@@ -51,6 +51,46 @@ describe('request()', function() {
     assert.instanceOf(promise, Promise);
   });
 
+  it('calls http.request() with options and callback', function() {
+    request('http://example.com');
+
+    assert.equal(http.request.callCount, 1);
+    var call = http.request.getCall(0);
+    assert.lengthOf(call.args, 2);
+
+    assert.deepEqual(call.args[0], {
+      protocol: 'http:',
+      hostname: 'example.com',
+      port: '80',
+      method: 'GET',
+      path: '/',
+      headers: {accept: 'application/json'}
+    });
+
+    assert.typeOf(call.args[1], 'function');
+  });
+
+  it('accepts a url string', function() {
+    request({
+      url: 'http://example.com'
+    });
+
+    assert.equal(http.request.callCount, 1);
+    var call = http.request.getCall(0);
+    assert.lengthOf(call.args, 2);
+
+    assert.deepEqual(call.args[0], {
+      protocol: 'http:',
+      hostname: 'example.com',
+      port: '80',
+      method: 'GET',
+      path: '/',
+      headers: {accept: 'application/json'}
+    });
+
+    assert.typeOf(call.args[1], 'function');
+  });
+
   it('accepts a terminator for aborting requests', function(done) {
     var promise = request({
       url: 'http//example.com',
