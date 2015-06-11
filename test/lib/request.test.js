@@ -5,8 +5,9 @@ var https = require('https');
 var chai = require('chai');
 var sinon = require('sinon');
 
-var request = require('../../lib/request');
+var auth = require('../../lib/auth');
 var errors = require('../../lib/errors');
+var request = require('../../lib/request');
 
 chai.config.truncateThreshold = 0;
 var assert = chai.assert;
@@ -36,6 +37,7 @@ describe('request', function() {
       http.request = httpRequest;
       https.request = httpsRequest;
       mockRequest = null;
+      auth.clear();
     });
 
     it('provides a shorthand for calling http.request()', function() {
@@ -245,6 +247,18 @@ describe('request', function() {
       };
 
       assert.deepEqual(request.parseConfig(config), options);
+    });
+
+    it('adds authorization header with stored API key', function() {
+      var key = 'my-key';
+      auth.setKey(key);
+      var config = {
+        url: 'http://example.com/'
+      };
+      var options = request.parseConfig(config);
+
+      var headers = options.headers;
+      assert.equal(headers.authorization, 'api-key ' + key);
     });
 
   });
