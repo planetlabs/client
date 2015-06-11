@@ -1,6 +1,18 @@
-## planet-client-js
+## planet-client
 
 A JavaScript client for [Planet's imagery API](https://www.planet.com/docs/).
+
+### Installation
+
+The `planet-client` package can be installed with `npm` (which comes with [Node](https://nodejs.org/)).  To add the package as a dependency to your project, run the following:
+
+    npm install planet-client --save
+
+### Use
+
+The `planet-client` package can be used in a Node based project or in the browser with a CommonJS module loader (like [Browserify](http://browserify.org/) or [Webpack](http://webpack.github.io/)).
+
+The library requires a global [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) implementation.  This comes with Node >= 0.12 and [modern browsers](http://caniuse.com/#search=promise).  To use `planet-client` in an environment without `Promise`, you can [use a polyfill](https://www.google.com/search?q=promise+polyfill).
 
 ### License
 
