@@ -6,6 +6,7 @@ var chai = require('chai');
 var sinon = require('sinon');
 
 var request = require('../../lib/request');
+var errors = require('../../lib/errors');
 
 chai.config.truncateThreshold = 0;
 var assert = chai.assert;
@@ -14,10 +15,10 @@ describe('request()', function() {
 
   var httpRequest = http.request;
   var httpsRequest = https.request;
-  var noop = function() {};
+  var mockRequest = null;
 
   beforeEach(function() {
-    var mockRequest = {
+    mockRequest = {
       end: sinon.spy(),
       abort: sinon.spy()
     };
@@ -32,16 +33,38 @@ describe('request()', function() {
   afterEach(function() {
     http.request = httpRequest;
     https.request = httpsRequest;
+    mockRequest = null;
   });
 
   it('provides a shorthand for calling http.request()', function() {
-    request('http://example.com', noop);
+    request('http://example.com');
     assert.equal(http.request.callCount, 1);
   });
 
   it('uses https.request() for https URLs', function() {
-    request('https://example.com', noop);
+    request('https://example.com');
     assert.equal(https.request.callCount, 1);
+  });
+
+  it('returns a promise', function() {
+    var promise = request('https://example.com');
+    assert.instanceOf(promise, Promise);
+  });
+
+  it('accepts a terminator for aborting requests', function(done) {
+    var promise = request({
+      url: 'http//example.com',
+      terminator: function(abort) {
+        setTimeout(abort, 10);
+      }
+    });
+    promise.then(function() {
+      done(new Error('Expected promise to be rejected'));
+    }).catch(function(err) {
+      assert.instanceOf(err, errors.AbortedRequest);
+      assert.equal(mockRequest.abort.callCount, 1);
+      done();
+    });
   });
 
 });
