@@ -9,10 +9,17 @@
   "bugs": {
     "url": "https://github.com/planetlabs/planet-client-js/issues"
   },
-  "licenses": [
-    {
-      "type": "Apache-2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    }
-  ]
+  "license": "Apache-2.0",
+  "scripts": {
+    "pretest": "eslint lib test",
+    "test": "mocha --recursive test",
+    "start": "watchy --watch lib,test -- npm test"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "eslint": "^0.22.1",
+    "eslint-config-planet": "^1.1.0",
+    "mocha": "^2.2.5",
+    "watchy": "^0.6.2"
+  }
 }
