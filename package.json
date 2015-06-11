@@ -20,6 +20,7 @@
     "eslint": "^0.22.1",
     "eslint-config-planet": "^1.1.0",
     "mocha": "^2.2.5",
+    "sinon": "^1.15.3",
     "watchy": "^0.6.2"
   }
 }
