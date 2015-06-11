@@ -7,7 +7,7 @@ var sinon = require('sinon');
 
 var auth = require('../../lib/auth');
 var errors = require('../../lib/errors');
-var request = require('../../lib/request');
+var req = require('../../lib/request');
 
 chai.config.truncateThreshold = 0;
 var assert = chai.assert;
@@ -15,10 +15,10 @@ var assert = chai.assert;
 describe('request', function() {
 
   describe('request()', function() {
-
     var httpRequest = http.request;
     var httpsRequest = https.request;
     var mockRequest = null;
+    var request = req.request;
 
     beforeEach(function() {
       mockRequest = {
@@ -113,9 +113,9 @@ describe('request', function() {
 
   });
 
+  describe('parseConfig()', function() {
 
-  describe('request.parseConfig()', function() {
-
+    var parseConfig = req.parseConfig;
     var defaultHeaders = {'accept': 'application/json'};
 
     it('generates request options from a URL', function() {
@@ -129,7 +129,7 @@ describe('request', function() {
         headers: defaultHeaders
       };
 
-      assert.deepEqual(request.parseConfig(config), options);
+      assert.deepEqual(parseConfig(config), options);
     });
 
     it('uses the correct default port for https', function() {
@@ -143,7 +143,7 @@ describe('request', function() {
         headers: defaultHeaders
       };
 
-      assert.deepEqual(request.parseConfig(config), options);
+      assert.deepEqual(parseConfig(config), options);
     });
 
     it('respects the port in the URL', function() {
@@ -157,7 +157,7 @@ describe('request', function() {
         headers: defaultHeaders
       };
 
-      assert.deepEqual(request.parseConfig(config), options);
+      assert.deepEqual(parseConfig(config), options);
     });
 
     it('respects a query string in the URL', function() {
@@ -171,7 +171,7 @@ describe('request', function() {
         headers: defaultHeaders
       };
 
-      assert.deepEqual(request.parseConfig(config), options);
+      assert.deepEqual(parseConfig(config), options);
     });
 
     it('accepts a config with url and query', function() {
@@ -190,7 +190,7 @@ describe('request', function() {
         headers: defaultHeaders
       };
 
-      assert.deepEqual(request.parseConfig(config), options);
+      assert.deepEqual(parseConfig(config), options);
     });
 
     it('extends an existing URL query string with query object', function() {
@@ -209,7 +209,7 @@ describe('request', function() {
         headers: defaultHeaders
       };
 
-      assert.deepEqual(request.parseConfig(config), options);
+      assert.deepEqual(parseConfig(config), options);
     });
 
     it('allows query object to override query string', function() {
@@ -228,7 +228,7 @@ describe('request', function() {
         headers: defaultHeaders
       };
 
-      assert.deepEqual(request.parseConfig(config), options);
+      assert.deepEqual(parseConfig(config), options);
     });
 
     it('passes along the withCredentials option', function() {
@@ -246,7 +246,7 @@ describe('request', function() {
         withCredentials: false
       };
 
-      assert.deepEqual(request.parseConfig(config), options);
+      assert.deepEqual(parseConfig(config), options);
     });
 
     it('adds authorization header with stored API key', function() {
@@ -255,7 +255,7 @@ describe('request', function() {
       var config = {
         url: 'http://example.com/'
       };
-      var options = request.parseConfig(config);
+      var options = parseConfig(config);
 
       var headers = options.headers;
       assert.equal(headers.authorization, 'api-key ' + key);
