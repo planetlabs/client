@@ -1,3 +1,6 @@
 {
-  "extends": "planet"
+  "extends": "planet",
+  "rules": {
+    "no-multiple-empty-lines": [2, {"max": 1}]
+  }
 }
