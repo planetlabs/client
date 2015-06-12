@@ -10,8 +10,8 @@ var query = {
   'acquired.gte': lastWeek.toISOString()
 };
 
-planet.scenes.find(query).then(function(scenes) {
-  console.log('Found ' + scenes.count + ' scenes since ' + lastWeek);
+planet.scenes.find(query).then(function(page) {
+  console.log('Total count: ' + page.data.count + ' scenes since ' + lastWeek);
 }).catch(errorHandler);
 
 function errorHandler(err) {
