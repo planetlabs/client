@@ -10,10 +10,10 @@ var query = {
   'acquired.gte': lastWeek.toISOString()
 };
 
-planet.scenes.find(query).then(function(page) {
-  console.log('Total count: ' + page.data.count + ' scenes since ' + lastWeek);
-}).catch(errorHandler);
-
-function errorHandler(err) {
-  console.error('Failed to fetch scenes:', err.message);
-}
+planet.scenes.find(query)
+  .then(function(page) {
+    console.log('Total count: ' + page.data.count + ' scenes since ' + lastWeek);
+  })
+  .catch(function(err) {
+    console.error('Failed to fetch scenes:', err.message);
+  });

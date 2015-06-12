@@ -23,10 +23,9 @@ function fetch(promise) {
   });
 }
 
-fetch(planet.scenes.find(query)).then(function() {
-  console.log('done fetching');
-}).catch(errorHandler);
-
-function errorHandler(err) {
-  console.error('Failed to fetch scenes:', err.message);
-}
+fetch(planet.scenes.find(query))
+  .then(function() {
+    console.log('done fetching');
+  }).catch(function(err) {
+    console.error('Failed to fetch scenes:', err.message);
+  });
