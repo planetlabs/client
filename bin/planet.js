@@ -23,7 +23,7 @@ parser
     default: process.env.PL_API_KEY
   });
 
-parser.command('find')
+parser.command('find-scenes')
   .option('type', {
     abbr: 't',
     help: 'imagery type',

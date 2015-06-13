@@ -12,9 +12,9 @@
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "scripts": {
-    "pretest": "eslint lib test",
+    "pretest": "eslint bin examples lib test",
     "test": "mocha --recursive test",
-    "start": "watchy --watch lib,test,examples -- npm test"
+    "start": "watchy --watch bin,examples,lib,test -- npm test"
   },
   "bin": {
     "planet": "bin/planet.js"
