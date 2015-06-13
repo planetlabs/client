@@ -45,6 +45,10 @@ parser.command('find-scenes')
     metavar: 'NUM',
     default: 1000
   })
+  .option('acquired', {
+    help: 'Filter by image acquisition time (ISO-8601 formatted date time with .. for ranges).',
+    metavar: 'TIME'
+  })
   .option('intersects', {
     help: 'Find imagery in the given area (GeoJSON, WKT, or @- for stdin)',
     metavar: 'GEOM'
