@@ -2,7 +2,7 @@
 
 var planet = require('../lib/index');
 
-planet.auth.setKey(process.env.API_KEY);
+planet.auth.setKey(process.env.PL_API_KEY);
 
 var lastWeek = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000));
 

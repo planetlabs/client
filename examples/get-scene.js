@@ -2,7 +2,7 @@
 
 var planet = require('../lib/index');
 
-planet.auth.setKey(process.env.API_KEY);
+planet.auth.setKey(process.env.PL_API_KEY);
 
 planet.scenes.get('20150607_151548_081f')
   .then(function(scene) {
