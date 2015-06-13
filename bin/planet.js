@@ -50,7 +50,7 @@ parser.command('find-scenes')
     metavar: 'TIME'
   })
   .option('intersects', {
-    help: 'Find imagery in the given area (GeoJSON, WKT, or @- for stdin)',
+    help: 'Find imagery in the given area (GeoJSON, WKT, @FILE, or @- for stdin)',
     metavar: 'GEOM'
   })
   .callback(run);
