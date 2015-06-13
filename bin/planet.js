@@ -1,20 +1,29 @@
 #!/usr/bin/env node
+var log = require('npmlog');
 var parser = require('nomnom');
 
 var auth = require('../lib/auth');
 var cli = require('../lib/cli/index');
 var version = require('../package.json').version;
 
-parser.script('planet');
+var script = 'planet';
+
+parser.script(script);
 
 parser
   .option('version', {
     abbr: 'v',
     flag: true,
-    help: 'output the version number',
+    help: 'Output the version number',
     callback: function() {
       return version;
     }
+  })
+  .option('loglevel', {
+    choices: ['silly', 'verbose', 'info', 'warn', 'error'],
+    default: 'info',
+    help: 'Log level',
+    metavar: 'LEVEL'
   })
   .option('key', {
     abbr: 'k',
@@ -26,13 +35,18 @@ parser
 parser.command('find-scenes')
   .option('type', {
     abbr: 't',
-    help: 'imagery type',
+    help: 'Imagery type',
     metavar: 'TYPE',
     default: 'ortho'
   })
+  .option('limit', {
+    abbr: 'l',
+    help: 'Limit the number of results',
+    metavar: 'NUM',
+    default: 1000
+  })
   .option('intersects', {
-    abbr: 'i',
-    help: 'find imagery in the given area (GeoJSON, WKT, or @- for stdin)',
+    help: 'Find imagery in the given area (GeoJSON, WKT, or @- for stdin)',
     metavar: 'GEOM'
   })
   .callback(run);
@@ -54,8 +68,10 @@ function run(opts) {
     })
     .catch(function(err) {
       process.stderr.write(err.message + '\n');
+      log.verbose(script, err.stack);
       process.exit(1);
     });
 }
 
-parser.parse();
+var options = parser.parse();
+log.level = options.loglevel;
