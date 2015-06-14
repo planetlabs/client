@@ -89,7 +89,10 @@ describe('cli/find-scenes', function() {
       ];
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
-        assert.throws(parse.bind(null, cases[i], {}));
+        assert.throws(
+            parse.bind(null, cases[i], {}),
+            'Invalid date for "acquired" option:',
+            'case ' + i);
       }
     });
 
