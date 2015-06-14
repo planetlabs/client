@@ -32,29 +32,11 @@ parser
     default: process.env.PL_API_KEY
   });
 
-parser.command('find-scenes')
-  .option('type', {
-    abbr: 't',
-    help: 'Imagery type',
-    metavar: 'TYPE',
-    default: 'ortho'
-  })
-  .option('limit', {
-    abbr: 'l',
-    help: 'Limit the number of results',
-    metavar: 'NUM',
-    default: 1000
-  })
-  .option('acquired', {
-    help: 'Filter by image acquisition time (ISO-8601 formatted date time with .. for ranges).',
-    metavar: 'TIME',
-    type: 'string'
-  })
-  .option('intersects', {
-    help: 'Find imagery in the given area (GeoJSON, WKT, @FILE, or @- for stdin)',
-    metavar: 'GEOM'
-  })
-  .callback(run);
+for (var name in cli) {
+  parser.command(name)
+    .options(cli[name].options)
+    .callback(run);
+}
 
 function run(opts) {
   if (!opts.key) {
@@ -64,8 +46,8 @@ function run(opts) {
     process.exit(1);
   }
   auth.setKey(opts.key);
-  var command = cli[opts[0]];
-  command(opts)
+
+  cli[opts[0]](opts)
     .then(function(result) {
       if (result) {
         process.stdout.write(result);
@@ -73,7 +55,7 @@ function run(opts) {
     })
     .catch(function(err) {
       process.stderr.write(err.message + '\n');
-      log.verbose(script, err.stack);
+      log.verbose(script + ' ' + opts[0], err.stack);
       process.exit(1);
     });
 }
