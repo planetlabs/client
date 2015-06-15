@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+var path = require('path');
+
 var log = require('npmlog');
 var parser = require('nomnom');
 
@@ -6,7 +8,7 @@ var auth = require('../lib/auth');
 var cli = require('../lib/cli/index');
 var version = require('../package.json').version;
 
-var script = 'planet';
+var script = path.basename(__filename, '.js');
 
 parser.script(script);
 
@@ -55,7 +57,7 @@ function run(opts) {
     })
     .catch(function(err) {
       process.stderr.write(err.message + '\n');
-      log.verbose(script + ' ' + opts[0], err.stack);
+      log.verbose(opts[0], err.stack);
       process.exit(1);
     });
 }
