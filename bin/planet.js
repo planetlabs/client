@@ -12,27 +12,29 @@ var script = path.basename(__filename, '.js');
 
 parser.script(script);
 
-parser
-  .option('version', {
+parser.options({
+  version: {
     abbr: 'v',
     flag: true,
     help: 'Output the version number',
     callback: function() {
       return version;
     }
-  })
-  .option('loglevel', {
+  },
+  logLevel: {
+    full: 'log-level',
     choices: ['silly', 'verbose', 'info', 'warn', 'error'],
     default: 'info',
     help: 'Log level',
     metavar: 'LEVEL'
-  })
-  .option('key', {
+  },
+  key: {
     abbr: 'k',
     help: 'API key (can also be provided with a PL_API_KEY environment variable)',
     metavar: 'KEY',
     default: process.env.PL_API_KEY
-  });
+  }
+});
 
 for (var name in cli) {
   parser.command(name)
@@ -63,4 +65,4 @@ function run(opts) {
 }
 
 var options = parser.parse();
-log.level = options.loglevel;
+log.level = options.logLevel;
