@@ -6,11 +6,14 @@ var parser = require('nomnom');
 
 var auth = require('../lib/auth');
 var cli = require('../lib/cli/index');
+var util = require('../lib/cli/util');
 var version = require('../package.json').version;
 
 var script = path.basename(__filename, '.js');
 
 parser.script(script);
+
+var levels = ['silly', 'verbose', 'info', 'warn', 'error'];
 
 parser.options({
   version: {
@@ -23,9 +26,9 @@ parser.options({
   },
   logLevel: {
     full: 'log-level',
-    choices: ['silly', 'verbose', 'info', 'warn', 'error'],
+    choices: levels,
     default: 'info',
-    help: 'Log level',
+    help: 'Log level' + util.choicesHelp(levels),
     metavar: 'LEVEL'
   },
   key: {
