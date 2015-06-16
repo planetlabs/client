@@ -1,71 +1,75 @@
 #!/usr/bin/env node
-var path = require('path');
 
 var log = require('npmlog');
-var parser = require('nomnom');
+var yargs = require('yargs');
 
 var auth = require('../lib/auth');
 var cli = require('../lib/cli/index');
 var util = require('../lib/cli/util');
 var version = require('../package.json').version;
 
-var script = path.basename(__filename, '.js');
-
-parser.script(script);
-
 var levels = ['silly', 'verbose', 'info', 'warn', 'error'];
 
-parser.options({
-  version: {
-    abbr: 'v',
-    flag: true,
-    help: 'Output the version number',
-    callback: function() {
-      return version;
+var parser = yargs.usage('Usage: $0 <command> [options]')
+  .options({
+    'help': {
+      alias: 'h'
+    },
+    'version': {
+      alias: 'v'
     }
+  })
+  .demand(1)
+  .version(version, 'version')
+  .help('help')
+  .strict();
+
+var commonOptions = {
+  'log-level': {
+    description: 'Log level' + util.choicesHelp(levels),
+    default: 'info'
   },
-  logLevel: {
-    full: 'log-level',
-    choices: levels,
-    default: 'info',
-    help: 'Log level' + util.choicesHelp(levels),
-    metavar: 'LEVEL'
-  },
-  key: {
-    abbr: 'k',
-    help: 'API key (can also be provided with a PL_API_KEY environment variable)',
-    metavar: 'KEY',
+  'key': {
+    alias: 'k',
+    description: 'API key (can also be provided with a PL_API_KEY environment variable)',
     default: process.env.PL_API_KEY
   }
-});
+};
 
 for (var name in cli) {
-  parser.command(name)
-    .options(cli[name].options)
-    .callback(run);
+  parser.command(name, cli[name].description, runner(name));
 }
 
-function run(opts) {
-  if (!opts.key) {
-    process.stderr.write(
-        'Provide your API key with the "key" option ' +
-        'or the PL_API_KEY environment variable\n');
-    process.exit(1);
-  }
-  auth.setKey(opts.key);
+function runner(commandName) {
+  var command = cli[commandName];
+  return function(subYargs) {
+    var subParser = subYargs
+      .usage('Usage: $0 ' + commandName + ' [options]')
+      .options(command.options)
+      .options(commonOptions)
+      .help('help')
+      .strict();
 
-  cli[opts[0]](opts)
-    .then(function(result) {
-      if (result) {
-        process.stdout.write(result);
+    var options = subParser.argv;
+    log.level = options.logLevel;
+    if (!options.key) {
+      process.stderr.write(
+          'Provide your API key with the "key" option ' +
+          'or the PL_API_KEY environment variable\n');
+      process.exit(1);
+    }
+    auth.setKey(options.key);
+    command.main(options).then(function(output) {
+      if (output) {
+        process.stdout.write(output);
       }
-    })
-    .catch(function(err) {
+      process.exit(0);
+    }).catch(function(err) {
+      log.error(commandName, err.stack);
       process.stderr.write(err.message + '\n');
-      log.verbose(opts[0], err.stack);
       process.exit(1);
     });
+  };
 }
 
-var options = parser.parse();
-log.level = options.logLevel;
+parser.parse(process.argv.slice(2));
