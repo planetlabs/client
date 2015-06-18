@@ -30,6 +30,8 @@ During development, you can start a file watcher that runs the linter and tests 
 
     npm start
 
+[![Current Status](https://travis-ci.org/planetlabs/planet-client-js.svg?branch=master)](https://travis-ci.org/planetlabs/planet-client-js)
+
 ### License
 
 © Planet Labs, Inc.
