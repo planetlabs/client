@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 
-var log = require('npmlog');
+var bole = require('bole');
+var pretty = require('bistre')();
 var yargs = require('yargs');
 
 var auth = require('../lib/auth');
 var cli = require('../lib/cli/index');
+var errors = require('../lib/errors');
 var util = require('../lib/cli/util');
 var version = require('../package.json').version;
 
-var levels = ['silly', 'verbose', 'info', 'warn', 'error'];
+var levels = ['debug', 'info', 'warn', 'error'];
+var log = bole('planet');
 
 var parser = yargs.usage('Usage: $0 <command> [options]')
   .options({
@@ -51,11 +54,15 @@ function runner(commandName) {
       .strict();
 
     var options = subParser.argv;
-    log.level = options.logLevel;
+    bole.output({
+      level: options.logLevel,
+      stream: pretty
+    });
+
     if (!options.key) {
-      process.stderr.write(
+      log.error(
           'Provide your API key with the "key" option ' +
-          'or the PL_API_KEY environment variable\n');
+          'or the PL_API_KEY environment variable');
       process.exit(1);
     }
     auth.setKey(options.key);
@@ -65,11 +72,20 @@ function runner(commandName) {
       }
       process.exit(0);
     }).catch(function(err) {
-      log.error(commandName, err.stack);
-      process.stderr.write(err.message + '\n');
+      log.error(err.message);
+      if (err instanceof errors.ResponseError) {
+        if (err.response.body) {
+          log.debug(err.response.body);
+        } else {
+          log.debug(err);
+        }
+      } else {
+        log.debug(err);
+      }
       process.exit(1);
     });
   };
 }
 
+pretty.pipe(process.stderr);
 parser.parse(process.argv.slice(2));

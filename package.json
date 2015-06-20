@@ -29,7 +29,8 @@
   },
   "dependencies": {
     "batch": "^0.5.2",
-    "npmlog": "^1.2.1",
+    "bistre": "^1.0.1",
+    "bole": "^2.0.0",
     "yargs": "^3.11.0"
   }
 }
