@@ -10,7 +10,7 @@
     "url": "https://github.com/planetlabs/planet-client-js/issues"
   },
   "license": "Apache-2.0",
-  "main": "lib/index.js",
+  "main": "lib/api/index.js",
   "scripts": {
     "pretest": "eslint bin examples lib test",
     "test": "mocha --recursive test",

@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 var assert = require('chai').assert;
 
-var auth = require('../../lib/auth');
-var util = require('../../lib/util');
+var auth = require('../../../lib/api/auth');
+var util = require('../../../lib/api/util');
 
 describe('util', function() {
 

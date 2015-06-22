@@ -2,7 +2,7 @@
 
 var assert = require('chai').assert;
 
-var urls = require('../../lib/urls');
+var urls = require('../../../lib/api/urls');
 
 describe('urls', function() {
 

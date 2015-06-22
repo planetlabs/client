@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 var assert = require('chai').assert;
 
-var errors = require('../../lib/errors');
+var errors = require('../../../lib/api/errors');
 
 describe('errors', function() {
 
