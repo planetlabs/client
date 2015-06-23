@@ -28,18 +28,6 @@ describe('errors', function() {
     });
   });
 
-  describe('InvalidCredentials', function() {
-    it('represents authentication with bad credentials', function() {
-      var message = 'foo';
-      var response = {};
-      var err = new errors.InvalidCredentials(message, response);
-      assert.equal(err.message, message);
-      assert.equal(err.response, response);
-      assert.instanceOf(err, errors.ResponseError);
-      assert.instanceOf(err, Error);
-    });
-  });
-
   describe('UnexpectedResponse', function() {
     it('represents authentication with bad credentials', function() {
       var message = 'foo';
