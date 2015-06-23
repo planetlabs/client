@@ -22,9 +22,10 @@ var parser = yargs.usage('Usage: $0 <command> [options]')
       alias: 'v'
     }
   })
-  .demand(1)
+  .demand(1, 1)
   .version(version, 'version')
   .help('help')
+  .completion('completion', 'Generate bash completion script')
   .strict();
 
 var commonOptions = {
