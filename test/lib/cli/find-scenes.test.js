@@ -5,6 +5,33 @@ var findScenes = require('../../../lib/cli/find-scenes');
 
 describe('cli/find-scenes', function() {
 
+  describe('parseWhere()', function() {
+
+    var parse = findScenes.parseWhere;
+
+    it('adds a where clause to the query when passed a valid string', function() {
+      var q = {};
+      parse('sat.alt.gte=200', q);
+      assert.deepEqual(q, {'sat.alt.gte': '200'});
+    });
+
+    it('adds multiple where clauses to the query when passed an array', function() {
+      var q = {};
+      parse(['sun.alt.gte=250', 'sun.alt.lte=400'], q);
+      assert.deepEqual(q, {
+        'sun.alt.gte': '250',
+        'sun.alt.lte': '400'
+      });
+    });
+
+    it('Ignores where clauses if not properly formatted', function() {
+      var q = {};
+      parse(['sun.alt.gte=250', 'sun.alt.lte'], q);
+      assert.deepEqual(q, {'sun.alt.gte': '250'});
+    });
+
+  });
+
   describe('parseAcquired()', function() {
     var parse = findScenes.parseAcquired;
 
