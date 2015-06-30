@@ -25,7 +25,7 @@ var parser = yargs.usage('Usage: $0 <command> [options]')
   .demand(1, 1)
   .version(version, 'version')
   .help('help')
-  .completion('completion', 'Generate bash completion script')
+  .completion('completion', false)
   .strict();
 
 var commonOptions = {
