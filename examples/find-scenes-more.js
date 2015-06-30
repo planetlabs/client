@@ -23,7 +23,7 @@ function fetch(promise) {
   });
 }
 
-fetch(planet.scenes.find(query))
+fetch(planet.scenes.search(query))
   .then(function() {
     console.log('done fetching');
   }).catch(function(err) {
