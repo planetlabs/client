@@ -1,0 +1,21 @@
+{
+  "source": {
+    "include": ["lib/api"]
+  },
+  "opts": {
+    "destination": "./build/doc",
+    "encoding": "utf8",
+    "readme": "./doc/index.md",
+    "recurse": true,
+    "template": "./node_modules/minami"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "templates": {
+    "default": {
+      "layoutFile": "./doc/template/layout.tmpl",
+      "outputSourceFiles": false
+    }
+  }
+}
