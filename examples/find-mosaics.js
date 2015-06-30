@@ -17,7 +17,7 @@ function fetch(promise) {
   });
 }
 
-fetch(planet.mosaics.find())
+fetch(planet.mosaics.search())
   .then(function() {
     console.log('done fetching');
   }).catch(function(err) {

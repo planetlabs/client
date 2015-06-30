@@ -8,7 +8,7 @@ var query = {
   'intersects': 'POINT(-110 45)'
 };
 
-planet.quads.find('color_balance_mosaic', query)
+planet.quads.search('color_balance_mosaic', query)
   .then(function(page) {
     console.log(JSON.stringify(page.data, null, 2));
   })

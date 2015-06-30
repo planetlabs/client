@@ -4,15 +4,37 @@ A JavaScript client for [Planet's imagery API](https://www.planet.com/docs/).
 
 ### Installation
 
-The `planet-client` package can be installed with `npm` (which comes with [Node](https://nodejs.org/)).  To add the package as a dependency to your project, run the following:
+The `planet-client` requires Node >= 0.12.  Install the `planet-client` package `npm` (which comes with [Node](https://nodejs.org/)).
 
-    npm install planet-client --save
+    npm install planet-client
 
-### Use
+The `planet-client` package provides a library for use in your application and a `planet` executable for command line use.  See details on both below.
+
+### Using the Library
 
 The `planet-client` package can be used in a Node based project or in the browser with a CommonJS module loader (like [Browserify](http://browserify.org/) or [Webpack](http://webpack.github.io/)).
 
 The library requires a global [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) implementation.  This comes with Node >= 0.12 and [modern browsers](http://caniuse.com/#search=promise).  To use `planet-client` in an environment without `Promise`, you can [use a polyfill](https://www.google.com/search?q=promise+polyfill).
+
+See the `examples` directory for example use of the library.
+
+### Using the CLI
+
+The `planet-client` package provides a `planet` executable.  This can be installed globally (`npm install --global planet-client`), or if you install it locally, you can add the executable to your path (`export PATH=path/to/node_modules/.bin:$PATH`).
+
+The general syntax for the `planet` executable is `planet <command> [options]`.  To see a list of commands, run the following:
+
+    planet --help
+
+You can get help for a specific command by adding `--help` to the command name (e.g. `planet find-scenes --help`).
+
+To take advantage of command line completion with the `planet` executable, you can run the following in bash:
+
+    eval "$(planet completion)"
+
+To enable this every time you start a new shell, you can append the output of `planet completion` to your `.bashrc`:
+
+    planet completion >> ~/.bashrc
 
 ### Contributing
 

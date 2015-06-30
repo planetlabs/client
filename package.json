@@ -14,7 +14,9 @@
   "scripts": {
     "pretest": "eslint bin examples lib test",
     "test": "mocha --recursive test",
-    "start": "watchy --watch bin,examples,lib,test -- npm test"
+    "start": "watchy --watch bin,examples,lib,test -- npm test",
+    "doc": "jsdoc --configure doc/config.json",
+    "publish-doc": "npm run doc && gh-pages --dist build/doc"
   },
   "bin": {
     "planet": "bin/planet.js"
@@ -23,6 +25,9 @@
     "chai": "^3.0.0",
     "eslint": "^0.22.1",
     "eslint-config-planet": "^2.0.0",
+    "gh-pages": "^0.3.1",
+    "jsdoc": "^3.3.2",
+    "minami": "^1.1.0",
     "mocha": "^2.2.5",
     "sinon": "^1.15.3",
     "watchy": "^0.6.2"
@@ -31,6 +36,6 @@
     "batch": "^0.5.2",
     "bistre": "^1.0.1",
     "bole": "^2.0.0",
-    "yargs": "^3.13.0"
+    "yargs": "^3.14.0"
   }
 }
