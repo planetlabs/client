@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-errors-AbortedRequest.html">AbortedRequest</a></li><li><a href="module-errors-ResponseError.html">ResponseError</a></li><li><a href="module-errors-Unauthorized.html">Unauthorized</a></li><li><a href="module-errors-UnexpectedResponse.html">UnexpectedResponse</a></li><li><a href="module-page-Page.html">Page</a><ul class='methods'><li data-type='method'><a href="module-page-Page.html#next">next</a></li><li data-type='method'><a href="module-page-Page.html#prev">prev</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-auth.html">auth</a><ul class='methods'><li data-type='method'><a href="module-auth.html#~clear">clear</a></li><li data-type='method'><a href="module-auth.html#~getKey">getKey</a></li><li data-type='method'><a href="module-auth.html#~setKey">setKey</a></li></ul></li><li><a href="module-mosaics.html">mosaics</a><ul class='methods'><li data-type='method'><a href="module-mosaics.html#~get">get</a></li><li data-type='method'><a href="module-mosaics.html#~search">search</a></li></ul></li><li><a href="module-quads.html">quads</a><ul class='methods'><li data-type='method'><a href="module-quads.html#~get">get</a></li><li data-type='method'><a href="module-quads.html#~search">search</a></li></ul></li><li><a href="module-scenes.html">scenes</a><ul class='methods'><li data-type='method'><a href="module-scenes.html#~get">get</a></li><li data-type='method'><a href="module-scenes.html#~search">search</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h2>planet-client</h2><p>A JavaScript client for <a href="https://www.planet.com/docs/">Planet's imagery API</a>.</p>
+<h3>Installation</h3><p>The <code>planet-client</code> requires Node &gt;= 0.12.  Install the <code>planet-client</code> package <code>npm</code> (which comes with <a href="https://nodejs.org/">Node</a>).</p>
+<pre class="prettyprint source"><code>npm install planet-client</code></pre><h3>Using the Library</h3><p>The <code>planet-client</code> package can be used in a Node based project or in the browser with a CommonJS module loader (like <a href="http://browserify.org/">Browserify</a> or <a href="http://webpack.github.io/">Webpack</a>).</p>
+<p>The library requires a global <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a> implementation.  This comes with Node &gt;= 0.12 and <a href="http://caniuse.com/#search=promise">modern browsers</a>.  To use <code>planet-client</code> in an environment without <code>Promise</code>, you can <a href="https://www.google.com/search?q=promise+polyfill">use a polyfill</a>.</p>
+<p>With the above prerequisites, you can start using the <code>planet-client</code> package in your application:</p>
+<pre class="prettyprint source lang-js"><code>var planet = require('planet-client');
+
+// set up your API key for all future requests
+planet.auth.setKey(process.env.PL_API_KEY);
+
+var lastWeek = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000));
+
+var query = {
+  'acquired.gte': lastWeek.toISOString()
+};
+
+planet.scenes.search(query)
+  .then(function(page) {
+    console.log('Total count: ' + page.data.count + ' scenes since ' + lastWeek);
+  })
+  .catch(function(err) {
+    console.error('Failed to fetch scenes:', err.message);
+  });</code></pre><p>See the list of modules to the left for details on what is exported by the library.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+
+<script>prettyPrint();</script>
+</body>
+</html>
