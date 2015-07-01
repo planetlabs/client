@@ -64,7 +64,8 @@ function download(productUrl, directory) {
   return function(done) {
     log.debug('getting %s', productUrl);
     request.get({url: productUrl, stream: true})
-      .then(function(response) {
+      .then(function(res) {
+        var response = res.response;
         response.on('error', done);
         response.on('end', done);
         var disposition = response.headers['content-disposition'];

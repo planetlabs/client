@@ -16,8 +16,8 @@ var urls = require('./urls');
  */
 function get(mosaicId, quadId) {
   var url = urls.join(urls.MOSAICS, mosaicId, 'quads', quadId);
-  return request.get(url).then(function(obj) {
-    return obj.data;
+  return request.get(url).then(function(res) {
+    return res.body;
   });
 }
 
@@ -33,8 +33,8 @@ function search(mosaicId, query) {
     url: urls.join(urls.MOSAICS, mosaicId, 'quads', ''),
     query: query
   };
-  return request.get(config).then(function(obj) {
-    return new Page(obj.data, search.bind(null, mosaicId));
+  return request.get(config).then(function(res) {
+    return new Page(res.body, search.bind(null, mosaicId));
   });
 }
 

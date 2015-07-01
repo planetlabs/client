@@ -25,11 +25,11 @@ function get(scene, options) {
     };
   }
   var url = urls.join(urls.SCENES, scene.type, scene.id);
-  return request.get(url).then(function(obj) {
+  return request.get(url).then(function(res) {
     if (options.augmentLinks !== false) {
-      util.augmentSceneLinks(obj.data);
+      util.augmentSceneLinks(res.body);
     }
-    return obj.data;
+    return res.body;
   });
 }
 
@@ -53,14 +53,14 @@ function search(query, options) {
     url: urls.join(urls.SCENES, type, ''),
     query: query
   };
-  return request.get(config).then(function(obj) {
+  return request.get(config).then(function(res) {
     if (options.augmentLinks !== false) {
-      var scenes = obj.data.features;
+      var scenes = res.body.features;
       for (var i = 0, ii = scenes.length; i < ii; ++i) {
         util.augmentSceneLinks(scenes[i]);
       }
     }
-    return new Page(obj.data, search);
+    return new Page(res.body, search);
   });
 }
 
