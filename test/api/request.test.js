@@ -123,13 +123,15 @@ describe('request', function() {
     it('rejects for invalid JSON in successful response', function(done) {
       var response = new stream.Readable();
       response.statusCode = 200;
+      var body = 'garbage response body';
 
       var promise = request({url: 'http://example.com'});
       promise.then(function(obj) {
         done(new Error('Expected promise to be rejected'));
       }, function(err) {
-        assert.instanceOf(err, Error);
+        assert.instanceOf(err, errors.UnexpectedResponse);
         assert.include(err.message, 'Trouble parsing response body as JSON');
+        assert.equal(err.body, body);
         done();
       }).catch(done);
 
@@ -138,7 +140,7 @@ describe('request', function() {
       assert.lengthOf(args, 2);
       var callback = args[1];
       callback(response);
-      response.emit('data', 'garbage in response body');
+      response.emit('data', body);
       response.emit('end');
     });
 
