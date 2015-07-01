@@ -15,6 +15,7 @@
     "pretest": "eslint bin examples api cli test",
     "test": "mocha --recursive test",
     "start": "watchy --watch bin,examples,api,cli,test -- npm test",
+    "postpublish": "npm run publish-doc",
     "doc": "jsdoc --configure doc/config.json",
     "publish-doc": "npm run doc && gh-pages --dist build/doc"
   },
