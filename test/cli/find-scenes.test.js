@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 var assert = require('chai').assert;
 
-var findScenes = require('../../../lib/cli/find-scenes');
+var findScenes = require('../../cli/find-scenes');
 
 describe('cli/find-scenes', function() {
 

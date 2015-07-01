@@ -5,9 +5,9 @@ var https = require('https');
 var chai = require('chai');
 var sinon = require('sinon');
 
-var auth = require('../../../lib/api/auth');
-var errors = require('../../../lib/api/errors');
-var req = require('../../../lib/api/request');
+var auth = require('../../api/auth');
+var errors = require('../../api/errors');
+var req = require('../../api/request');
 
 chai.config.truncateThreshold = 0;
 var assert = chai.assert;

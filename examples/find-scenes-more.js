@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-var planet = require('../lib/api/index');
+var planet = require('../api/index');
 
 planet.auth.setKey(process.env.PL_API_KEY);
 

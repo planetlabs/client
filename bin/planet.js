@@ -4,10 +4,10 @@ var bole = require('bole');
 var pretty = require('bistre')();
 var yargs = require('yargs');
 
-var auth = require('../lib/api/auth');
-var cli = require('../lib/cli/index');
-var errors = require('../lib/api/errors');
-var util = require('../lib/cli/util');
+var auth = require('../api/auth');
+var cli = require('../cli/index');
+var errors = require('../api/errors');
+var util = require('../cli/util');
 var version = require('../package.json').version;
 
 var levels = ['debug', 'info', 'warn', 'error'];

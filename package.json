@@ -10,11 +10,11 @@
     "url": "https://github.com/planetlabs/planet-client-js/issues"
   },
   "license": "Apache-2.0",
-  "main": "lib/api/index.js",
+  "main": "api/index.js",
   "scripts": {
-    "pretest": "eslint bin examples lib test",
+    "pretest": "eslint bin examples api cli test",
     "test": "mocha --recursive test",
-    "start": "watchy --watch bin,examples,lib,test -- npm test",
+    "start": "watchy --watch bin,examples,api,cli,test -- npm test",
     "doc": "jsdoc --configure doc/config.json",
     "publish-doc": "npm run doc && gh-pages --dist build/doc"
   },
