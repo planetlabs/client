@@ -15,8 +15,8 @@ var urls = require('./urls');
  */
 function get(id) {
   var url = urls.join(urls.MOSAICS, id);
-  return request.get(url).then(function(obj) {
-    return obj.data;
+  return request.get(url).then(function(res) {
+    return res.body;
   });
 }
 
@@ -31,8 +31,8 @@ function search(query) {
     url: urls.MOSAICS,
     query: query
   };
-  return request.get(config).then(function(obj) {
-    return new Page(obj.data, search);
+  return request.get(config).then(function(res) {
+    return new Page(res.body, search);
   });
 }
 

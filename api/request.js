@@ -75,7 +75,7 @@ function parseConfig(config) {
 
 /**
  * Create a handler for JSON API responses.
- * @param {function(Object)} resolve Called on success with response and data
+ * @param {function(Object)} resolve Called on success with response and body
  *     properties.
  * @param {function(Error)} reject Called on failure.
  * @param {Object} info Request storage object with aborted and completed
@@ -99,13 +99,13 @@ function createResponseHandler(resolve, reject, info) {
         reject(new errors.UnexpectedResponse('Unexpected response status: ' +
             status, response));
       } else {
-        resolve(response);
+        resolve({response: response, body: null});
       }
       return;
     }
-    var body = '';
+    var data = '';
     response.on('data', function(chunk) {
-      body += String(chunk);
+      data += String(chunk);
     });
 
     response.on('error', function(err) {
@@ -116,33 +116,32 @@ function createResponseHandler(resolve, reject, info) {
 
     response.on('end', function() {
       info.completed = true;
-      var data = null;
+      if (info.aborted) {
+        return;
+      }
+      var body = null;
       var err = null;
-      if (!info.aborted) {
-        if (body) {
-          try {
-            data = JSON.parse(body);
-          } catch (parseErr) {
-            err = new errors.UnexpectedResponse(
-                'Trouble parsing response body as JSON: ' + body + '\n' +
-                parseErr.stack + '\n', response, body);
-          }
+      if (status === 401) {
+        err = new errors.Unauthorized('Unauthorized', response, body);
+      } else if (!(status >= 200 && status < 300)) {
+        err = new errors.UnexpectedResponse('Unexpected response status: ' +
+            status, response, data);
+      } else if (data) {
+        try {
+          body = JSON.parse(data);
+        } catch (parseErr) {
+          err = new errors.UnexpectedResponse(
+              'Trouble parsing response body as JSON: ' + data + '\n' +
+              parseErr.stack + '\n', response, data);
         }
-        if (status === 401) {
-          err = new errors.Unauthorized('Unauthorized', response, body);
-
-        } else if (!(status >= 200 && status < 300)) {
-          err = new errors.UnexpectedResponse('Unexpected response status: ' +
-              status, response, body);
-        }
-        if (err) {
-          reject(err);
-          return;
-        }
+      }
+      if (err) {
+        reject(err);
+        return;
       }
       resolve({
         response: response,
-        data: data
+        body: body
       });
     });
   };
@@ -168,8 +167,10 @@ function createResponseHandler(resolve, reject, info) {
  *     token will be added to an authorization header.
  * @param {boolean} config.withCredentials - Determines whether
  *     `XMLHttpRequest.withCredentials` is set (`true` by default).
- * @return {Promise<IncomingMessage>} A promise that resolves to a successful
- *     response.  Any non 200 status will result in a rejection.
+ * @return {Promise<Object>} A promise that resolves on a successful
+ *     response.  The object includes response and body properties, where the
+ *     body is a JSON decoded object representing the response body.  Any
+ *     non-200 status will result in a rejection.
  */
 function request(config) {
   var options = parseConfig(config);
@@ -219,8 +220,10 @@ function request(config) {
  * Issue a GET request.
  * @param {string|Object} config A URL or request config.
  * @param {string} config.url A URL or request config.
- * @return {Promise<IncomingMessage>} A promise that resolves to a successful
- *     response.  Any non 200 status will result in a rejection.
+ * @return {Promise<Object>} A promise that resolves on a successful
+ *     response.  The object includes response and body properties, where the
+ *     body is a JSON decoded object representing the response body.  Any
+ *     non-200 status will result in a rejection.
  */
 function get(config) {
   if (typeof config === 'string') {

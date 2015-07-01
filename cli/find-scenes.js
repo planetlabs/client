@@ -113,9 +113,12 @@ function resolveQuery(opts) {
   return resolveIntersects(opts.intersects).then(function(geom) {
     var query = {
       type: opts.type,
-      intersects: geom,
       count: Math.min(opts.limit, 500)
     };
+
+    if (geom) {
+      query.intersects = geom;
+    }
 
     if (opts.acquired) {
       parseAcquired(opts.acquired, query);

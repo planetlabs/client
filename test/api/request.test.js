@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 var http = require('http');
 var https = require('https');
+var stream = require('stream');
 
 var chai = require('chai');
 var sinon = require('sinon');
@@ -68,6 +69,79 @@ describe('request', function() {
     it('uses https.request() for https URLs', function() {
       request({url: 'https://example.com'});
       assert.equal(https.request.callCount, 1);
+    });
+
+    it('resolves to an object with body and response', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 200;
+      var body = {
+        foo: 'bar'
+      };
+
+      var promise = request({url: 'http://example.com'});
+      promise.then(function(obj) {
+        assert.equal(obj.response, response);
+        assert.deepEqual(obj.body, body);
+        done();
+      }, done);
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', JSON.stringify(body));
+      response.emit('end');
+    });
+
+    it('resolves before parsing body if stream is true', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 200;
+      var body = {
+        foo: 'bar'
+      };
+
+      var promise = request({
+        url: 'http://example.com',
+        stream: true
+      });
+      promise.then(function(obj) {
+        assert.equal(obj.response, response);
+        assert.isNull(obj.body);
+        done();
+      }, done);
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', JSON.stringify(body));
+      response.emit('end');
+    });
+
+    it('rejects for invalid JSON in successful response', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 200;
+      var body = 'garbage response body';
+
+      var promise = request({url: 'http://example.com'});
+      promise.then(function(obj) {
+        done(new Error('Expected promise to be rejected'));
+      }, function(err) {
+        assert.instanceOf(err, errors.UnexpectedResponse);
+        assert.include(err.message, 'Trouble parsing response body as JSON');
+        assert.equal(err.body, body);
+        done();
+      }).catch(done);
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', body);
+      response.emit('end');
     });
 
     it('accepts a terminator for aborting requests', function(done) {
