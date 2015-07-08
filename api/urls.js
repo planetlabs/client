@@ -21,5 +21,6 @@ exports.API = API;
 exports.MOSAICS = join(API, 'mosaics', '');
 exports.SCENES = join(API, 'scenes', '');
 exports.WORKSPACES = join(API, 'workspaces', '');
+exports.LOGIN = join(API, 'auth', 'login');
 
 exports.join = join;
