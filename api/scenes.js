@@ -13,6 +13,9 @@ var util = require('./util');
  * @param {Object|string} scene An object with scene id and type properties.  If
  *     a string is provided, it is assumed to be the id, and the type will be
  *     set to 'ortho'.
+ * @param {Object} options Options.
+ * @param {boolean} options.augmentLinks Add API key to links for image
+ *     resources in the response.  False by default.
  * @return {Promise.<Object>} A promise that resolves to scene metadata or is
  *     rejected with any error.
  */
@@ -36,6 +39,9 @@ function get(scene, options) {
 /**
  * Get a collection of scene metadata based on a query.
  * @param {Object} query A query object.
+ * @param {Object} options Options.
+ * @param {boolean} options.augmentLinks Add API key to links for image
+ *     resources in the response.  False by default.
  * @return {Promise.<Page>} A promise that resolves to a page of scene
  *     metadata or is rejected with any error.
  */
