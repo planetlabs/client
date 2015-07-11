@@ -11,7 +11,8 @@ var url = require('url');
 
 var bole = require('bole');
 
-var auth = require('./auth');
+var assign = require('./util').assign;
+var authStore = require('./auth-store');
 var errors = require('./errors');
 
 var log = bole(path.basename(__filename, '.js'));
@@ -53,9 +54,14 @@ function parseConfig(config) {
     headers['content-type'] = 'application/json';
   }
 
-  var apiKey = auth.getKey();
-  if (apiKey && config.withCredentials !== false && !headers.authorization) {
-    headers.authorization = 'api-key ' + apiKey;
+  if (config.withCredentials !== false) {
+    var token = authStore.getToken();
+    var apiKey = authStore.getKey();
+    if (token) {
+      headers.authorization = 'Bearer ' + token;
+    } else if (apiKey) {
+      headers.authorization = 'api-key ' + apiKey;
+    }
   }
 
   var options = {
@@ -236,23 +242,18 @@ function get(config) {
 }
 
 /**
- * Simplified polyfill for ES6 Object.assign.
- * TODO: use 6to5 transform
- * @param {Object} target The target object.
- * @param {Object} src The source object(s).
- * @return {Object} The target object with source properties assigned.
- * @private
+ * Issue a POST request.
+ * @param {Object} config The request config.
+ * @return {Promise<Object>} A promise that resolves on a successful
+ *     response.  The object includes response and body properties, where the
+ *     body is a JSON decoded object representing the response body.  Any
+ *     non-200 status will result in a rejection.
  */
-function assign(target, src) {
-  for (var i = 1, ii = arguments.length; i < ii; ++i) {
-    src = arguments[i];
-    for (var key in src) {
-      target[key] = src[key];
-    }
-  }
-  return target;
+function post(config) {
+  return request(assign({method: 'POST'}, config));
 }
 
 exports.get = get;
+exports.post = post;
 exports.parseConfig = parseConfig;
 exports.request = request;

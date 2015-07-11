@@ -6,7 +6,7 @@ var stream = require('stream');
 var chai = require('chai');
 var sinon = require('sinon');
 
-var auth = require('../../api/auth');
+var authStore = require('../../api/auth-store');
 var errors = require('../../api/errors');
 var req = require('../../api/request');
 
@@ -36,7 +36,7 @@ describe('request', function() {
     http.request = httpRequest;
     https.request = httpsRequest;
     mockRequest = null;
-    auth.clear();
+    authStore.clear();
   });
 
   describe('request()', function() {
@@ -186,7 +186,9 @@ describe('request', function() {
   });
 
   describe('parseConfig()', function() {
-
+    // {api_key: 'my-api-key'}
+    var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +
+        'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
     var parseConfig = req.parseConfig;
     var defaultHeaders = {'accept': 'application/json'};
 
@@ -329,9 +331,20 @@ describe('request', function() {
       assert.deepEqual(parseConfig(config), options);
     });
 
+    it('adds authorization header with stored token', function() {
+      authStore.setToken(token);
+      var config = {
+        url: 'http://example.com/'
+      };
+      var options = parseConfig(config);
+
+      var headers = options.headers;
+      assert.equal(headers.authorization, 'Bearer ' + token);
+    });
+
     it('adds authorization header with stored API key', function() {
       var key = 'my-key';
-      auth.setKey(key);
+      authStore.setKey(key);
       var config = {
         url: 'http://example.com/'
       };
@@ -339,6 +352,18 @@ describe('request', function() {
 
       var headers = options.headers;
       assert.equal(headers.authorization, 'api-key ' + key);
+    });
+
+    it('prefers token to API key', function() {
+      authStore.setToken(token);
+      authStore.setKey('some-key');
+      var config = {
+        url: 'http://example.com/'
+      };
+      var options = parseConfig(config);
+
+      var headers = options.headers;
+      assert.equal(headers.authorization, 'Bearer ' + token);
     });
 
   });
