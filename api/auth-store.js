@@ -1,6 +1,7 @@
 /**
  * Memory store for API key and token.
  * @module auth-store
+ * @private
  */
 
 var jwtClaims = require('jwt-claims');
