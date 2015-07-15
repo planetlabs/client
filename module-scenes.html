@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-errors-AbortedRequest.html">AbortedRequest</a></li><li><a href="module-errors-ResponseError.html">ResponseError</a></li><li><a href="module-errors-Unauthorized.html">Unauthorized</a></li><li><a href="module-errors-UnexpectedResponse.html">UnexpectedResponse</a></li><li><a href="module-page-Page.html">Page</a><ul class='methods'><li data-type='method'><a href="module-page-Page.html#next">next</a></li><li data-type='method'><a href="module-page-Page.html#prev">prev</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-auth.html">auth</a><ul class='methods'><li data-type='method'><a href="module-auth.html#~clear">clear</a></li><li data-type='method'><a href="module-auth.html#~getKey">getKey</a></li><li data-type='method'><a href="module-auth.html#~setKey">setKey</a></li></ul></li><li><a href="module-mosaics.html">mosaics</a><ul class='methods'><li data-type='method'><a href="module-mosaics.html#~get">get</a></li><li data-type='method'><a href="module-mosaics.html#~search">search</a></li></ul></li><li><a href="module-quads.html">quads</a><ul class='methods'><li data-type='method'><a href="module-quads.html#~get">get</a></li><li data-type='method'><a href="module-quads.html#~search">search</a></li></ul></li><li><a href="module-scenes.html">scenes</a><ul class='methods'><li data-type='method'><a href="module-scenes.html#~get">get</a></li><li data-type='method'><a href="module-scenes.html#~search">search</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-errors-AbortedRequest.html">AbortedRequest</a></li><li><a href="module-errors-ResponseError.html">ResponseError</a></li><li><a href="module-errors-Unauthorized.html">Unauthorized</a></li><li><a href="module-errors-UnexpectedResponse.html">UnexpectedResponse</a></li><li><a href="module-page-Page.html">Page</a><ul class='methods'><li data-type='method'><a href="module-page-Page.html#next">next</a></li><li data-type='method'><a href="module-page-Page.html#prev">prev</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-auth.html">auth</a><ul class='methods'><li data-type='method'><a href="module-auth.html#~login">login</a></li><li data-type='method'><a href="module-auth.html#~logout">logout</a></li><li data-type='method'><a href="module-auth.html#~setKey">setKey</a></li></ul></li><li><a href="module-auth-store.html">auth-store</a><ul class='methods'><li data-type='method'><a href="module-auth-store.html#~clear">clear</a></li><li data-type='method'><a href="module-auth-store.html#~getKey">getKey</a></li><li data-type='method'><a href="module-auth-store.html#~getToken">getToken</a></li><li data-type='method'><a href="module-auth-store.html#~setKey">setKey</a></li><li data-type='method'><a href="module-auth-store.html#~setToken">setToken</a></li></ul></li><li><a href="module-mosaics.html">mosaics</a><ul class='methods'><li data-type='method'><a href="module-mosaics.html#~get">get</a></li><li data-type='method'><a href="module-mosaics.html#~search">search</a></li></ul></li><li><a href="module-quads.html">quads</a><ul class='methods'><li data-type='method'><a href="module-quads.html#~get">get</a></li><li data-type='method'><a href="module-quads.html#~search">search</a></li></ul></li><li><a href="module-scenes.html">scenes</a><ul class='methods'><li data-type='method'><a href="module-scenes.html#~get">get</a></li><li data-type='method'><a href="module-scenes.html#~search">search</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -144,7 +144,7 @@
 
     
 
-    <h4 class="name" id="~get"><span class="type-signature">(inner) </span>get<span class="signature">(scene)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
+    <h4 class="name" id="~get"><span class="type-signature">(inner) </span>get<span class="signature">(scene, options)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
 
     
 
@@ -209,6 +209,79 @@
             <td class="description last"><p>An object with scene id and type properties.  If
     a string is provided, it is assumed to be the id, and the type will be
     set to 'ortho'.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Options.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>augmentLinks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Add API key to links for image
+    resources in the response.  False by default.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -298,7 +371,7 @@
 
     
 
-    <h4 class="name" id="~search"><span class="type-signature">(inner) </span>search<span class="signature">(query)</span><span class="type-signature"> &rarr; {Promise.&lt;Page>}</span></h4>
+    <h4 class="name" id="~search"><span class="type-signature">(inner) </span>search<span class="signature">(query, options)</span><span class="type-signature"> &rarr; {Promise.&lt;Page>}</span></h4>
 
     
 
@@ -358,6 +431,79 @@
             
 
             <td class="description last"><p>A query object.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Options.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>augmentLinks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Add API key to links for image
+    resources in the response.  False by default.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
