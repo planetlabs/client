@@ -60,7 +60,7 @@ function runner(commandName) {
       stream: pretty
     });
 
-    if (!options.key) {
+    if (!options.key && !command.optionalKey) {
       log.error(
           'Provide your API key with the "key" option ' +
           'or the PL_API_KEY environment variable');

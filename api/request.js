@@ -52,6 +52,7 @@ function parseConfig(config) {
   }
   if (config.body) {
     headers['content-type'] = 'application/json';
+    headers['content-length'] = JSON.stringify(config.body).length;
   }
 
   if (config.withCredentials !== false) {
