@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
+var path = require('path');
+
 var bole = require('bole');
+var homedir = require('os-homedir');
 var pretty = require('bistre')();
 var yargs = require('yargs');
 
@@ -12,6 +15,15 @@ var version = require('../package.json').version;
 
 var levels = ['debug', 'info', 'warn', 'error'];
 var log = bole('planet');
+
+var configPath = path.join(homedir(), '.planet.json');
+
+var planet;
+try {
+  planet = require(configPath);
+} catch (_) {
+  planet = {};
+}
 
 var parser = yargs.usage('Usage: $0 <command> [options]')
   .options({
@@ -36,7 +48,7 @@ var commonOptions = {
   'key': {
     alias: 'k',
     description: 'API key (can also be provided with a PL_API_KEY environment variable)',
-    default: process.env.PL_API_KEY
+    default: process.env.PL_API_KEY || planet.key
   }
 };
 
