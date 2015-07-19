@@ -7,7 +7,7 @@ var prompt = require('prompt');
 var auth = require('../api/auth');
 var authStore = require('../api/auth-store');
 
-var file = path.join(homedir(), '.planet');
+var file = path.join(homedir(), '.planet.json');
 
 /**
  * Options for the find-scenes command.
@@ -68,8 +68,9 @@ function promptForMissing(opts) {
 }
 
 function writeKey(key) {
+  var body = JSON.stringify({key: key}, null, 2) + '\n';
   return new Promise(function(resolve, reject) {
-    fs.writeFile(file, key, {flag: 'wx'}, function(err) {
+    fs.writeFile(file, body, {flag: 'wx'}, function(err) {
       if (err) {
         reject(err);
         return;
