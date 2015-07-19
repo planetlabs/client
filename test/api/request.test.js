@@ -7,6 +7,7 @@ var chai = require('chai');
 var sinon = require('sinon');
 
 var authStore = require('../../api/auth-store');
+var assign = require('../../api/util').assign;
 var errors = require('../../api/errors');
 var req = require('../../api/request');
 
@@ -190,7 +191,7 @@ describe('request', function() {
     var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +
         'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
     var parseConfig = req.parseConfig;
-    var defaultHeaders = {'accept': 'application/json'};
+    var defaultHeaders = {accept: 'application/json'};
 
     it('generates request options from a URL', function() {
       var config = {
@@ -235,6 +236,32 @@ describe('request', function() {
         method: 'GET',
         path: '/',
         headers: defaultHeaders
+      };
+
+      assert.deepEqual(parseConfig(config), options);
+    });
+
+    it('accepts a body that can be serialized to JSON', function() {
+      var config = {
+        url: 'http://example.com/page',
+        method: 'POST',
+        body: {
+          foo: 'bar'
+        }
+      };
+
+      var headers = assign({
+        'content-type': 'application/json',
+        'content-length': 13
+      }, defaultHeaders);
+
+      var options = {
+        protocol: 'http:',
+        hostname: 'example.com',
+        port: '80',
+        method: 'POST',
+        path: '/page',
+        headers: headers
       };
 
       assert.deepEqual(parseConfig(config), options);
