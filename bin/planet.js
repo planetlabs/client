@@ -13,8 +13,9 @@ var errors = require('../api/errors');
 var util = require('../cli/util');
 var version = require('../package.json').version;
 
+var name = path.basename(__filename, '.js');
 var levels = ['debug', 'info', 'warn', 'error'];
-var log = bole('planet');
+var log = bole(name);
 
 var configPath = path.join(homedir(), '.planet.json');
 
@@ -52,8 +53,8 @@ var commonOptions = {
   }
 };
 
-for (var name in cli) {
-  parser.command(name, cli[name].description, runner(name));
+for (var cmd in cli) {
+  parser.command(cmd, cli[cmd].description, runner(cmd));
 }
 
 function runner(commandName) {
@@ -74,8 +75,9 @@ function runner(commandName) {
 
     if (!options.key && !command.optionalKey) {
       log.error(
-          'Provide your API key with the "key" option ' +
-          'or the PL_API_KEY environment variable');
+          'Provide your API key with the "key" option or the PL_API_KEY ' +
+          'environment variable.  Run `planet init` to store your key for ' +
+          'future use.');
       process.exit(1);
     }
     auth.setKey(options.key);
