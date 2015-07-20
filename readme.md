@@ -36,6 +36,10 @@ To enable this every time you start a new shell, you can append the output of `p
 
     planet completion >> ~/.bashrc
 
+The CLI will be fully documented when it is a bit more stable.  For now, you can get a preview of what's available with this video:
+
+[![screen shot](https://raw.githubusercontent.com/wiki/planetlabs/planet-client-js/planet-client.png)](https://vimeo.com/134018559)
+
 ### Contributing
 
 To get set up, clone the repository and install the development dependencies:
