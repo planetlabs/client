@@ -227,7 +227,7 @@ describe('request', function() {
     });
 
     it('works with a url.parse() response', function() {
-      var config = url.parse('https://example.com', true);
+      var config = url.parse('https://example.com/page/1', true);
       config.query.foo = 'bar';
 
       var options = {
@@ -235,7 +235,7 @@ describe('request', function() {
         hostname: 'example.com',
         port: '443',
         method: 'GET',
-        path: '/?foo=bar',
+        path: '/page/1?foo=bar',
         headers: defaultHeaders
       };
 
