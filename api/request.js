@@ -29,7 +29,7 @@ var defaultHeaders = {
  * @private
  */
 function parseConfig(config) {
-  var base = config.url ? url.parse(config.url, true) : {};
+  var base = config.url ? url.parse(config.url, true) : {query: {}};
   if (config.query) {
     config.path = url.format({
       pathname: base.pathname || '/',
