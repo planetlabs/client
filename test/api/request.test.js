@@ -2,6 +2,7 @@
 var http = require('http');
 var https = require('https');
 var stream = require('stream');
+var url = require('url');
 
 var chai = require('chai');
 var sinon = require('sinon');
@@ -219,6 +220,22 @@ describe('request', function() {
         port: '443',
         method: 'GET',
         path: '/',
+        headers: defaultHeaders
+      };
+
+      assert.deepEqual(parseConfig(config), options);
+    });
+
+    it('works with a url.parse() response', function() {
+      var config = url.parse('https://example.com', true);
+      config.query.foo = 'bar';
+
+      var options = {
+        protocol: 'https:',
+        hostname: 'example.com',
+        port: '443',
+        method: 'GET',
+        path: '/?foo=bar',
         headers: defaultHeaders
       };
 
