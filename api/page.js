@@ -20,21 +20,23 @@ function Page(data, factory) {
   /**
    * Get the previous page.  If there is no previous page, `previous` will be
    *     `null`.
+   * @param {Object} options Any request options.
    * @return {Promise.<Page>} The previous page.
    * @method
    */
-  this.prev = !links.prev ? null : function() {
-    return factory(url.parse(links.prev, true).query);
+  this.prev = !links.prev ? null : function(options) {
+    return factory(url.parse(links.prev, true).query, options);
   };
 
   /**
    * Get the next page.
+   * @param {Object} options Any request options.
    * @return {Promise.<Page>} The next page.  If there is no next page,
    *     `next` will be `null`.
    * @method
    */
-  this.next = !links.next ? null : function() {
-    return factory(url.parse(links.next, true).query);
+  this.next = !links.next ? null : function(options) {
+    return factory(url.parse(links.next, true).query, options);
   };
 
   this.data = data;
