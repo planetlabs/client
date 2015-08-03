@@ -16,6 +16,8 @@ var util = require('./util');
  * @param {Object} options Options.
  * @param {boolean} options.augmentLinks Add API key to links for image
  *     resources in the response.  False by default.
+ * @param {function(function())} options.terminator A function that is called
+ *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object>} A promise that resolves to scene metadata or is
  *     rejected with any error.
  */
@@ -27,8 +29,11 @@ function get(scene, options) {
       type: 'ortho'
     };
   }
-  var url = urls.join(urls.SCENES, scene.type, scene.id);
-  return request.get(url).then(function(res) {
+  var config = {
+    url: urls.join(urls.SCENES, scene.type, scene.id),
+    terminator: options.terminator
+  };
+  return request.get(config).then(function(res) {
     if (options.augmentLinks !== false) {
       util.augmentSceneLinks(res.body);
     }
@@ -42,6 +47,8 @@ function get(scene, options) {
  * @param {Object} options Options.
  * @param {boolean} options.augmentLinks Add API key to links for image
  *     resources in the response.  False by default.
+ * @param {function(function())} options.terminator A function that is called
+ *     with a function that can be called back to terminate the request.
  * @return {Promise.<Page>} A promise that resolves to a page of scene
  *     metadata or is rejected with any error.
  */
@@ -57,7 +64,8 @@ function search(query, options) {
 
   var config = {
     url: urls.join(urls.SCENES, type, ''),
-    query: query
+    query: query,
+    terminator: options.terminator
   };
   return request.get(config).then(function(res) {
     if (options.augmentLinks !== false) {
