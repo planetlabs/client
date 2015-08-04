@@ -184,4 +184,68 @@ describe('util', function() {
 
   });
 
+  describe('augmentMosaicLinks()', function() {
+    var mosaic;
+
+    beforeEach(function() {
+      mosaic = util.assign({}, {
+        name: 'color_balance_mosaic',
+        links: {
+          quads: 'https://example.com/mosaics/one/quads/',
+          self: 'https://example.com/mosaics/one',
+          tiles: 'https://s{0-3}.example.com/v0/mosaics/one/{z}/{x}/{y}.png',
+          quadmap: 'https://example.com/mosaics/one/quad-map.png'
+        },
+        'first_acquired': '2014-03-20T15:57:11+00:00',
+        datatype: 'byte',
+        'quad_size': 4096,
+        title: 'A Mosaic',
+        'coordinate_system': 'EPSG:3857',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [[-180, -90], [-180, 90], [180, 90], [180, -90], [-180, -90]]
+          ]
+        },
+        'last_acquired': '2015-07-20T02:11:31.947579+00:00',
+        'scene_type': 'ortho',
+        'quad_pattern': 'L{glevel:d}-{tilex:04d}E-{tiley:04d}N',
+        level: 15,
+        resolution: 4.77731426716
+      });
+    });
+
+    afterEach(function() {
+      authStore.clear();
+    });
+
+    it('adds a API key from stored token to data URLs', function() {
+      // {api_key: 'my-api-key'}
+      var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +
+          'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
+      authStore.setToken(token);
+      var key = authStore.getKey();
+
+      var augmented = util.augmentMosaicLinks(mosaic);
+      assert.equal(augmented.links.tiles,
+          'https://s{0-3}.example.com/v0/mosaics/one/{z}/{x}/{y}.png?api_key=' +
+          key);
+      assert.equal(augmented.links.quadmap,
+          'https://example.com/mosaics/one/quad-map.png?api_key=' + key);
+    });
+
+    it('adds a stored API key to data URLs', function() {
+      var key = 'my-key';
+      authStore.setKey(key);
+
+      var augmented = util.augmentMosaicLinks(mosaic);
+      assert.equal(augmented.links.tiles,
+          'https://s{0-3}.example.com/v0/mosaics/one/{z}/{x}/{y}.png?api_key=' +
+          key);
+      assert.equal(augmented.links.quadmap,
+          'https://example.com/mosaics/one/quad-map.png?api_key=' + key);
+    });
+
+  });
+
 });
