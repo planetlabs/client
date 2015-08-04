@@ -54,6 +54,9 @@ function augmentQuadLinks(quad) {
     if (links.full) {
       links.full = addQueryParams(links.full, {'api_key': key});
     }
+    if (links.thumbnail) {
+      links.thumbnail = addQueryParams(links.thumbnail, {'api_key': key});
+    }
   }
 
   return quad;
