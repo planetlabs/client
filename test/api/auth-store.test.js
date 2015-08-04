@@ -23,6 +23,17 @@ describe('authStore', function() {
       assert.equal(authStore.getKey(), 'my-api-key');
     });
 
+    it('throws if the token does not contain an api_key claim', function() {
+      // {foo: 'bar'}
+      var bogus = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmb28iOiJiYXIifQ.' +
+          'yPmf5QFV26W-3ldVCrsvRdnecy7QjA0fnCWCDLDZ-M4';
+
+      function call() {
+        authStore.setToken(bogus);
+      }
+      assert.throws(call, Error, 'Expected api_key in token payload');
+    });
+
   });
 
   describe('getToken()', function() {
