@@ -15,7 +15,7 @@ var util = require('./util');
  *     set to 'ortho'.
  * @param {Object} options Options.
  * @param {boolean} options.augmentLinks Add API key to links for image
- *     resources in the response.  False by default.
+ *     resources in the response.  True by default.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object>} A promise that resolves to scene metadata or is
@@ -46,7 +46,7 @@ function get(scene, options) {
  * @param {Object} query A query object.
  * @param {Object} options Options.
  * @param {boolean} options.augmentLinks Add API key to links for image
- *     resources in the response.  False by default.
+ *     resources in the response.  True by default.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Page>} A promise that resolves to a page of scene
