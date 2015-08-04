@@ -248,4 +248,74 @@ describe('util', function() {
 
   });
 
+  describe('assign()', function() {
+
+    it('assigns source properties to target object', function() {
+      var source = {
+        foo: 'bar'
+      };
+      var target = {
+        num: 42
+      };
+
+      util.assign(target, source);
+      assert.deepEqual(target, {
+        foo: 'bar',
+        num: 42
+      });
+    });
+
+    it('returns the target object', function() {
+      var target = {};
+
+      var got = util.assign(target, {foo: 'bar'});
+      assert.equal(got, target);
+    });
+
+    it('overwrites target properties', function() {
+      var target = {
+        foo: 'bar'
+      };
+
+      util.assign(target, {foo: 'bam'});
+      assert.equal(target.foo, 'bam');
+    });
+
+    it('works with multiple sources', function() {
+      var target = {
+        foo: 'bar'
+      };
+      var source1 = {
+        foo1: 'bar1'
+      };
+      var source2 = {
+        foo2: 'bar2'
+      };
+
+      util.assign(target, source1, source2);
+      assert.deepEqual(target, {
+        foo: 'bar',
+        foo1: 'bar1',
+        foo2: 'bar2'
+      });
+    });
+
+    it('prefers later sources, does not modify earlier ones', function() {
+      var target = {
+        foo: 'bar'
+      };
+      var source1 = {
+        foo: 'bam'
+      };
+      var source2 = {
+        foo: 'baz'
+      };
+
+      util.assign(target, source1, source2);
+      assert.deepEqual(target, {foo: 'baz'});
+      assert.deepEqual(source1, {foo: 'bam'});
+    });
+
+  });
+
 });
