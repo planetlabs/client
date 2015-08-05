@@ -352,6 +352,48 @@ describe('api/request', function() {
 
   });
 
+  describe('post()', function() {
+
+    it('calls request() with method set to POST', function() {
+      req.post({url: 'http://example.com'});
+      assert.equal(http.request.callCount, 1);
+      var call = http.request.getCall(0);
+      assert.lengthOf(call.args, 2);
+      var config = call.args[0];
+      assert.equal(config.method, 'POST');
+      assert.equal(config.hostname, 'example.com');
+    });
+
+  });
+
+  describe('put()', function() {
+
+    it('calls request() with method set to PUT', function() {
+      req.put({url: 'http://example.com'});
+      assert.equal(http.request.callCount, 1);
+      var call = http.request.getCall(0);
+      assert.lengthOf(call.args, 2);
+      var config = call.args[0];
+      assert.equal(config.method, 'PUT');
+      assert.equal(config.hostname, 'example.com');
+    });
+
+  });
+
+  describe('del()', function() {
+
+    it('calls request() with method set to DELETE', function() {
+      req.del({url: 'http://example.com'});
+      assert.equal(http.request.callCount, 1);
+      var call = http.request.getCall(0);
+      assert.lengthOf(call.args, 2);
+      var config = call.args[0];
+      assert.equal(config.method, 'DELETE');
+      assert.equal(config.hostname, 'example.com');
+    });
+
+  });
+
   describe('parseConfig()', function() {
     // {api_key: 'my-api-key'}
     var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +

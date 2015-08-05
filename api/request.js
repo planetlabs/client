@@ -254,7 +254,33 @@ function post(config) {
   return request(assign({method: 'POST'}, config));
 }
 
+/**
+ * Issue a PUT request.
+ * @param {Object} config The request config.
+ * @return {Promise<Object>} A promise that resolves on a successful
+ *     response.  The object includes response and body properties, where the
+ *     body is a JSON decoded object representing the response body.  Any
+ *     non-200 status will result in a rejection.
+ */
+function put(config) {
+  return request(assign({method: 'PUT'}, config));
+}
+
+/**
+ * Issue a DELETE request.
+ * @param {Object} config The request config.
+ * @return {Promise<Object>} A promise that resolves on a successful
+ *     response.  The object includes response and body properties, where the
+ *     body is a JSON decoded object representing the response body.  Any
+ *     non-200 status will result in a rejection.
+ */
+function del(config) {
+  return request(assign({method: 'DELETE'}, config));
+}
+
 exports.get = get;
 exports.post = post;
+exports.put = put;
+exports.del = del;
 exports.parseConfig = parseConfig;
 exports.request = request;
