@@ -40,9 +40,6 @@ describe('auth', function() {
     https.request = httpsRequest;
     mockRequest = null;
     authStore.clear();
-  });
-
-  afterEach(function() {
     auth.logout();
   });
 
