@@ -21,10 +21,25 @@ ResponseError.prototype = new Error();
 ResponseError.prototype.name = 'ResponseError';
 
 /**
- * An error that occurs when the client is unathorized to make the request.
+ * The request was bad (400).
  * @param {string} message Error message.
  * @param {XMLHttpRequest} response The response.
- * @param {string} body Any parsed response body.
+ * @param {Object} body Any parsed response body (as JSON).
+ * @extends {ResponseError}
+ * @constructor
+ */
+function BadRequest(message, response, body) {
+  ResponseError.apply(this, arguments);
+}
+
+BadRequest.prototype = new ResponseError();
+BadRequest.prototype.name = 'BadRequest';
+
+/**
+ * The request requires user authentication (401).
+ * @param {string} message Error message.
+ * @param {XMLHttpRequest} response The response.
+ * @param {Object} body Any parsed response body (as JSON).
  * @extends {ResponseError}
  * @constructor
  */
@@ -36,7 +51,22 @@ Unauthorized.prototype = new ResponseError();
 Unauthorized.prototype.name = 'Unauthorized';
 
 /**
- * An error that occurs the API returns an unexpected response.
+ * The client is forbidden from making the request (403).
+ * @param {string} message Error message.
+ * @param {XMLHttpRequest} response The response.
+ * @param {Object} body Any parsed response body (as JSON).
+ * @extends {ResponseError}
+ * @constructor
+ */
+function Forbidden(message, response, body) {
+  ResponseError.apply(this, arguments);
+}
+
+Forbidden.prototype = new ResponseError();
+Forbidden.prototype.name = 'Forbidden';
+
+/**
+ * The API returns an unexpected response.
  * @param {string} message Error message.
  * @param {XMLHttpRequest} response The response.
  * @param {string} body Any parsed response body.
@@ -63,6 +93,8 @@ AbortedRequest.prototype = new Error();
 AbortedRequest.prototype.name = 'AbortedRequest';
 
 exports.ResponseError = ResponseError;
+exports.BadRequest = BadRequest;
 exports.Unauthorized = Unauthorized;
+exports.Forbidden = Forbidden;
 exports.UnexpectedResponse = UnexpectedResponse;
 exports.AbortedRequest = AbortedRequest;
