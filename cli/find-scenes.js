@@ -205,5 +205,8 @@ exports.description = 'Find scenes';
 exports.main = main;
 exports.options = options;
 
+exports.fetch = fetch;
 exports.parseAcquired = parseAcquired;
 exports.parseWhere = parseWhere;
+exports.resolveIntersects = resolveIntersects;
+exports.resolveQuery = resolveQuery;

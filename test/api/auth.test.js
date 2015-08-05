@@ -9,8 +9,9 @@ var sinon = require('sinon');
 
 var auth = require('../../api/auth');
 var authStore = require('../../api/auth-store');
+var errors = require('../../api/errors');
 
-describe('auth', function() {
+describe('api/auth', function() {
 
   var httpRequest = http.request;
   var httpsRequest = https.request;
@@ -39,9 +40,6 @@ describe('auth', function() {
     https.request = httpsRequest;
     mockRequest = null;
     authStore.clear();
-  });
-
-  afterEach(function() {
     auth.logout();
   });
 
@@ -78,7 +76,7 @@ describe('auth', function() {
         assert.equal(authStore.getToken(), token);
         assert.equal(authStore.getKey(), 'my-api-key');
         done();
-      }, done);
+      }).catch(done);
 
       assert.equal(https.request.callCount, 1);
       var args = https.request.getCall(0).args;
@@ -89,6 +87,51 @@ describe('auth', function() {
       response.emit('end');
     });
 
+    it('rejects if body does not contain a token', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 200;
+      var body = {foo: 'bar'};
+
+      var email = 'user@email.com';
+      var password = 'psswd';
+      auth.login(email, password).then(function(success) {
+        done(new Error('Expected rejection'));
+      }, function(err) {
+        assert.instanceOf(err, errors.UnexpectedResponse);
+        done();
+      }).catch(done);
+
+      assert.equal(https.request.callCount, 1);
+      var args = https.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', JSON.stringify(body));
+      response.emit('end');
+    });
+
+    it('rejects if body contains a bogus token', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 200;
+      var body = {token: 'bogus'};
+
+      var email = 'user@email.com';
+      var password = 'psswd';
+      auth.login(email, password).then(function(success) {
+        done(new Error('Expected rejection'));
+      }, function(err) {
+        assert.instanceOf(err, errors.UnexpectedResponse);
+        done();
+      }).catch(done);
+
+      assert.equal(https.request.callCount, 1);
+      var args = https.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', JSON.stringify(body));
+      response.emit('end');
+    });
   });
 
   describe('setKey()', function() {

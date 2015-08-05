@@ -129,7 +129,7 @@ function createResponseHandler(resolve, reject, info) {
       var body = null;
       var err = null;
       if (status === 401) {
-        err = new errors.Unauthorized('Unauthorized', response, body);
+        err = new errors.Unauthorized('Unauthorized', response, data);
       } else if (!(status >= 200 && status < 300)) {
         err = new errors.UnexpectedResponse('Unexpected response status: ' +
             status, response, data);

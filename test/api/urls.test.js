@@ -4,7 +4,7 @@ var assert = require('chai').assert;
 
 var urls = require('../../api/urls');
 
-describe('urls', function() {
+describe('api/urls', function() {
 
   describe('join()', function() {
 

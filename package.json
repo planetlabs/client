@@ -13,7 +13,8 @@
   "main": "api/index.js",
   "scripts": {
     "pretest": "eslint bin examples api cli test",
-    "test": "mocha --recursive test",
+    "test": "nyc mocha --recursive test",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test-debug": "mocha --debug-brk --recursive test",
     "start": "watchy --watch bin,examples,api,cli,test -- npm test",
     "postpublish": "npm run publish-doc",
@@ -25,12 +26,14 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
+    "coveralls": "^2.11.3",
     "eslint": "^0.22.1",
     "eslint-config-planet": "^2.0.0",
     "gh-pages": "^0.3.1",
     "jsdoc": "^3.3.2",
     "minami": "^1.1.0",
     "mocha": "^2.2.5",
+    "nyc": "^3.1.0",
     "sinon": "^1.15.3",
     "watchy": "^0.6.2"
   },

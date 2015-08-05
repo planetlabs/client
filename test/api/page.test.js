@@ -6,7 +6,7 @@ var sinon = require('sinon');
 
 var Page = require('../../api/page');
 
-describe('Page', function() {
+describe('api/page', function() {
 
   var spy;
   beforeEach(function() {
@@ -68,6 +68,67 @@ describe('Page', function() {
 
       var options = {};
       page.next(options);
+      assert.equal(spy.callCount, 1);
+      var call = spy.getCall(0);
+      assert.equal(call.args[1], options);
+    });
+
+  });
+
+  describe('#prev()', function() {
+
+    it('is only assigned if data includes prev link', function() {
+      var query = {
+        foo: 'bar',
+        num: '42'
+      };
+
+      var data = {
+        links: {
+          next: url.format({
+            query: query
+          })
+        }
+      };
+
+      var page = new Page(data, spy);
+      assert.isNull(page.prev);
+    });
+
+    it('calls the factory with a query from the prev url', function() {
+      var query = {
+        foo: 'bar',
+        num: '42'
+      };
+
+      var data = {
+        links: {
+          prev: url.format({
+            query: query
+          })
+        }
+      };
+
+      var page = new Page(data, spy);
+      assert.typeOf(page.prev, 'function');
+      page.prev();
+      assert.equal(spy.callCount, 1);
+      var call = spy.getCall(0);
+      assert.deepEqual(call.args[0], query);
+    });
+
+    it('passes along options as second arg to factory', function() {
+      var data = {
+        links: {
+          prev: 'http://example.com'
+        }
+      };
+
+      var page = new Page(data, spy);
+      assert.typeOf(page.prev, 'function');
+
+      var options = {};
+      page.prev(options);
       assert.equal(spy.callCount, 1);
       var call = spy.getCall(0);
       assert.equal(call.args[1], options);

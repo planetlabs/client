@@ -38,7 +38,7 @@ To enable this every time you start a new shell, you can append the output of `p
 
 The CLI will be fully documented when it is a bit more stable.  For now, you can get a preview of what's available with this video:
 
-[![screen shot](https://raw.githubusercontent.com/wiki/planetlabs/planet-client-js/planet-client.png)](https://vimeo.com/134018559)
+[![screen shot][video-image]][video-url]
 
 ### Contributing
 
@@ -56,7 +56,9 @@ During development, you can start a file watcher that runs the linter and tests 
 
     npm start
 
-[![Current Status](https://travis-ci.org/planetlabs/planet-client-js.svg?branch=master)](https://travis-ci.org/planetlabs/planet-client-js)
+
+[![Build Status][travis-image]][travis-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 
 ### License
 
@@ -65,3 +67,10 @@ During development, you can start a file watcher that runs the linter and tests 
 Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0) (the "License"); you may not use this file except in compliance with the License.
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See [the License](http://www.apache.org/licenses/LICENSE-2.0) for the specific language governing permissions and limitations under the License.
+
+[video-url]: https://vimeo.com/134018559
+[video-image]: https://raw.githubusercontent.com/wiki/planetlabs/planet-client-js/planet-client.png
+[travis-url]: https://travis-ci.org/planetlabs/planet-client-js
+[travis-image]: https://img.shields.io/travis/planetlabs/planet-client-js.svg
+[coveralls-url]: https://coveralls.io/github/planetlabs/planet-client-js
+[coveralls-image]: https://img.shields.io/coveralls/planetlabs/planet-client-js.svg

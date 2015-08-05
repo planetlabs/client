@@ -11,11 +11,12 @@ var authStore = require('../../api/auth-store');
 var assign = require('../../api/util').assign;
 var errors = require('../../api/errors');
 var req = require('../../api/request');
+var util = require('../../api/util');
 
 chai.config.truncateThreshold = 0;
 var assert = chai.assert;
 
-describe('request', function() {
+describe('api/request', function() {
 
   var httpRequest = http.request;
   var httpsRequest = https.request;
@@ -85,7 +86,7 @@ describe('request', function() {
         assert.equal(obj.response, response);
         assert.deepEqual(obj.body, body);
         done();
-      }, done);
+      }).catch(done);
 
       assert.equal(http.request.callCount, 1);
       var args = http.request.getCall(0).args;
@@ -94,6 +95,40 @@ describe('request', function() {
       callback(response);
       response.emit('data', JSON.stringify(body));
       response.emit('end');
+    });
+
+    it('follows location header on 302', function(done) {
+      var firstResponse = new stream.Readable();
+      firstResponse.statusCode = 302;
+      firstResponse.headers = {
+        location: 'https://redirect.com'
+      };
+
+      var secondResponse = new stream.Readable();
+      secondResponse.statusCode = 200;
+      var body = {
+        foo: 'bar'
+      };
+
+      var promise = request({
+        url: 'https://example.com'
+      });
+      promise.then(function(obj) {
+        assert.equal(obj.response, secondResponse);
+        assert.deepEqual(obj.body, body);
+        done();
+      }).catch(done);
+
+      assert.equal(https.request.callCount, 1);
+      var firstCallback = https.request.getCall(0).args[1];
+      firstCallback(firstResponse);
+      firstResponse.emit('end');
+
+      assert.equal(https.request.callCount, 2);
+      var secondCallback = https.request.getCall(1).args[1];
+      secondCallback(secondResponse);
+      secondResponse.emit('data', JSON.stringify(body));
+      secondResponse.emit('end');
     });
 
     it('resolves before parsing body if stream is true', function(done) {
@@ -111,7 +146,33 @@ describe('request', function() {
         assert.equal(obj.response, response);
         assert.isNull(obj.body);
         done();
-      }, done);
+      }).catch(done);
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', JSON.stringify(body));
+      response.emit('end');
+    });
+
+    it('rejects on non 2xx if stream is true', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 502;
+      var body = 'too much request';
+
+      var promise = request({
+        url: 'http://example.com',
+        stream: true
+      });
+      promise.then(function(obj) {
+        done(new Error('Expected rejection'));
+      }, function(err) {
+        assert.instanceOf(err, errors.UnexpectedResponse);
+        assert.include(err.message, 'Unexpected response status: 502');
+        done();
+      }).catch(done);
 
       assert.equal(http.request.callCount, 1);
       var args = http.request.getCall(0).args;
@@ -146,6 +207,54 @@ describe('request', function() {
       response.emit('end');
     });
 
+    it('rejects for non 2xx response', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 500;
+      var body = 'server error';
+
+      var promise = request({url: 'http://example.com'});
+      promise.then(function(obj) {
+        done(new Error('Expected promise to be rejected'));
+      }, function(err) {
+        assert.instanceOf(err, errors.UnexpectedResponse);
+        assert.include(err.message, 'Unexpected response status: 500');
+        assert.equal(err.body, body);
+        done();
+      }).catch(done);
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', body);
+      response.emit('end');
+    });
+
+    it('rejects with Unauthorized for 401', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 401;
+      var body = 'unauthorized';
+
+      var promise = request({url: 'http://example.com'});
+      promise.then(function(obj) {
+        done(new Error('Expected promise to be rejected'));
+      }, function(err) {
+        assert.instanceOf(err, errors.Unauthorized);
+        assert.include(err.message, 'Unauthorized');
+        assert.equal(err.body, body);
+        done();
+      }).catch(done);
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', body);
+      response.emit('end');
+    });
+
     it('accepts a terminator for aborting requests', function(done) {
       var promise = request({
         url: 'http//example.com',
@@ -160,6 +269,62 @@ describe('request', function() {
         assert.equal(mockRequest.abort.callCount, 1);
         done();
       });
+    });
+
+    it('calls request.xhr.abort() if request.abort is absent', function(done) {
+      var promise = request({
+        url: 'http//example.com',
+        terminator: function(abort) {
+          setTimeout(abort, 10);
+        }
+      });
+
+      delete mockRequest.abort;
+      mockRequest.xhr = {
+        abort: sinon.spy()
+      };
+
+      promise.then(function() {
+        done(new Error('Expected promise to be rejected'));
+      }).catch(function(err) {
+        assert.instanceOf(err, errors.AbortedRequest);
+        assert.equal(mockRequest.xhr.abort.callCount, 1);
+        done();
+      });
+    });
+
+    it('allows termination on partial response', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 200;
+      var body = 'partial body';
+
+      var promise = request({
+        url: 'http//example.com',
+        terminator: function(abort) {
+          setTimeout(abort, 10);
+        }
+      });
+
+      var rejected = false;
+      promise.then(function() {
+        done(new Error('Expected promise to be rejected'));
+      }).catch(function(err) {
+        rejected = true;
+        assert.instanceOf(err, errors.AbortedRequest);
+        assert.equal(mockRequest.abort.callCount, 1);
+      });
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', body);
+      setTimeout(function() {
+        response.emit('end');
+        assert.equal(rejected, true);
+        done();
+      }, 20);
     });
 
   });
@@ -205,6 +370,25 @@ describe('request', function() {
         method: 'GET',
         path: '/',
         headers: defaultHeaders
+      };
+
+      assert.deepEqual(parseConfig(config), options);
+    });
+
+    it('adds user provided headers', function() {
+      var config = {
+        url: 'http://example.com',
+        headers: {
+          foo: 'bar'
+        }
+      };
+      var options = {
+        protocol: 'http:',
+        hostname: 'example.com',
+        port: '80',
+        method: 'GET',
+        path: '/',
+        headers: util.assign({}, defaultHeaders, config.headers)
       };
 
       assert.deepEqual(parseConfig(config), options);
