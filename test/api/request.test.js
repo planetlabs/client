@@ -86,7 +86,7 @@ describe('request', function() {
         assert.equal(obj.response, response);
         assert.deepEqual(obj.body, body);
         done();
-      }, done);
+      }).catch(done);
 
       assert.equal(http.request.callCount, 1);
       var args = http.request.getCall(0).args;
@@ -117,7 +117,7 @@ describe('request', function() {
         assert.equal(obj.response, secondResponse);
         assert.deepEqual(obj.body, body);
         done();
-      }, done);
+      }).catch(done);
 
       assert.equal(https.request.callCount, 1);
       var firstCallback = https.request.getCall(0).args[1];
@@ -146,7 +146,7 @@ describe('request', function() {
         assert.equal(obj.response, response);
         assert.isNull(obj.body);
         done();
-      }, done);
+      }).catch(done);
 
       assert.equal(http.request.callCount, 1);
       var args = http.request.getCall(0).args;
@@ -172,7 +172,7 @@ describe('request', function() {
         assert.instanceOf(err, errors.UnexpectedResponse);
         assert.include(err.message, 'Unexpected response status: 502');
         done();
-      });
+      }).catch(done);
 
       assert.equal(http.request.callCount, 1);
       var args = http.request.getCall(0).args;

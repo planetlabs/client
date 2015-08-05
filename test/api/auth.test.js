@@ -76,7 +76,7 @@ describe('auth', function() {
         assert.equal(authStore.getToken(), token);
         assert.equal(authStore.getKey(), 'my-api-key');
         done();
-      }, done);
+      }).catch(done);
 
       assert.equal(https.request.callCount, 1);
       var args = https.request.getCall(0).args;
@@ -99,7 +99,7 @@ describe('auth', function() {
       }, function(err) {
         assert.instanceOf(err, errors.UnexpectedResponse);
         done();
-      });
+      }).catch(done);
 
       assert.equal(https.request.callCount, 1);
       var args = https.request.getCall(0).args;
@@ -122,7 +122,7 @@ describe('auth', function() {
       }, function(err) {
         assert.instanceOf(err, errors.UnexpectedResponse);
         done();
-      });
+      }).catch(done);
 
       assert.equal(https.request.callCount, 1);
       var args = https.request.getCall(0).args;
