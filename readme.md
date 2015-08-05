@@ -73,4 +73,4 @@ Unless required by applicable law or agreed to in writing, software distributed 
 [travis-url]: https://travis-ci.org/planetlabs/planet-client-js
 [travis-image]: https://img.shields.io/travis/planetlabs/planet-client-js.svg
 [coveralls-url]: https://coveralls.io/github/planetlabs/planet-client-js
-[coveralls-image]: https://img.shields.io/coveralls/planetlabs/planet-client-js.svg
+[coveralls-image]: https://coveralls.io/repos/planetlabs/planet-client-js/badge.svg?branch=master&service=github
