@@ -13,7 +13,11 @@ var API = require('./config').API_URL;
  */
 function join() {
   return Array.prototype.map.call(arguments, function(part) {
-    return part.replace(/^\/?(.*?)\/?$/, '$1');
+    if (!(typeof part === 'string' || typeof part === 'number')) {
+      throw new Error(
+          'join must be called with strings or numbers, got: ' + part);
+    }
+    return String(part).replace(/^\/?(.*?)\/?$/, '$1');
   }).join('/');
 }
 
