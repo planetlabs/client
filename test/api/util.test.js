@@ -189,7 +189,7 @@ describe('api/util', function() {
 
     beforeEach(function() {
       mosaic = util.assign({}, {
-        name: 'color_balance_mosaic',
+        name: 'one',
         links: {
           quads: 'https://example.com/mosaics/one/quads/',
           self: 'https://example.com/mosaics/one',
