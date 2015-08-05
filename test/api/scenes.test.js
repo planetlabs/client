@@ -9,7 +9,7 @@ var scenes = require('../../api/scenes');
 var urls = require('../../api/urls');
 var util = require('../../api/util');
 
-describe('scenes', function() {
+describe('api/scenes', function() {
 
   var get = request.get;
   afterEach(function() {

@@ -16,7 +16,7 @@ var util = require('../../api/util');
 chai.config.truncateThreshold = 0;
 var assert = chai.assert;
 
-describe('request', function() {
+describe('api/request', function() {
 
   var httpRequest = http.request;
   var httpsRequest = https.request;

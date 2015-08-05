@@ -6,7 +6,7 @@ var sinon = require('sinon');
 
 var Page = require('../../api/page');
 
-describe('Page', function() {
+describe('api/page', function() {
 
   var spy;
   beforeEach(function() {

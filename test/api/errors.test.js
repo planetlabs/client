@@ -3,7 +3,7 @@ var assert = require('chai').assert;
 
 var errors = require('../../api/errors');
 
-describe('errors', function() {
+describe('api/errors', function() {
 
   describe('ResponseError', function() {
     it('is a generic response error', function() {

@@ -4,7 +4,7 @@ var assert = require('chai').assert;
 var authStore = require('../../api/auth-store');
 var util = require('../../api/util');
 
-describe('util', function() {
+describe('api/util', function() {
 
   describe('addQueryParams()', function() {
 

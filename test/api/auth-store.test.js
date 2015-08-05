@@ -3,7 +3,7 @@ var assert = require('chai').assert;
 
 var authStore = require('../../api/auth-store');
 
-describe('authStore', function() {
+describe('api/auth-store', function() {
   afterEach(function() {
     authStore.clear();
   });

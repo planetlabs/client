@@ -11,7 +11,7 @@ var auth = require('../../api/auth');
 var authStore = require('../../api/auth-store');
 var errors = require('../../api/errors');
 
-describe('auth', function() {
+describe('api/auth', function() {
 
   var httpRequest = http.request;
   var httpsRequest = https.request;
