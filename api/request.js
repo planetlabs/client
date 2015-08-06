@@ -81,6 +81,28 @@ function parseConfig(config) {
 }
 
 /**
+ * Check if the response represents an error.
+ * @param {IncomingMessage} response The response.
+ * @param {Object} body Any parsed body (as JSON).
+ * @return {errors.ResponseError} A response error (or null if none).
+ */
+function errorCheck(response, body) {
+  var err = null;
+  var status = response.statusCode;
+  if (status === 400) {
+    err = new errors.BadRequest('Bad request', response, body);
+  } else if (status === 401) {
+    err = new errors.Unauthorized('Unauthorized', response, body);
+  } else if (status === 403) {
+    err = new errors.Forbidden('Forbidden', response, body);
+  } else if (!(status >= 200 && status < 300)) {
+    err = new errors.UnexpectedResponse('Unexpected response status: ' +
+        status, response);
+  }
+  return err;
+}
+
+/**
  * Create a handler for JSON API responses.
  * @param {function(Object)} resolve Called on success with response and body
  *     properties.
@@ -101,15 +123,17 @@ function createResponseHandler(resolve, reject, info) {
           createResponseHandler(resolve, reject, info));
       return;
     }
+
     if (info.stream) {
-      if (!(status >= 200 && status < 300)) {
-        reject(new errors.UnexpectedResponse('Unexpected response status: ' +
-            status, response));
+      var streamErr = errorCheck(response, null);
+      if (streamErr) {
+        reject(streamErr);
       } else {
         resolve({response: response, body: null});
       }
       return;
     }
+
     var data = '';
     response.on('data', function(chunk) {
       data += String(chunk);
@@ -128,12 +152,7 @@ function createResponseHandler(resolve, reject, info) {
       }
       var body = null;
       var err = null;
-      if (status === 401) {
-        err = new errors.Unauthorized('Unauthorized', response, data);
-      } else if (!(status >= 200 && status < 300)) {
-        err = new errors.UnexpectedResponse('Unexpected response status: ' +
-            status, response, data);
-      } else if (data) {
+      if (data) {
         try {
           body = JSON.parse(data);
         } catch (parseErr) {
@@ -142,14 +161,17 @@ function createResponseHandler(resolve, reject, info) {
               parseErr.stack + '\n', response, data);
         }
       }
+
+      err = errorCheck(response, body) || err;
+
       if (err) {
         reject(err);
-        return;
+      } else {
+        resolve({
+          response: response,
+          body: body
+        });
       }
-      resolve({
-        response: response,
-        body: body
-      });
     });
   };
 }
@@ -254,7 +276,33 @@ function post(config) {
   return request(assign({method: 'POST'}, config));
 }
 
+/**
+ * Issue a PUT request.
+ * @param {Object} config The request config.
+ * @return {Promise<Object>} A promise that resolves on a successful
+ *     response.  The object includes response and body properties, where the
+ *     body is a JSON decoded object representing the response body.  Any
+ *     non-200 status will result in a rejection.
+ */
+function put(config) {
+  return request(assign({method: 'PUT'}, config));
+}
+
+/**
+ * Issue a DELETE request.
+ * @param {Object} config The request config.
+ * @return {Promise<Object>} A promise that resolves on a successful
+ *     response.  The object includes response and body properties, where the
+ *     body is a JSON decoded object representing the response body.  Any
+ *     non-200 status will result in a rejection.
+ */
+function del(config) {
+  return request(assign({method: 'DELETE'}, config));
+}
+
 exports.get = get;
 exports.post = post;
+exports.put = put;
+exports.del = del;
 exports.parseConfig = parseConfig;
 exports.request = request;

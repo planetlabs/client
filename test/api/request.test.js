@@ -207,10 +207,10 @@ describe('api/request', function() {
       response.emit('end');
     });
 
-    it('rejects for non 2xx response', function(done) {
+    it('rejects with UnexpectedResponse for 500 response', function(done) {
       var response = new stream.Readable();
       response.statusCode = 500;
-      var body = 'server error';
+      var body = 'server error (maybe a secret in the stack trace)';
 
       var promise = request({url: 'http://example.com'});
       promise.then(function(obj) {
@@ -218,7 +218,7 @@ describe('api/request', function() {
       }, function(err) {
         assert.instanceOf(err, errors.UnexpectedResponse);
         assert.include(err.message, 'Unexpected response status: 500');
-        assert.equal(err.body, body);
+        assert.equal(err.body, null); // don't leak unexpected responses
         done();
       }).catch(done);
 
@@ -231,18 +231,18 @@ describe('api/request', function() {
       response.emit('end');
     });
 
-    it('rejects with Unauthorized for 401', function(done) {
+    it('rejects with BadRequest for 400', function(done) {
       var response = new stream.Readable();
-      response.statusCode = 401;
-      var body = 'unauthorized';
+      response.statusCode = 400;
+      var body = {message: 'Invalid email or password', errors: []};
 
       var promise = request({url: 'http://example.com'});
       promise.then(function(obj) {
         done(new Error('Expected promise to be rejected'));
       }, function(err) {
-        assert.instanceOf(err, errors.Unauthorized);
-        assert.include(err.message, 'Unauthorized');
-        assert.equal(err.body, body);
+        assert.instanceOf(err, errors.BadRequest);
+        assert.include(err.message, 'Bad request');
+        assert.deepEqual(err.body, body);
         done();
       }).catch(done);
 
@@ -251,7 +251,55 @@ describe('api/request', function() {
       assert.lengthOf(args, 2);
       var callback = args[1];
       callback(response);
-      response.emit('data', body);
+      response.emit('data', JSON.stringify(body));
+      response.emit('end');
+    });
+
+    it('rejects with Unauthorized for 401', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 401;
+      var body = {message: 'Invalid email or password', errors: []};
+
+      var promise = request({url: 'http://example.com'});
+      promise.then(function(obj) {
+        done(new Error('Expected promise to be rejected'));
+      }, function(err) {
+        assert.instanceOf(err, errors.Unauthorized);
+        assert.include(err.message, 'Unauthorized');
+        assert.deepEqual(err.body, body);
+        done();
+      }).catch(done);
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', JSON.stringify(body));
+      response.emit('end');
+    });
+
+    it('rejects with Forbidden for 403', function(done) {
+      var response = new stream.Readable();
+      response.statusCode = 403;
+      var body = {message: 'some user info here'};
+
+      var promise = request({url: 'http://example.com'});
+      promise.then(function(obj) {
+        done(new Error('Expected promise to be rejected'));
+      }, function(err) {
+        assert.instanceOf(err, errors.Forbidden);
+        assert.include(err.message, 'Forbidden');
+        assert.deepEqual(err.body, body);
+        done();
+      }).catch(done);
+
+      assert.equal(http.request.callCount, 1);
+      var args = http.request.getCall(0).args;
+      assert.lengthOf(args, 2);
+      var callback = args[1];
+      callback(response);
+      response.emit('data', JSON.stringify(body));
       response.emit('end');
     });
 
@@ -347,6 +395,48 @@ describe('api/request', function() {
       assert.lengthOf(call.args, 2);
       var config = call.args[0];
       assert.equal(config.method, 'GET');
+      assert.equal(config.hostname, 'example.com');
+    });
+
+  });
+
+  describe('post()', function() {
+
+    it('calls request() with method set to POST', function() {
+      req.post({url: 'http://example.com'});
+      assert.equal(http.request.callCount, 1);
+      var call = http.request.getCall(0);
+      assert.lengthOf(call.args, 2);
+      var config = call.args[0];
+      assert.equal(config.method, 'POST');
+      assert.equal(config.hostname, 'example.com');
+    });
+
+  });
+
+  describe('put()', function() {
+
+    it('calls request() with method set to PUT', function() {
+      req.put({url: 'http://example.com'});
+      assert.equal(http.request.callCount, 1);
+      var call = http.request.getCall(0);
+      assert.lengthOf(call.args, 2);
+      var config = call.args[0];
+      assert.equal(config.method, 'PUT');
+      assert.equal(config.hostname, 'example.com');
+    });
+
+  });
+
+  describe('del()', function() {
+
+    it('calls request() with method set to DELETE', function() {
+      req.del({url: 'http://example.com'});
+      assert.equal(http.request.callCount, 1);
+      var call = http.request.getCall(0);
+      assert.lengthOf(call.args, 2);
+      var config = call.args[0];
+      assert.equal(config.method, 'DELETE');
       assert.equal(config.hostname, 'example.com');
     });
 
