@@ -1,0 +1,9 @@
+<b>{{ name }}</b>
+<p>{{ description }}</p>
+{{#if methods}}
+  <ul>
+  {{#each methods}}
+    <li>{{>method this}}</li>
+  {{/each}}
+  </ul>
+{{/if}}

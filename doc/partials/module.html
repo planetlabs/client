@@ -1,0 +1,25 @@
+<div>
+  <h1>{{ name }}</h1>
+  <p>{{ description }}</p>
+
+  {{#if classes}}
+    Classes:
+    <ul>
+    {{#each classes}}
+      <li>{{>class this}}</li>
+    {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if functions}}
+    Functions:
+    <ul>
+    {{#each functions}}
+      <li>{{>function this}}</li>
+    {{/each}}
+    </ul>
+  {{/if}}
+
+  <hr>
+
+</div>
