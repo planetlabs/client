@@ -1,14 +1,26 @@
 <section class="toc">
 {{#each modules}}
-  <div class="module"><a href="#{{longname}}"><code>{{name}}</code></a></div>
+  <div class="module">
+    <a href="#{{longname}}">
+      <code><span class="name">{{name}}</span></code>
+    </a>
+  </div>
   <ul class="classes">
   {{#each classes}}
-    <li class="class"><a href="#{{longname}}"><code>{{name}}</code></a></li>
+    <li class="class">
+      <a href="#{{longname}}">
+        <code><span class="name">{{name}}</span></code>
+      </a>
+    </li>
   {{/each}}
   </ul>
   <ul class="functions">
   {{#each functions}}
-    <li class="function"><a href="#{{longname}}"><code>{{name}}</code></a></li>
+    <li class="function">
+      <a href="#{{longname}}">
+        <code><span class="name">{{name}}</span></code>
+      </a>
+    </li>
   {{/each}}
   </ul>
 {{/each}}
