@@ -2,7 +2,11 @@
 layout: main.html
 title: API Docs
 ---
-
-{{#each modules}}
-  {{>module this}}
-{{/each}}
+<div id="sidebar">
+  {{>toc this}}
+</div>
+<div id="content">
+  {{#each modules}}
+    {{>module this}}
+  {{/each}}
+</div>

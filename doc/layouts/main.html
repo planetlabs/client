@@ -29,6 +29,18 @@
         font-size: 0.9em;
         color: #171A48;
       }
+      #sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow: scroll;
+        width: 200px;
+        padding: 2em 2em 0 0;
+        box-sizing: border-box;
+      }
+      #content {
+        margin-left: 200px;
+      }
       .module {
         margin-bottom: 3em;
         border: 1px solid #eee;
@@ -51,6 +63,24 @@
       }
       .param code.type {
         color: #666;
+      }
+      .toc {
+        font-size: 0.8em;
+      }
+      .toc .module {
+        margin: 1em 0 0;
+        border: 0;
+        padding: 0;
+      }
+      .toc .classes,
+      .toc .functions {
+        margin: 0.5em 0;
+        list-style-type: circle;
+        padding: 0 20px;
+      }
+      .toc .function,
+      .toc .class {
+        margin: 0;
       }
     </style>
   </head>
