@@ -21,7 +21,7 @@ function Page(data, factory) {
    * Get the previous page.  If there is no previous page, `prev` will be
    * `null`.
    * @param {Object} options Any request options.
-   * @return {Promise.<Page>} The previous page.
+   * @return {Promise.<module:planet-client/api/page~Page>} The previous page.
    * @method
    */
   this.prev = !links.prev ? null : function(options) {
@@ -31,7 +31,7 @@ function Page(data, factory) {
   /**
    * Get the next page.  If there is no next page, `next` will be `null`.
    * @param {Object} options Any request options.
-   * @return {Promise.<Page>} The next page.
+   * @return {Promise.<module:planet-client/api/page~Page>} The next page.
    * @method
    */
   this.next = !links.next ? null : function(options) {

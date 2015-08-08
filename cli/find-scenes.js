@@ -133,7 +133,8 @@ function resolveQuery(opts) {
 
 /**
  * Recursively fetch all pages until the limit is reached.
- * @param {Promise.<Page>} promise A promise that resolves to a page of scenes.
+ * @param {Promise.<module:planet-client/api/page~Page>} promise A promise that
+ *     resolves to a page of scenes.
  * @param {Array} features An array of scene metadata.
  * @param {number} limit The limit.
  * @return {Promise.<Array>} An array that resolves to an array of scenes.

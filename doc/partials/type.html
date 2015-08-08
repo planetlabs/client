@@ -1,1 +1,3 @@
-<code class="type">{{join type.names "|"}}</code>
+<code class="type">
+  {{#each type.names}}{{#if @index}}|{{/if}}{{linkType this}}{{/each}}
+</code>

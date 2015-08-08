@@ -125,9 +125,6 @@ function main(callback) {
             var className = getClassName(memberof);
             return className.charAt(0).toLowerCase() + className.slice(1);
           },
-          join: function(array, sep) {
-            return array.join(sep);
-          },
           listParams: function(params) {
             if (!params) {
               return '';
@@ -137,6 +134,32 @@ function main(callback) {
             }).filter(function(name) {
               return name.indexOf('.') === -1;
             }).join(', ');
+          },
+          linkType: function(type) {
+            var openIndex = type.lastIndexOf('<');
+            var closeIndex = type.indexOf('>');
+            var match, link;
+            if (openIndex >= 0 && closeIndex > openIndex) {
+              match = type.slice(openIndex + 1, closeIndex).match(
+                  CLASS_NAME_RE);
+              if (match) {
+                link = new handlebars.SafeString(
+                    type.slice(0, openIndex + 1).replace('<', '&lt;') +
+                    '<a href="#' + match[0] + '">' + match[1] + '</a>' +
+                    type.slice(closeIndex).replace('>', '&gt;'));
+              } else {
+                link = type;
+              }
+            } else {
+              match = type.match(CLASS_NAME_RE);
+              if (match) {
+                link = new handlebars.SafeString(
+                    '<a href="#' + match[0] + '>' + match[1] + '</a>');
+              } else {
+                link = type;
+              }
+            }
+            return link;
           },
           lower: function(str) {
             return str.charAt(0).toLowerCase() + str.slice(1);

@@ -2,7 +2,8 @@ var mosaics = require('../api/mosaics');
 
 /**
  * Recursively fetch all pages until the limit is reached.
- * @param {Promise.<Page>} promise A promise that resolves to a page of mosaics.
+ * @param {Promise.<module:planet-client/api/page~Page>} promise A promise that
+ *     resolves to a page of mosaics.
  * @param {Array} list An array of mosaic metadata.
  * @param {number} limit The limit.
  * @return {Promise.<Array>} An array that resolves to an array of mosaics.

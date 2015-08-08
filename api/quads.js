@@ -43,8 +43,8 @@ function get(mosaicId, quadId, options) {
  *     resources in the response.  True by default.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
- * @return {Promise.<Page>} A promise that resolves to a page of quad
- *     metadata or is rejected with any error.
+ * @return {Promise.<module:planet-client/api/page~Page>} A promise that
+ *     resolves to a page of quad metadata or is rejected with any error.
  */
 function search(mosaicId, query, options) {
   options = options || {};
