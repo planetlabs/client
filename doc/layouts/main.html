@@ -6,17 +6,51 @@
       html, body {
         margin: 1em;
         padding; 0;
-        font-family: Tahoma, Geneva, sans-serif;
-        background: #FBFFE8;
-        color: #272727;
+        font-family: "Open Sans",sans-serif,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        background: #FFF;
+        color: #666;
+      }
+      a {
+        color: #00a9e9;
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus {
+        color: #00729d;
+        text-decoration: none;
+      }
+      hr {
+        border: 0;
+        height: 1px;
+        background: #eee;
       }
       code {
         font-family: "Lucida Console", Monaco, monospace;
-        font-size: smaller;
+        font-size: 0.9em;
         color: #171A48;
       }
       .module {
         margin-bottom: 3em;
+        border: 1px solid #eee;
+        padding: 0 2em;
+      }
+      .function,
+      .method,
+      .class {
+        margin-bottom: 2em;
+      }
+      .params {
+        padding: 0 30px;
+        list-style-type: circle;
+      }
+      .param {
+        margin-bottom: 0.5em;
+      }
+      .param .separator {
+        color: #666;
+      }
+      .param code.type {
+        color: #666;
       }
     </style>
   </head>

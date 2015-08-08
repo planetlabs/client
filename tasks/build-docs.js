@@ -125,6 +125,9 @@ function main(callback) {
             var className = getClassName(memberof);
             return className.charAt(0).toLowerCase() + className.slice(1);
           },
+          join: function(array, sep) {
+            return array.join(sep);
+          },
           listParams: function(params) {
             if (!params) {
               return '';

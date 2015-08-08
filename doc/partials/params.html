@@ -1,0 +1,8 @@
+<ul class="params">
+  {{#each params}}
+    <li class="param">
+      <code class="name">{{name}}</code>&nbsp;<span class="separator">:</span>
+      {{>type this}} - {{description}}
+    </li>
+  {{/each}}
+</ul>

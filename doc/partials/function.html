@@ -1,2 +1,12 @@
-<h2><code>mod.{{name}}({{listParams params}})</code></h2>
+<h2 id="{{longname}}">
+  <a href="#{{longname}}">
+    <code>mod.{{name}}({{listParams params}})</code>
+  </a>
+</h2>
 <p>{{md description}}</p>
+{{#if params}}
+  {{>params this}}
+{{/if}}
+{{#if returns}}
+  {{>returns this}}
+{{/if}}

@@ -1,2 +1,12 @@
-<h3><code>{{instance memberof}}.{{name}}()</code></h3>
+<h3 id="{{longname}}">
+  <a href="#{{longname}}">
+    <code>{{instance memberof}}.{{name}}({{listParams params}})</code>
+  </a>
+</h3>
 <p>{{md description}}</p>
+{{#if params}}
+  {{>params this}}
+{{/if}}
+{{#if returns}}
+  {{>returns this}}
+{{/if}}

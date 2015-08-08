@@ -1,6 +1,9 @@
-<div class="module">
-  <h1><code>{{name}}</code></h1>
+<section class="module" id="{{longname}}">
+  <h1>
+    <a href="#{{longname}}"><code>{{name}}</code></a>
+  </h1>
   <p class="description">{{md description}}</p>
+  <hr>
   <h2><code>var mod = require('{{name}}')</code></h2>
 
   {{#if classes}}
@@ -19,4 +22,4 @@
     {{/each}}
   {{/if}}
 
-</div>
+</section>

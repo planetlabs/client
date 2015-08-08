@@ -1,9 +1,11 @@
-<h2>
-  {{#if ignore}}
-    <code>mod.{{name}}</code>
-  {{else}}
-    <code>var {{lower name}} = new mod.{{name}}()</code>
-  {{/if}}
+<h2 id="{{longname}}">
+  <a href="#{{longname}}">
+    {{#if ignore}}
+      <code>mod.{{name}}</code>
+    {{else}}
+      <code>var {{lower name}} = new mod.{{name}}()</code>
+    {{/if}}
+  </a>
 </h2>
 <p class="description">{{md description}}</p>
 {{#if methods}}
