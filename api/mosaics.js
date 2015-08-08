@@ -1,6 +1,6 @@
 /**
  * Provides methods for getting scene metadata.
- * @module mosaics
+ * @module planet-client/api/mosaics
  */
 
 var Page = require('./page');

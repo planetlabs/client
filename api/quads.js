@@ -1,6 +1,6 @@
 /**
  * Provides methods for getting mosaic quad metadata.
- * @module quads
+ * @module planet-client/api/quads
  */
 
 var Page = require('./page');

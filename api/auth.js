@@ -1,6 +1,6 @@
 /**
  * Provides methods for setting API authentication credentials.
- * @module auth
+ * @module planet-client/api/auth
  */
 
 var errors = require('./errors');

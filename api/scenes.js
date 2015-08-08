@@ -1,6 +1,6 @@
 /**
  * Provides methods getting scene metadata.
- * @module scenes
+ * @module planet-client/api/scenes
  */
 
 var Page = require('./page');

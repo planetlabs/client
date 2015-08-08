@@ -1,9 +1,15 @@
-<b>{{ name }}</b>
-<p>{{ description }}</p>
+<h2>
+  {{#if ignore}}
+    <code>mod.{{name}}</code>
+  {{else}}
+    <code>var {{lower name}} = new mod.{{name}}()</code>
+  {{/if}}
+</h2>
+<p class="description">{{md description}}</p>
 {{#if methods}}
-  <ul>
   {{#each methods}}
-    <li>{{>method this}}</li>
+    <div class="method">
+      {{>method this}}
+    </div>
   {{/each}}
-  </ul>
 {{/if}}

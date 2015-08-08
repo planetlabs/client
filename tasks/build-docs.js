@@ -1,6 +1,8 @@
 var Metalsmith = require('metalsmith');
-var layouts = require('metalsmith-layouts');
+var handlebars = require('handlebars');
 var inPlace = require('metalsmith-in-place');
+var layouts = require('metalsmith-layouts');
+var marked = require('marked');
 
 var pkg = require('../package.json');
 var api = require('../build/api.json');
@@ -20,20 +22,20 @@ function getNamed(name, array) {
   return item;
 }
 
-var MOD_RE = /^module:([\w-]+)~/;
+var MODULE_NAME_RE = /^module:([\w-\/]+)~/;
 
 function getModuleName(longname) {
-  var match = longname.match(MOD_RE);
+  var match = longname.match(MODULE_NAME_RE);
   if (!match) {
     throw new Error('Expected to parse a module name from ' + longname);
   }
   return match[1];
 }
 
-var CLASS_RE = /^module:[\w-]+~([A-Z]\w+)$/;
+var CLASS_NAME_RE = /^module:[\w-\/]+~([A-Z]\w+)$/;
 
 function getClassName(memberof) {
-  var match = memberof.match(CLASS_RE);
+  var match = memberof.match(CLASS_NAME_RE);
   if (!match) {
     throw new Error('Expected to parse a class name from ' + memberof);
   }
@@ -117,7 +119,29 @@ function main(callback) {
       })
       .use(inPlace({
         engine: 'handlebars',
-        partials: 'doc/partials'
+        partials: 'doc/partials',
+        helpers: {
+          instance: function(memberof) {
+            var className = getClassName(memberof);
+            return className.charAt(0).toLowerCase() + className.slice(1);
+          },
+          listParams: function(params) {
+            if (!params) {
+              return '';
+            }
+            return params.map(function(param) {
+              return param.name;
+            }).filter(function(name) {
+              return name.indexOf('.') === -1;
+            }).join(', ');
+          },
+          lower: function(str) {
+            return str.charAt(0).toLowerCase() + str.slice(1);
+          },
+          md: function(str) {
+            return new handlebars.SafeString(marked(str));
+          }
+        }
       }))
       .use(layouts({
         engine: 'handlebars',

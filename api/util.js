@@ -1,6 +1,6 @@
 /**
  * General utilities.
- * @module util
+ * @module planet-client/api/util
  * @private
  */
 
