@@ -1,7 +1,6 @@
 /**
  * Provides a utility for working with pages of search results.
  * @module page
- * @private
  */
 
 var url = require('url');
