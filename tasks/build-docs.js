@@ -56,7 +56,7 @@ function organizeDocs(docs) {
   var modules = [];
   for (var i = 0, ii = docs.length; i < ii; ++i) {
     var doc = docs[i];
-    var module;
+    var module, cls;
     switch (doc.kind) {
       case 'module':
         module = getNamed(doc.name, modules);
@@ -67,7 +67,16 @@ function organizeDocs(docs) {
         if (!module.classes) {
           module.classes = [];
         }
-        module.classes.push(doc);
+        cls = getClass(doc.longname, module.classes);
+        assign(cls, doc);
+        break;
+      case 'member':
+        module = getModule(doc.longname, modules);
+        cls = getClass(doc.memberof, module.classes);
+        if (!cls.members) {
+          cls.members = [];
+        }
+        cls.members.push(doc);
         break;
       case 'function':
         module = getModule(doc.longname, modules);
@@ -75,7 +84,7 @@ function organizeDocs(docs) {
           if (!module.classes) {
             module.classes = [];
           }
-          var cls = getClass(doc.memberof, module.classes);
+          cls = getClass(doc.memberof, module.classes);
           if (!cls.methods) {
             cls.methods = [];
           }

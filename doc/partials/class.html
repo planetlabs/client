@@ -15,3 +15,10 @@
     </div>
   {{/each}}
 {{/if}}
+{{#if members}}
+  {{#each members}}
+    <div class="member">
+      {{>member this}}
+    </div>
+  {{/each}}
+{{/if}}

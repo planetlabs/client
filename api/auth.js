@@ -1,5 +1,5 @@
 /**
- * Provides methods for setting API authentication credentials.
+ * Provides methods for authenticating with a Planet API account.
  * @module planet-client/api/auth
  */
 
@@ -9,9 +9,10 @@ var store = require('./auth-store');
 var urls = require('./urls');
 
 /**
- * Submit credentials for authentication.
- * @param {string} email Email.
- * @param {string} password Password.
+ * Submit credentials for authentication.  Upon successful authentication, a
+ * token representing the user will be stored for subsequent API requests.
+ * @param {string} email The email associated with a Planet account.
+ * @param {string} password The password for a Planet account.
  * @return {Promise} A promise that resolves on successful login and is rejected
  *     otherwise.
  */
@@ -47,7 +48,9 @@ function logout() {
 }
 
 /**
- * Set an API key to be used for subsequent requests.
+ * Set an API key to be used for subsequent requests.  This is an alternative
+ * to submitting credentials with the [`login`](#module:planet-client/api/auth~login)
+ * method.  The stored key will be used for subsequent API requests.
  * @param {string} key An API key.
  */
 function setKey(key) {
