@@ -2,11 +2,11 @@
 layout: main.html
 title: API Docs
 ---
-<div id="sidebar">
-  {{>toc this}}
-</div>
-<div id="content">
+<section id="sidebar">
+  {{>toc this api="active" root=".."}}
+</section>
+<section id="content">
   {{#each modules}}
     {{>module this}}
   {{/each}}
-</div>
+</section>

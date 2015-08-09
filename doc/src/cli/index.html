@@ -1,0 +1,48 @@
+---
+layout: main.html
+title: CLI Docs
+---
+<section id="sidebar">
+  {{>toc this cli="active" root=".."}}
+</section>
+
+<section id="content" class="separated">
+
+  <h1>Using the CLI</h1>
+
+  <p>
+    The <code>planet-client</code> package provides a <code>planet</code> executable.  This can be installed globally (<code>npm install --global planet-client</code>), or if you install it locally, you can add the executable to your path (<code>export PATH=path/to/node_modules/.bin:$PATH</code>).
+  </p>
+
+  <p>
+    The general syntax for the <code>planet</code> executable is <code>planet [options]</code>.  To see a list of commands, run the following:
+  </p>
+
+  <pre><code>planet --help</code></pre>
+
+  <p>
+    You can get help for a specific command by adding <code>--help</code> to the command name (e.g. <code>planet find-scenes --help</code>).
+  </p>
+
+  <p>
+    To take advantage of command line completion with the <code>planet</code> executable, you can run the following in bash:
+  </p>
+
+  <pre><code>eval "$(planet completion)"</code></pre>
+
+  <p>
+    To enable this every time you start a new shell, you can append the output of <code>planet completion</code> to your <code>.bashrc</code>:
+  </p>
+
+  <pre><code>planet completion >> ~/.bashrc</code></pre>
+
+  <p>
+    The CLI will be fully documented when it is a bit more stable.  For now, you can get a preview of what's available with this video:
+  </p>
+
+  <a href="https://vimeo.com/134018559">
+    <img src="https://raw.githubusercontent.com/wiki/planetlabs/planet-client-js/planet-client.png"
+        style="display: block; width: 80%; margin: 0 auto;">
+  </a>
+
+</section>
