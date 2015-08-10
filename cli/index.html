@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Planet Client</title>
+    <title>CLI Docs</title>
     <style>
       html, body {
         margin: 1em;
@@ -113,64 +113,54 @@
     </style>
   </head>
   <body>
-  
-<section id="sidebar">
+  <section id="sidebar">
   <div class="toc">
-    <h1><a href="./">Planet Client</a></h1>
+    <h1><a href="../">Planet Client</a></h1>
     <hr>
-    <h2><a href="./api/">API Modules</a></h2>
-    <h2><a href="./cli/">CLI Usage</a></h2>
+    <h2><a href="../api/">API Modules</a></h2>
+    <h2><a href="../cli/">CLI Usage</a></h2>
   </div>
 </section>
 
 <section id="content" class="separated">
-  <h1><code>planet-client</code></h1>
+
+  <h1>CLI Usage</h1>
 
   <p>
-    A JavaScript client for <a href="https://www.planet.com/docs/">Planet's imagery API</a>.
-  </p>
-
-  <h2 id="installation">Installation</h2>
-
-  <p>
-    Install the <code>planet-client</code> package with <code>npm</code> (which comes with <a href="https://nodejs.org/">Node</a>).
-  </p>
-
-  <pre><code>npm install planet-client</code></pre>
-
-  <p>
-    The <code>planet-client</code> package provides <a href="#using-the-library">a library</a> for use in your application and a <code>planet</code> executable for <a href="#using-the-cli">command line use</a>. See details on both below.
-  </p>
-
-  <h2 id="using-the-library">Using the Library</h2>
-
-  <p>
-    The <code>planet-client</code> package can be used in a Node based project or in the browser with a CommonJS module loader (like <a href="http://browserify.org/">Browserify</a> or <a href="http://webpack.github.io/">Webpack</a>).
+    The <code>planet-client</code> package provides a <code>planet</code> executable.  This can be installed globally (<code>npm install --global planet-client</code>), or if you install it locally, you can add the executable to your path (<code>export PATH=path/to/node_modules/.bin:$PATH</code>).
   </p>
 
   <p>
-    The library requires a global <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a> implementation.  This comes with Node &gt;= 0.12 and <a href="http://caniuse.com/#search=promise">modern browsers</a>.  To use <code>planet-client</code> in an environment without <code>Promise</code>, you can <a href="https://www.google.com/search?q=promise+polyfill">use a polyfill</a>.
-  </p>
-
-  <p>
-    With the above prerequisites, you can start using the <code>planet-client</code> package in your application.  See the <a href="./api/">client API documentation</a> for details on using the library.
-  </p>
-
-  <h2 id="using-the-cli">Using the CLI</h2>
-
-  <p>
-    The <code>planet-client</code> package provides a <code>planet</code> executable. This can be installed globally (<code>npm install --global planet-client</code>), or if you install it locally, you can add the executable to your path (<code>export PATH=$PATH:path/to/node_modules/.bin</code>).
-  </p>
-
-  <p>
-    The general syntax for the planet executable is planet <command> [options]. To see a list of commands, run the following:
+    The general syntax for the <code>planet</code> executable is <code>planet [options]</code>.  To see a list of commands, run the following:
   </p>
 
   <pre><code>planet --help</code></pre>
 
   <p>
-    See the <a href="./cli/">CLI docs</a> for more details on using the <code>planet</code> command.
+    You can get help for a specific command by adding <code>--help</code> to the command name (e.g. <code>planet find-scenes --help</code>).
   </p>
+
+  <p>
+    To take advantage of command line completion with the <code>planet</code> executable, you can run the following in bash:
+  </p>
+
+  <pre><code>eval "$(planet completion)"</code></pre>
+
+  <p>
+    To enable this every time you start a new shell, you can append the output of <code>planet completion</code> to your <code>.bashrc</code>:
+  </p>
+
+  <pre><code>planet completion >> ~/.bashrc</code></pre>
+
+  <p>
+    The CLI will be fully documented when it is a bit more stable.  For now, you can get a preview of what's available with this video:
+  </p>
+
+  <a href="https://vimeo.com/134018559">
+    <img src="https://raw.githubusercontent.com/wiki/planetlabs/planet-client-js/planet-client.png"
+        style="display: block; width: 80%; margin: 0 auto;">
+  </a>
+
 </section>
 
   </body>

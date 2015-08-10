@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Docs</title>
+    <style>
+      html, body {
+        margin: 1em;
+        padding; 0;
+        font-family: "Open Sans",sans-serif,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        background: #FFF;
+        color: #666;
+      }
+      a {
+        color: #00a9e9;
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus {
+        color: #00729d;
+        text-decoration: none;
+      }
+      hr {
+        border: 0;
+        height: 1px;
+        background: #eee;
+      }
+      pre {
+        background: #eee;
+        padding: 1em;
+      }
+      code {
+        font-family: "Lucida Console", Monaco, monospace;
+        font-size: 0.9em;
+        color: #666;
+      }
+      a code .name {
+        color: #00a9e9;
+      }
+      a:hover code .name,
+      a:focus code .name {
+        color: #00729d;
+      }
+      #sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow: scroll;
+        width: 200px;
+        padding: 2em 2em 0 0;
+        box-sizing: border-box;
+      }
+      #sidebar h1 {
+        margin-top: 0.5em;
+        font-size: 1.5em
+      }
+      #sidebar h2 {
+        margin-top: 1em;
+        font-size: 1.2em
+      }
+      #sidebar ul {
+        margin: 0.5em 0;
+        list-style-type: circle;
+        padding: 0 20px;
+      }
+      #content {
+        margin-left: 200px;
+      }
+      section.separated {
+        border: 1px solid #eee;
+        padding: 0 2em;
+        margin-bottom: 3em;
+      }
+      .function,
+      .method,
+      .class {
+        margin-bottom: 2em;
+      }
+      .params {
+        padding: 0 30px;
+        list-style-type: circle;
+      }
+      .param {
+        margin-bottom: 0.5em;
+      }
+      .param .separator {
+        color: #666;
+      }
+      .param code.type {
+        color: #666;
+      }
+      .param p {
+        display: inline;
+      }
+      .returns {
+        padding: 0 30px;
+        list-style-type: circle;
+      }
+      .returns p {
+        display: inline;
+      }
+      .toc {
+        font-size: 0.8em;
+      }
+      .toc .module {
+        margin: 1em 0 0;
+        border: 0;
+        padding: 0;
+      }
+      .toc .function,
+      .toc .class {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+  <section id="sidebar">
+  <div class="toc">
+    <h1><a href="../">Planet Client</a></h1>
+    <hr>
+    <h2><a href="../api/">API Modules</a></h2>
+        <div class="module">
+          <a href="#module:planet-client/api/auth">
+            <code><span class="name">planet-client/api/auth</span></code>
+          </a>
+        </div>
+        <ul class="classes">
+        </ul>
+        <ul class="functions">
+          <li class="function">
+            <a href="#module:planet-client/api/auth~login">
+              <code><span class="name">login</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:planet-client/api/auth~logout">
+              <code><span class="name">logout</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:planet-client/api/auth~setKey">
+              <code><span class="name">setKey</span></code>
+            </a>
+          </li>
+        </ul>
+        <div class="module">
+          <a href="#module:planet-client/api/errors">
+            <code><span class="name">planet-client/api/errors</span></code>
+          </a>
+        </div>
+        <ul class="classes">
+          <li class="class">
+            <a href="#module:planet-client/api/errors~ResponseError">
+              <code><span class="name">ResponseError</span></code>
+            </a>
+          </li>
+          <li class="class">
+            <a href="#module:planet-client/api/errors~BadRequest">
+              <code><span class="name">BadRequest</span></code>
+            </a>
+          </li>
+          <li class="class">
+            <a href="#module:planet-client/api/errors~Unauthorized">
+              <code><span class="name">Unauthorized</span></code>
+            </a>
+          </li>
+          <li class="class">
+            <a href="#module:planet-client/api/errors~Forbidden">
+              <code><span class="name">Forbidden</span></code>
+            </a>
+          </li>
+          <li class="class">
+            <a href="#module:planet-client/api/errors~UnexpectedResponse">
+              <code><span class="name">UnexpectedResponse</span></code>
+            </a>
+          </li>
+          <li class="class">
+            <a href="#module:planet-client/api/errors~AbortedRequest">
+              <code><span class="name">AbortedRequest</span></code>
+            </a>
+          </li>
+        </ul>
+        <ul class="functions">
+        </ul>
+        <div class="module">
+          <a href="#module:planet-client/api/mosaics">
+            <code><span class="name">planet-client/api/mosaics</span></code>
+          </a>
+        </div>
+        <ul class="classes">
+        </ul>
+        <ul class="functions">
+          <li class="function">
+            <a href="#module:planet-client/api/mosaics~get">
+              <code><span class="name">get</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:planet-client/api/mosaics~search">
+              <code><span class="name">search</span></code>
+            </a>
+          </li>
+        </ul>
+        <div class="module">
+          <a href="#module:planet-client/api/page">
+            <code><span class="name">planet-client/api/page</span></code>
+          </a>
+        </div>
+        <ul class="classes">
+          <li class="class">
+            <a href="#module:planet-client/api/page~Page">
+              <code><span class="name">Page</span></code>
+            </a>
+          </li>
+        </ul>
+        <ul class="functions">
+        </ul>
+        <div class="module">
+          <a href="#module:planet-client/api/quads">
+            <code><span class="name">planet-client/api/quads</span></code>
+          </a>
+        </div>
+        <ul class="classes">
+        </ul>
+        <ul class="functions">
+          <li class="function">
+            <a href="#module:planet-client/api/quads~get">
+              <code><span class="name">get</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:planet-client/api/quads~search">
+              <code><span class="name">search</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:planet-client/api/quads~scenes">
+              <code><span class="name">scenes</span></code>
+            </a>
+          </li>
+        </ul>
+        <div class="module">
+          <a href="#module:planet-client/api/scenes">
+            <code><span class="name">planet-client/api/scenes</span></code>
+          </a>
+        </div>
+        <ul class="classes">
+        </ul>
+        <ul class="functions">
+          <li class="function">
+            <a href="#module:planet-client/api/scenes~get">
+              <code><span class="name">get</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:planet-client/api/scenes~search">
+              <code><span class="name">search</span></code>
+            </a>
+          </li>
+        </ul>
+    <h2><a href="../cli/">CLI Usage</a></h2>
+  </div>
+</section>
+<div id="content">
+  <section class="separated">
+    <h1>API Modules</h1>
+    <p>
+      The <code>planet-client</code> package is organized as a collection of modules that roughly follow the structure of the <a href="https://www.planet.com/docs/">HTTP API</a>.  The API provides access to individual <a href="#module:planet-client/api/scenes">scenes</a> from a variety of providers and <a href="#module:planet-client/api/mosaics">mosaics</a> of those scenes.
+    </p>
+  </section>
+    <section class="module separated" id="module:planet-client/api/auth">
+      <h1>
+        <a href="#module:planet-client/api/auth"><code><span class="name">planet-client/api/auth</span></code></a>
+      </h1>
+      <p class="description"><p>Provides methods for authenticating with a Planet API account.</p>
+    </p>
+      <hr>
+      <h2><code>var mod = require('planet-client/api/auth')</code></h2>
+    
+    
+          <div class="function">
+            <h2 id="module:planet-client/api/auth~login">
+              <a href="#module:planet-client/api/auth~login">
+                <code>
+                  mod.<span class="name">login</span>(email, password)
+                </code>
+              </a>
+            </h2>
+            <p><p>Submit credentials for authentication.  Upon successful authentication, a
+            token representing the user will be stored for subsequent API requests.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">email</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>The email associated with a Planet account.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">password</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>The password for a Planet account.</p>
+              
+                  </li>
+              </ul>
+              <h4>Returns</h4>
+              <ul class="returns">
+                <li><code class="type">
+                Promise
+              </code>
+               - <p>A promise that resolves on successful login and is rejected
+                  otherwise.</p>
+              </li>
+              </ul>
+          </div>
+          <div class="function">
+            <h2 id="module:planet-client/api/auth~logout">
+              <a href="#module:planet-client/api/auth~logout">
+                <code>
+                  mod.<span class="name">logout</span>()
+                </code>
+              </a>
+            </h2>
+            <p><p>Clear any stored credentials.</p>
+            </p>
+          </div>
+          <div class="function">
+            <h2 id="module:planet-client/api/auth~setKey">
+              <a href="#module:planet-client/api/auth~setKey">
+                <code>
+                  mod.<span class="name">setKey</span>(key)
+                </code>
+              </a>
+            </h2>
+            <p><p>Set an API key to be used for subsequent requests.  This is an alternative
+            to submitting credentials with the <a href="#module:planet-client/api/auth~login"><code>login</code></a>
+            method.  The stored key will be used for subsequent API requests.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">key</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>An API key.</p>
+              
+                  </li>
+              </ul>
+          </div>
+    
+    </section>
+    <section class="module separated" id="module:planet-client/api/errors">
+      <h1>
+        <a href="#module:planet-client/api/errors"><code><span class="name">planet-client/api/errors</span></code></a>
+      </h1>
+      <p class="description"><p>Includes specific <code>Error</code> types generated by API requests.  When a request
+    method returns a promise that is rejected, you can use <code>instanceof</code> to
+    determine what type of error you have.</p>
+    </p>
+      <hr>
+      <h2><code>var mod = require('planet-client/api/errors')</code></h2>
+    
+          <div class="class">
+            <h2 id="module:planet-client/api/errors~ResponseError">
+              <a href="#module:planet-client/api/errors~ResponseError">
+                  <code>mod.<span class="name">ResponseError</span></code>
+              </a>
+            </h2>
+            <p class="description"><p>The base class for all response errors.</p>
+            </p>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~ResponseError#message">
+                    <a href="#module:planet-client/api/errors~ResponseError#message">
+                      <code>
+                        responseError.<span class="name">message</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>A message providing details about the error.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~ResponseError#response">
+                    <a href="#module:planet-client/api/errors~ResponseError#response">
+                      <code>
+                        responseError.<span class="name">response</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    IncomingMessage
+                  </code>
+                  
+                  </h3>
+                  <p><p>The server response.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~ResponseError#body">
+                    <a href="#module:planet-client/api/errors~ResponseError#body">
+                      <code>
+                        responseError.<span class="name">body</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    Object
+                  </code>
+                  
+                  </h3>
+                  <p><p>Any parsed response body.  For &quot;expected&quot; errors, this will be an object
+                  representing the JSON response body.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~ResponseError#stack">
+                    <a href="#module:planet-client/api/errors~ResponseError#stack">
+                      <code>
+                        responseError.<span class="name">stack</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>The stack trace for the error.</p>
+                  </p>
+                </div>
+          </div>
+          <div class="class">
+            <h2 id="module:planet-client/api/errors~BadRequest">
+              <a href="#module:planet-client/api/errors~BadRequest">
+                  <code>mod.<span class="name">BadRequest</span></code>
+              </a>
+            </h2>
+            <p class="description"><p>The request was bad (status <code>400</code>).</p>
+            </p>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~BadRequest#message">
+                    <a href="#module:planet-client/api/errors~BadRequest#message">
+                      <code>
+                        badRequest.<span class="name">message</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>A message providing details about the error.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~BadRequest#response">
+                    <a href="#module:planet-client/api/errors~BadRequest#response">
+                      <code>
+                        badRequest.<span class="name">response</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    IncomingMessage
+                  </code>
+                  
+                  </h3>
+                  <p><p>The server response.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~BadRequest#body">
+                    <a href="#module:planet-client/api/errors~BadRequest#body">
+                      <code>
+                        badRequest.<span class="name">body</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    Object
+                  </code>
+                  
+                  </h3>
+                  <p><p>Any parsed response body.  For &quot;expected&quot; errors, this will be an object
+                  representing the JSON response body.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~BadRequest#stack">
+                    <a href="#module:planet-client/api/errors~BadRequest#stack">
+                      <code>
+                        badRequest.<span class="name">stack</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>The stack trace for the error.</p>
+                  </p>
+                </div>
+          </div>
+          <div class="class">
+            <h2 id="module:planet-client/api/errors~Unauthorized">
+              <a href="#module:planet-client/api/errors~Unauthorized">
+                  <code>mod.<span class="name">Unauthorized</span></code>
+              </a>
+            </h2>
+            <p class="description"><p>The request requires user authentication (status <code>401</code>).</p>
+            </p>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~Unauthorized#message">
+                    <a href="#module:planet-client/api/errors~Unauthorized#message">
+                      <code>
+                        unauthorized.<span class="name">message</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>A message providing details about the error.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~Unauthorized#response">
+                    <a href="#module:planet-client/api/errors~Unauthorized#response">
+                      <code>
+                        unauthorized.<span class="name">response</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    IncomingMessage
+                  </code>
+                  
+                  </h3>
+                  <p><p>The server response.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~Unauthorized#body">
+                    <a href="#module:planet-client/api/errors~Unauthorized#body">
+                      <code>
+                        unauthorized.<span class="name">body</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    Object
+                  </code>
+                  
+                  </h3>
+                  <p><p>Any parsed response body.  For &quot;expected&quot; errors, this will be an object
+                  representing the JSON response body.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~Unauthorized#stack">
+                    <a href="#module:planet-client/api/errors~Unauthorized#stack">
+                      <code>
+                        unauthorized.<span class="name">stack</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>The stack trace for the error.</p>
+                  </p>
+                </div>
+          </div>
+          <div class="class">
+            <h2 id="module:planet-client/api/errors~Forbidden">
+              <a href="#module:planet-client/api/errors~Forbidden">
+                  <code>mod.<span class="name">Forbidden</span></code>
+              </a>
+            </h2>
+            <p class="description"><p>The client is forbidden from making the request (status <code>403</code>).</p>
+            </p>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~Forbidden#message">
+                    <a href="#module:planet-client/api/errors~Forbidden#message">
+                      <code>
+                        forbidden.<span class="name">message</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>A message providing details about the error.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~Forbidden#response">
+                    <a href="#module:planet-client/api/errors~Forbidden#response">
+                      <code>
+                        forbidden.<span class="name">response</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    IncomingMessage
+                  </code>
+                  
+                  </h3>
+                  <p><p>The server response.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~Forbidden#body">
+                    <a href="#module:planet-client/api/errors~Forbidden#body">
+                      <code>
+                        forbidden.<span class="name">body</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    Object
+                  </code>
+                  
+                  </h3>
+                  <p><p>Any parsed response body.  For &quot;expected&quot; errors, this will be an object
+                  representing the JSON response body.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~Forbidden#stack">
+                    <a href="#module:planet-client/api/errors~Forbidden#stack">
+                      <code>
+                        forbidden.<span class="name">stack</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>The stack trace for the error.</p>
+                  </p>
+                </div>
+          </div>
+          <div class="class">
+            <h2 id="module:planet-client/api/errors~UnexpectedResponse">
+              <a href="#module:planet-client/api/errors~UnexpectedResponse">
+                  <code>mod.<span class="name">UnexpectedResponse</span></code>
+              </a>
+            </h2>
+            <p class="description"><p>The API returns an unexpected response.</p>
+            </p>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~UnexpectedResponse#message">
+                    <a href="#module:planet-client/api/errors~UnexpectedResponse#message">
+                      <code>
+                        unexpectedResponse.<span class="name">message</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>A message providing details about the error.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~UnexpectedResponse#response">
+                    <a href="#module:planet-client/api/errors~UnexpectedResponse#response">
+                      <code>
+                        unexpectedResponse.<span class="name">response</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    IncomingMessage
+                  </code>
+                  
+                  </h3>
+                  <p><p>The server response.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~UnexpectedResponse#body">
+                    <a href="#module:planet-client/api/errors~UnexpectedResponse#body">
+                      <code>
+                        unexpectedResponse.<span class="name">body</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    Object
+                  </code>
+                  
+                  </h3>
+                  <p><p>Any parsed response body.  For &quot;expected&quot; errors, this will be an object
+                  representing the JSON response body.</p>
+                  </p>
+                </div>
+                <div class="member">
+                  <h3 id="module:planet-client/api/errors~UnexpectedResponse#stack">
+                    <a href="#module:planet-client/api/errors~UnexpectedResponse#stack">
+                      <code>
+                        unexpectedResponse.<span class="name">stack</span>
+                      </code>
+                    </a>
+                    <span class="separator">:</span>&nbsp;<code class="type">
+                    string
+                  </code>
+                  
+                  </h3>
+                  <p><p>The stack trace for the error.</p>
+                  </p>
+                </div>
+          </div>
+          <div class="class">
+            <h2 id="module:planet-client/api/errors~AbortedRequest">
+              <a href="#module:planet-client/api/errors~AbortedRequest">
+                  <code>mod.<span class="name">AbortedRequest</span></code>
+              </a>
+            </h2>
+            <p class="description"><p>An error generated when the request is terminated.</p>
+            </p>
+          </div>
+    
+    
+    </section>
+    <section class="module separated" id="module:planet-client/api/mosaics">
+      <h1>
+        <a href="#module:planet-client/api/mosaics"><code><span class="name">planet-client/api/mosaics</span></code></a>
+      </h1>
+      <p class="description"><p>Provides methods for getting scene metadata.</p>
+    </p>
+      <hr>
+      <h2><code>var mod = require('planet-client/api/mosaics')</code></h2>
+    
+    
+          <div class="function">
+            <h2 id="module:planet-client/api/mosaics~get">
+              <a href="#module:planet-client/api/mosaics~get">
+                <code>
+                  mod.<span class="name">get</span>(id, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get metadata for a single mosaic.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">id</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>A mosaic identifier.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>Options.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.augmentLinks</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                boolean
+              </code>
+               - <p>Add API key to links for image
+                  resources in the response.  True by default.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.terminator</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                function
+              </code>
+               - <p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              
+                  </li>
+              </ul>
+              <h4>Returns</h4>
+              <ul class="returns">
+                <li><code class="type">
+                Promise.&lt;Object&gt;
+              </code>
+               - <p>A promise that resolves to mosaic metadata or is
+                  rejected with any error.  See the <a href="#module:planet-client/api/errors"><code>errors</code>
+                  module</a> for a list of the possible
+                  error types.</p>
+              </li>
+              </ul>
+          </div>
+          <div class="function">
+            <h2 id="module:planet-client/api/mosaics~search">
+              <a href="#module:planet-client/api/mosaics~search">
+                <code>
+                  mod.<span class="name">search</span>(query, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get a collection of mosaic metadata.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">query</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>A query object.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>Options.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.augmentLinks</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                boolean
+              </code>
+               - <p>Add API key to links for image
+                  resources in the response.  True by default.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.terminator</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                function
+              </code>
+               - <p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              
+                  </li>
+              </ul>
+              <h4>Returns</h4>
+              <ul class="returns">
+                <li><code class="type">
+                Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;
+              </code>
+               - <p>A promise that
+                  resolves to a page of mosaic metadata or is rejected with any error.
+                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
+                  the possible error types.</p>
+              </li>
+              </ul>
+          </div>
+    
+    </section>
+    <section class="module separated" id="module:planet-client/api/page">
+      <h1>
+        <a href="#module:planet-client/api/page"><code><span class="name">planet-client/api/page</span></code></a>
+      </h1>
+      <p class="description"><p>Provides a utility for working with pages of search results.</p>
+    </p>
+      <hr>
+      <h2><code>var mod = require('planet-client/api/page')</code></h2>
+    
+          <div class="class">
+            <h2 id="module:planet-client/api/page~Page">
+              <a href="#module:planet-client/api/page~Page">
+                  <code>mod.<span class="name">Page</span></code>
+              </a>
+            </h2>
+            <p class="description"><p>A page of results.  Pages do not need to be constructed directly, but are
+            generated by methods that make API requests.</p>
+            </p>
+                <div class="method">
+                  <h3 id="module:planet-client/api/page~Page#prev">
+                    <a href="#module:planet-client/api/page~Page#prev">
+                      <code>
+                        page.<span class="name">prev</span>(options)
+                      </code>
+                    </a>
+                  </h3>
+                  <p><p>Get the previous page.  If there is no previous page, <code>prev</code> will be
+                  <code>null</code>.</p>
+                  </p>
+                    <h4>Arguments</h4>
+                    <ul class="params">
+                        <li class="param">
+                          <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                          <code class="type">
+                      Object
+                    </code>
+                     - <p>Any request options.</p>
+                    
+                        </li>
+                    </ul>
+                    <h4>Returns</h4>
+                    <ul class="returns">
+                      <li><code class="type">
+                      Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;
+                    </code>
+                     - <p>The previous page.</p>
+                    </li>
+                    </ul>
+                </div>
+                <div class="method">
+                  <h3 id="module:planet-client/api/page~Page#next">
+                    <a href="#module:planet-client/api/page~Page#next">
+                      <code>
+                        page.<span class="name">next</span>(options)
+                      </code>
+                    </a>
+                  </h3>
+                  <p><p>Get the next page.  If there is no next page, <code>next</code> will be <code>null</code>.</p>
+                  </p>
+                    <h4>Arguments</h4>
+                    <ul class="params">
+                        <li class="param">
+                          <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                          <code class="type">
+                      Object
+                    </code>
+                     - <p>Any request options.</p>
+                    
+                        </li>
+                    </ul>
+                    <h4>Returns</h4>
+                    <ul class="returns">
+                      <li><code class="type">
+                      Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;
+                    </code>
+                     - <p>The next page.</p>
+                    </li>
+                    </ul>
+                </div>
+          </div>
+    
+    
+    </section>
+    <section class="module separated" id="module:planet-client/api/quads">
+      <h1>
+        <a href="#module:planet-client/api/quads"><code><span class="name">planet-client/api/quads</span></code></a>
+      </h1>
+      <p class="description"><p>Provides methods for getting mosaic quad metadata.</p>
+    </p>
+      <hr>
+      <h2><code>var mod = require('planet-client/api/quads')</code></h2>
+    
+    
+          <div class="function">
+            <h2 id="module:planet-client/api/quads~get">
+              <a href="#module:planet-client/api/quads~get">
+                <code>
+                  mod.<span class="name">get</span>(mosaicId, quadId, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get metadata for a mosaic quad.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">mosaicId</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>A mosaic identifier.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">quadId</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>A quad identifier.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>Options.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.augmentLinks</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                boolean
+              </code>
+               - <p>Add API key to links for image
+                  resources in the response.  True by default.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.terminator</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                function
+              </code>
+               - <p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              
+                  </li>
+              </ul>
+              <h4>Returns</h4>
+              <ul class="returns">
+                <li><code class="type">
+                Promise.&lt;Object&gt;
+              </code>
+               - <p>A promise that resolves to quad metadata or is
+                  rejected with any error.
+                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
+                  the possible error types.</p>
+              </li>
+              </ul>
+          </div>
+          <div class="function">
+            <h2 id="module:planet-client/api/quads~search">
+              <a href="#module:planet-client/api/quads~search">
+                <code>
+                  mod.<span class="name">search</span>(mosaicId, query, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get a collection of quad metadata based on a query.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">mosaicId</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>A mosaic identifier.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">query</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>A query object.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>Options.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.augmentLinks</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                boolean
+              </code>
+               - <p>Add API key to links for image
+                  resources in the response.  True by default.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.terminator</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                function
+              </code>
+               - <p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              
+                  </li>
+              </ul>
+              <h4>Returns</h4>
+              <ul class="returns">
+                <li><code class="type">
+                Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;
+              </code>
+               - <p>A promise that
+                  resolves to a page of quad metadata or is rejected with any error.
+                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
+                  the possible error types.</p>
+              </li>
+              </ul>
+          </div>
+          <div class="function">
+            <h2 id="module:planet-client/api/quads~scenes">
+              <a href="#module:planet-client/api/quads~scenes">
+                <code>
+                  mod.<span class="name">scenes</span>(mosaicId, quadId, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get scenes for a mosaic quad.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">mosaicId</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>A mosaic identifier.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">quadId</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                string
+              </code>
+               - <p>A quad identifier.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>Options.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.augmentLinks</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                boolean
+              </code>
+               - <p>Add API key to links for image
+                  resources in the response.  True by default.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.terminator</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                function
+              </code>
+               - <p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              
+                  </li>
+              </ul>
+              <h4>Returns</h4>
+              <ul class="returns">
+                <li><code class="type">
+                Promise.&lt;Object&gt;
+              </code>
+               - <p>A promise that resolves to quad metadata or is
+                  rejected with any error.
+                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
+                  the possible error types.</p>
+              </li>
+              </ul>
+          </div>
+    
+    </section>
+    <section class="module separated" id="module:planet-client/api/scenes">
+      <h1>
+        <a href="#module:planet-client/api/scenes"><code><span class="name">planet-client/api/scenes</span></code></a>
+      </h1>
+      <p class="description"><p>Provides methods getting scene metadata.</p>
+    </p>
+      <hr>
+      <h2><code>var mod = require('planet-client/api/scenes')</code></h2>
+    
+    
+          <div class="function">
+            <h2 id="module:planet-client/api/scenes~get">
+              <a href="#module:planet-client/api/scenes~get">
+                <code>
+                  mod.<span class="name">get</span>(scene, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get metadata for a single scene.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">scene</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object|string
+              </code>
+               - <p>An object with scene id and type properties.  If
+                  a string is provided, it is assumed to be the id, and the type will be
+                  set to &#39;ortho&#39;.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>Options.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.augmentLinks</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                boolean
+              </code>
+               - <p>Add API key to links for image
+                  resources in the response.  True by default.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.terminator</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                function
+              </code>
+               - <p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              
+                  </li>
+              </ul>
+              <h4>Returns</h4>
+              <ul class="returns">
+                <li><code class="type">
+                Promise.&lt;Object&gt;
+              </code>
+               - <p>A promise that resolves to scene metadata or is
+                  rejected with any error.
+                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
+                  the possible error types.</p>
+              </li>
+              </ul>
+          </div>
+          <div class="function">
+            <h2 id="module:planet-client/api/scenes~search">
+              <a href="#module:planet-client/api/scenes~search">
+                <code>
+                  mod.<span class="name">search</span>(query, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get a collection of scene metadata based on a query.</p>
+            </p>
+              <h4>Arguments</h4>
+              <ul class="params">
+                  <li class="param">
+                    <code class="name">query</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>A query object.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                Object
+              </code>
+               - <p>Options.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.augmentLinks</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                boolean
+              </code>
+               - <p>Add API key to links for image
+                  resources in the response.  True by default.</p>
+              
+                  </li>
+                  <li class="param">
+                    <code class="name">options.terminator</code>&nbsp;<span class="separator">:</span>
+                    <code class="type">
+                function
+              </code>
+               - <p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              
+                  </li>
+              </ul>
+              <h4>Returns</h4>
+              <ul class="returns">
+                <li><code class="type">
+                Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;
+              </code>
+               - <p>A promise that
+                  resolves to a page of scene metadata or is rejected with any error.
+                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
+                  the possible error types.</p>
+              </li>
+              </ul>
+          </div>
+    
+    </section>
+</div>
+
+  </body>
+</html>
