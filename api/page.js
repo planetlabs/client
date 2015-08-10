@@ -1,7 +1,6 @@
 /**
  * Provides a utility for working with pages of search results.
- * @module page
- * @private
+ * @module planet-client/api/page
  */
 
 var url = require('url');
@@ -13,15 +12,16 @@ var url = require('url');
  * @param {function(Object):Promise} factory Function that creates a promise of
  *     new data given a query object.
  * @constructor
+ * @ignore
  */
 function Page(data, factory) {
   var links = data.links;
 
   /**
-   * Get the previous page.  If there is no previous page, `previous` will be
-   *     `null`.
+   * Get the previous page.  If there is no previous page, `prev` will be
+   * `null`.
    * @param {Object} options Any request options.
-   * @return {Promise.<Page>} The previous page.
+   * @return {Promise.<module:planet-client/api/page~Page>} The previous page.
    * @method
    */
   this.prev = !links.prev ? null : function(options) {
@@ -29,10 +29,9 @@ function Page(data, factory) {
   };
 
   /**
-   * Get the next page.
+   * Get the next page.  If there is no next page, `next` will be `null`.
    * @param {Object} options Any request options.
-   * @return {Promise.<Page>} The next page.  If there is no next page,
-   *     `next` will be `null`.
+   * @return {Promise.<module:planet-client/api/page~Page>} The next page.
    * @method
    */
   this.next = !links.next ? null : function(options) {

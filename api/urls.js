@@ -1,6 +1,6 @@
 /**
  * API URL utilities.
- * @module urls
+ * @module planet-client/api/urls
  * @private
  */
 

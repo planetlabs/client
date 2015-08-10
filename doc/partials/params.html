@@ -1,0 +1,9 @@
+<h4>Arguments</h4>
+<ul class="params">
+  {{#each params}}
+    <li class="param">
+      <code class="name">{{name}}</code>&nbsp;<span class="separator">:</span>
+      {{>type this}} - {{md description}}
+    </li>
+  {{/each}}
+</ul>

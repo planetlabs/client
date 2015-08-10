@@ -1,6 +1,6 @@
 /**
  * Provides methods for getting scene metadata.
- * @module mosaics
+ * @module planet-client/api/mosaics
  */
 
 var Page = require('./page');
@@ -17,7 +17,9 @@ var util = require('./util');
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object>} A promise that resolves to mosaic metadata or is
- *     rejected with any error.
+ *     rejected with any error.  See the [`errors`
+ *     module](#module:planet-client/api/errors) for a list of the possible
+ *     error types.
  */
 function get(id, options) {
   options = options || {};
@@ -41,8 +43,10 @@ function get(id, options) {
  *     resources in the response.  True by default.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
- * @return {Promise.<Page>} A promise that resolves to a page of mosaic
- *     metadata or is rejected with any error.
+ * @return {Promise.<module:planet-client/api/page~Page>} A promise that
+ *     resolves to a page of mosaic metadata or is rejected with any error.
+ *     See the [`errors` module](#module:planet-client/api/errors) for a list of
+ *     the possible error types.
  */
 function search(query, options) {
   options = options || {};

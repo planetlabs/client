@@ -1,0 +1,58 @@
+---
+layout: main.html
+title: Planet Client
+---
+
+<section id="sidebar">
+  {{>toc this root="."}}
+</section>
+
+<section id="content" class="separated">
+  <h1><code>planet-client</code></h1>
+
+  <p>
+    A JavaScript client for <a href="https://www.planet.com/docs/">Planet's imagery API</a>.
+  </p>
+
+  <h2 id="installation">Installation</h2>
+
+  <p>
+    Install the <code>planet-client</code> package with <code>npm</code> (which comes with <a href="https://nodejs.org/">Node</a>).
+  </p>
+
+  <pre><code>npm install planet-client</code></pre>
+
+  <p>
+    The <code>planet-client</code> package provides <a href="#using-the-library">a library</a> for use in your application and a <code>planet</code> executable for <a href="#using-the-cli">command line use</a>. See details on both below.
+  </p>
+
+  <h2 id="using-the-library">Using the Library</h2>
+
+  <p>
+    The <code>planet-client</code> package can be used in a Node based project or in the browser with a CommonJS module loader (like <a href="http://browserify.org/">Browserify</a> or <a href="http://webpack.github.io/">Webpack</a>).
+  </p>
+
+  <p>
+    The library requires a global <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a> implementation.  This comes with Node &gt;= 0.12 and <a href="http://caniuse.com/#search=promise">modern browsers</a>.  To use <code>planet-client</code> in an environment without <code>Promise</code>, you can <a href="https://www.google.com/search?q=promise+polyfill">use a polyfill</a>.
+  </p>
+
+  <p>
+    With the above prerequisites, you can start using the <code>planet-client</code> package in your application.  See the <a href="./api/">client API documentation</a> for details on using the library.
+  </p>
+
+  <h2 id="using-the-cli">Using the CLI</h2>
+
+  <p>
+    The <code>planet-client</code> package provides a <code>planet</code> executable. This can be installed globally (<code>npm install --global planet-client</code>), or if you install it locally, you can add the executable to your path (<code>export PATH=$PATH:path/to/node_modules/.bin</code>).
+  </p>
+
+  <p>
+    The general syntax for the planet executable is planet <command> [options]. To see a list of commands, run the following:
+  </p>
+
+  <pre><code>planet --help</code></pre>
+
+  <p>
+    See the <a href="./cli/">CLI docs</a> for more details on using the <code>planet</code> command.
+  </p>
+</section>

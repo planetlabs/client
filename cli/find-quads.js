@@ -44,7 +44,8 @@ function resolveQuery(opts) {
 
 /**
  * Recursively fetch all pages until the limit is reached.
- * @param {Promise.<Page>} promise A promise that resolves to a page of quads.
+ * @param {Promise.<module:planet-client/api/page~Page>} promise A promise that
+ *     resolves to a page of quads.
  * @param {Array} features An array of quad metadata.
  * @param {number} limit The limit.
  * @return {Promise.<Array>} An array that resolves to an array of quads.

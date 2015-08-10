@@ -1,0 +1,18 @@
+---
+layout: main.html
+title: API Docs
+---
+<section id="sidebar">
+  {{>toc this api="active" root=".."}}
+</section>
+<div id="content">
+  <section class="separated">
+    <h1>API Modules</h1>
+    <p>
+      The <code>planet-client</code> package is organized as a collection of modules that roughly follow the structure of the <a href="https://www.planet.com/docs/">HTTP API</a>.  The API provides access to individual <a href="#module:planet-client/api/scenes">scenes</a> from a variety of providers and <a href="#module:planet-client/api/mosaics">mosaics</a> of those scenes.
+    </p>
+  </section>
+  {{#each modules}}
+    {{>module this}}
+  {{/each}}
+</div>

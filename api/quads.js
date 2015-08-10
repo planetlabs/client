@@ -1,6 +1,6 @@
 /**
  * Provides methods for getting mosaic quad metadata.
- * @module quads
+ * @module planet-client/api/quads
  */
 
 var Page = require('./page');
@@ -19,6 +19,8 @@ var util = require('./util');
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object>} A promise that resolves to quad metadata or is
  *     rejected with any error.
+ *     See the [`errors` module](#module:planet-client/api/errors) for a list of
+ *     the possible error types.
  */
 function get(mosaicId, quadId, options) {
   options = options || {};
@@ -43,8 +45,10 @@ function get(mosaicId, quadId, options) {
  *     resources in the response.  True by default.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
- * @return {Promise.<Page>} A promise that resolves to a page of quad
- *     metadata or is rejected with any error.
+ * @return {Promise.<module:planet-client/api/page~Page>} A promise that
+ *     resolves to a page of quad metadata or is rejected with any error.
+ *     See the [`errors` module](#module:planet-client/api/errors) for a list of
+ *     the possible error types.
  */
 function search(mosaicId, query, options) {
   options = options || {};
@@ -75,6 +79,8 @@ function search(mosaicId, query, options) {
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object>} A promise that resolves to quad metadata or is
  *     rejected with any error.
+ *     See the [`errors` module](#module:planet-client/api/errors) for a list of
+ *     the possible error types.
  */
 function scenes(mosaicId, quadId, options) {
   options = options || {};

@@ -1,0 +1,24 @@
+<h2 id="{{longname}}">
+  <a href="#{{longname}}">
+    {{#if ignore}}
+      <code>mod.<span class="name">{{name}}</span></code>
+    {{else}}
+      <code>var {{lower name}} = new mod.<span class="name">{{name}}</span>()</code>
+    {{/if}}
+  </a>
+</h2>
+<p class="description">{{md description}}</p>
+{{#if methods}}
+  {{#each methods}}
+    <div class="method">
+      {{>method this}}
+    </div>
+  {{/each}}
+{{/if}}
+{{#if members}}
+  {{#each members}}
+    <div class="member">
+      {{>member this}}
+    </div>
+  {{/each}}
+{{/if}}

@@ -1,6 +1,6 @@
 /**
  * Provides methods for working with workspaces.
- * @module workspaces
+ * @module planet-client/api/workspaces
  * @private
  */
 

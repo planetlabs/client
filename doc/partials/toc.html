@@ -1,0 +1,33 @@
+<div class="toc">
+  <h1><a href="{{root}}/">Planet Client</a></h1>
+  <hr>
+  <h2><a href="{{root}}/api/">API Modules</a></h2>
+  {{#if api}}
+    {{#each modules}}
+      <div class="module">
+        <a href="#{{longname}}">
+          <code><span class="name">{{name}}</span></code>
+        </a>
+      </div>
+      <ul class="classes">
+      {{#each classes}}
+        <li class="class">
+          <a href="#{{longname}}">
+            <code><span class="name">{{name}}</span></code>
+          </a>
+        </li>
+      {{/each}}
+      </ul>
+      <ul class="functions">
+      {{#each functions}}
+        <li class="function">
+          <a href="#{{longname}}">
+            <code><span class="name">{{name}}</span></code>
+          </a>
+        </li>
+      {{/each}}
+      </ul>
+    {{/each}}
+  {{/if}}
+  <h2><a href="{{root}}/cli/">CLI Usage</a></h2>
+</div>

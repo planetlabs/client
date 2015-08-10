@@ -1,6 +1,6 @@
 /**
  * Memory store for API key and token.
- * @module auth-store
+ * @module planet-client/api/auth-store
  * @private
  */
 

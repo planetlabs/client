@@ -1,0 +1,14 @@
+<h2 id="{{longname}}">
+  <a href="#{{longname}}">
+    <code>
+      mod.<span class="name">{{name}}</span>({{listParams params}})
+    </code>
+  </a>
+</h2>
+<p>{{md description}}</p>
+{{#if params}}
+  {{>params this}}
+{{/if}}
+{{#if returns}}
+  {{>returns this}}
+{{/if}}
