@@ -26,9 +26,16 @@
   "bin": {
     "planet": "bin/planet.js"
   },
+  "browserify": {
+    "transform": [
+      "envify"
+    ]
+  },
   "devDependencies": {
+    "browserify": "^7.0.3",
     "chai": "^3.0.0",
     "coveralls": "^2.11.3",
+    "envify": "^3.2.0",
     "eslint": "^0.22.1",
     "eslint-config-planet": "^2.0.0",
     "gh-pages": "^0.3.1",
