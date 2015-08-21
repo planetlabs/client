@@ -25,13 +25,15 @@
         background: #eee;
       }
       pre {
-        background: #eee;
+        background: #f3f6f9;
         padding: 1em;
       }
       code {
         font-family: "Lucida Console", Monaco, monospace;
         font-size: 0.9em;
         color: #666;
+        background: #f3f6f9;
+        padding: 0.2em 0.5em;
       }
       a code .name {
         color: #00a9e9;
@@ -65,6 +67,9 @@
       #content {
         margin-left: 200px;
       }
+      #content h3 {
+        margin-top: 1.5em;
+      }
       section.separated {
         border: 1px solid #eee;
         padding: 0 2em;
@@ -75,31 +80,28 @@
       .class {
         margin-bottom: 2em;
       }
-      .params {
-        padding: 0 30px;
-        list-style-type: circle;
+      table td {
+        vertical-align: top;
+        padding: 0.75em 0.2em;
       }
-      .param {
-        margin-bottom: 0.5em;
-      }
-      .param .separator {
-        color: #666;
-      }
-      .param code.type {
+      code.type {
+        white-space: nowrap;
         color: #666;
       }
       .param p {
         display: inline;
       }
-      .returns {
-        padding: 0 30px;
-        list-style-type: circle;
+      .description p {
+        display: inline;
       }
       .returns p {
         display: inline;
       }
       .toc {
         font-size: 0.8em;
+      }
+      .toc code {
+        background: inherit;
       }
       .toc .module {
         margin: 1em 0 0;
