@@ -7,6 +7,7 @@
   <h2><code>var mod = require('{{name}}')</code></h2>
 
   {{#if classes}}
+    <h3>Classes</h3>
     {{#each classes}}
       <div class="class">
         {{>class this}}
@@ -15,6 +16,7 @@
   {{/if}}
 
   {{#if functions}}
+    <h3>Functions</h3>
     {{#each functions}}
       <div class="function">
         {{>function this}}

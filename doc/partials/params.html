@@ -1,9 +1,13 @@
 <h4>Arguments</h4>
-<ul class="params">
+<table class="params">
   {{#each params}}
-    <li class="param">
-      <code class="name">{{name}}</code>&nbsp;<span class="separator">:</span>
-      {{>type this}} - {{md description}}
-    </li>
+    <tr class="param">
+      <td>
+        <code class="name">{{name}}</code>
+      </td>
+      <td>
+        {{>type this}} <span class="description">{{md description}}</span>
+      </td>
+    </tr>
   {{/each}}
-</ul>
+</table>

@@ -16,9 +16,19 @@
   {{/each}}
 {{/if}}
 {{#if members}}
-  {{#each members}}
-    <div class="member">
-      {{>member this}}
-    </div>
-  {{/each}}
+  <h3>Properties</h3>
+  <table class="members">
+    <tbody>
+      {{#each members}}
+        <tr id="{{longname}}">
+          <td>
+            <code><span class="name">{{name}}</span></code>
+          </td>
+          <td>
+            {{>type this}} <span class="description">{{md description}}</span>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
 {{/if}}
