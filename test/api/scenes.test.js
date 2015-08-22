@@ -9,6 +9,8 @@ var scenes = require('../../api/scenes');
 var urls = require('../../api/urls');
 var util = require('../../api/util');
 
+var SCENES = 'https://api.planet.com/v0/scenes/';
+
 describe('api/scenes', function() {
 
   var get = request.get;
@@ -52,7 +54,7 @@ describe('api/scenes', function() {
       var promise = scenes.get({type: 'foo', id: 'bar'});
       assert.lengthOf(calls, 1);
       var arg = calls[0];
-      assert.equal(arg.url, urls.join(urls.SCENES, 'foo', 'bar'));
+      assert.equal(arg.url, urls.join(SCENES, 'foo', 'bar'));
 
       promise.then(function(got) {
         assert.deepEqual(got, scene);
@@ -71,7 +73,7 @@ describe('api/scenes', function() {
       };
 
       var promise = scenes.get('bar');
-      assert.equal(calls[0].url, urls.join(urls.SCENES, 'ortho', 'bar'));
+      assert.equal(calls[0].url, urls.join(SCENES, 'ortho', 'bar'));
 
       promise.then(function(got) {
         assert.deepEqual(got, scene);
@@ -160,7 +162,7 @@ describe('api/scenes', function() {
       var promise = scenes.search(query);
 
       var arg = calls[0];
-      assert.equal(arg.url, urls.join(urls.SCENES, 'landsat', ''));
+      assert.equal(arg.url, urls.join(SCENES, 'landsat', ''));
       assert.deepEqual(arg.query, query);
 
       promise.then(function(got) {
@@ -191,7 +193,7 @@ describe('api/scenes', function() {
       var promise = scenes.search(query);
 
       var arg = calls[0];
-      assert.equal(arg.url, urls.join(urls.SCENES, 'ortho', ''));
+      assert.equal(arg.url, urls.join(SCENES, 'ortho', ''));
       assert.deepEqual(arg.query, query);
 
       promise.then(function(got) {

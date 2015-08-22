@@ -9,6 +9,8 @@ var quads = require('../../api/quads');
 var urls = require('../../api/urls');
 var util = require('../../api/util');
 
+var MOSAICS = 'https://api.planet.com/v0/mosaics/';
+
 describe('api/mosaics', function() {
 
   var quad;
@@ -66,7 +68,7 @@ describe('api/mosaics', function() {
       assert.lengthOf(calls, 1);
       var arg = calls[0];
       assert.equal(arg.url,
-          urls.join(urls.MOSAICS, 'my-mosaic', 'quads', 'my-quad'));
+          urls.join(MOSAICS, 'my-mosaic', 'quads', 'my-quad'));
 
       promise.then(function(got) {
         assert.deepEqual(got, quad);
@@ -135,7 +137,7 @@ describe('api/mosaics', function() {
       var promise = quads.search('my-mosaic', query);
 
       var arg = calls[0];
-      assert.equal(arg.url, urls.join(urls.MOSAICS, 'my-mosaic', 'quads', ''));
+      assert.equal(arg.url, urls.join(MOSAICS, 'my-mosaic', 'quads', ''));
       assert.deepEqual(arg.query, query);
 
       promise.then(function(got) {
@@ -226,7 +228,7 @@ describe('api/mosaics', function() {
 
       var arg = calls[0];
       assert.equal(arg.url, urls.join(
-          urls.MOSAICS, 'my-mosaic', 'quads', 'my-quad', 'scenes', ''));
+          MOSAICS, 'my-mosaic', 'quads', 'my-quad', 'scenes', ''));
 
       promise.then(function(got) {
         assert.lengthOf(got.features, 1);

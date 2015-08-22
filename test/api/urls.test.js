@@ -39,6 +39,9 @@ describe('api/urls', function() {
       }, {
         actual: urls.join('http://example.com', 'foo/', '/bar/', 'bam/'),
         expected: 'http://example.com/foo/bar/bam'
+      }, {
+        actual: urls.join('http://example.com', '', 'foo/', 'bam/', '', ''),
+        expected: 'http://example.com/foo/bam/'
       }];
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
@@ -70,6 +73,21 @@ describe('api/urls', function() {
         urls.join('http://example.com', new Date());
       }
       assert.throws(call, Error, 'join must be called with strings or numbers');
+    });
+
+    it('works with degenerate cases', function() {
+      var cases = [{
+        actual: urls.join(),
+        expected: ''
+      }, {
+        actual: urls.join('', ''),
+        expected: ''
+      }];
+
+      for (var i = 0, ii = cases.length; i < ii; ++i) {
+        var c = cases[i];
+        assert.deepEqual(c.actual, c.expected, 'case ' + i);
+      }
     });
 
   });

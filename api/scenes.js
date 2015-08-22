@@ -32,7 +32,7 @@ function get(scene, options) {
     };
   }
   var config = {
-    url: urls.join(urls.SCENES, scene.type, scene.id),
+    url: urls.scenes(scene.type, scene.id),
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
@@ -67,7 +67,7 @@ function search(query, options) {
   }
 
   var config = {
-    url: urls.join(urls.SCENES, type, ''),
+    url: urls.scenes(type, ''),
     query: query,
     terminator: options.terminator
   };
