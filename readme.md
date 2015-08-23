@@ -56,6 +56,11 @@ During development, you can start a file watcher that runs the linter and tests 
 
     npm start
 
+Releases are published from the master branch.  To cut a new minor release, do this:
+
+    npm version minor && git push --tags origin master && npm publish
+
+The `postpublish` script will update [the docs](http://planetlabs.github.io/planet-client-js/).
 
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
