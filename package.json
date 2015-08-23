@@ -18,7 +18,7 @@
     "test-debug": "mocha --debug-brk --recursive test",
     "start": "watchy --watch bin,examples,api,cli,test -- npm test",
     "postpublish": "npm run publish-doc",
-    "apidoc": "jsdoc --template jsdoc-json --destination build/api.json api",
+    "apidoc": "mkdir -p build && jsdoc --template jsdoc-json --destination build/api.json api",
     "doc": "npm run apidoc && node --harmony-generators tasks/build-docs.js",
     "start-doc": "watchy --watch doc,api,tasks -- npm run doc",
     "publish-doc": "npm run doc && gh-pages --dist build/doc"
