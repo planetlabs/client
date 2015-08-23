@@ -25,7 +25,7 @@ var util = require('./util');
 function get(mosaicId, quadId, options) {
   options = options || {};
   var config = {
-    url: urls.join(urls.MOSAICS, mosaicId, 'quads', quadId),
+    url: urls.mosaics(mosaicId, 'quads', quadId),
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
@@ -53,7 +53,7 @@ function get(mosaicId, quadId, options) {
 function search(mosaicId, query, options) {
   options = options || {};
   var config = {
-    url: urls.join(urls.MOSAICS, mosaicId, 'quads', ''),
+    url: urls.mosaics(mosaicId, 'quads', ''),
     query: query,
     terminator: options.terminator
   };
@@ -85,7 +85,7 @@ function search(mosaicId, query, options) {
 function scenes(mosaicId, quadId, options) {
   options = options || {};
   var config = {
-    url: urls.join(urls.MOSAICS, mosaicId, 'quads', quadId, 'scenes', ''),
+    url: urls.mosaics(mosaicId, 'quads', quadId, 'scenes', ''),
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {

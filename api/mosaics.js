@@ -24,7 +24,7 @@ var util = require('./util');
 function get(id, options) {
   options = options || {};
   var config = {
-    url: urls.join(urls.MOSAICS, id),
+    url: urls.mosaics(id),
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
@@ -51,7 +51,7 @@ function get(id, options) {
 function search(query, options) {
   options = options || {};
   var config = {
-    url: urls.MOSAICS,
+    url: urls.mosaics(),
     query: query,
     terminator: options.terminator
   };

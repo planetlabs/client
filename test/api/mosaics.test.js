@@ -9,6 +9,8 @@ var mosaics = require('../../api/mosaics');
 var urls = require('../../api/urls');
 var util = require('../../api/util');
 
+var MOSAICS = 'https://api.planet.com/v0/mosaics/';
+
 describe('api/mosaics', function() {
 
   var mosaic;
@@ -61,7 +63,7 @@ describe('api/mosaics', function() {
       var promise = mosaics.get('one');
       assert.lengthOf(calls, 1);
       var arg = calls[0];
-      assert.equal(arg.url, urls.join(urls.MOSAICS, 'one'));
+      assert.equal(arg.url, urls.join(MOSAICS, 'one'));
 
       promise.then(function(got) {
         assert.deepEqual(got, mosaic);
@@ -130,7 +132,7 @@ describe('api/mosaics', function() {
       var promise = mosaics.search(query);
 
       var arg = calls[0];
-      assert.equal(arg.url, urls.MOSAICS);
+      assert.equal(arg.url, MOSAICS);
       assert.deepEqual(arg.query, query);
 
       promise.then(function(got) {

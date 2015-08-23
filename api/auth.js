@@ -18,7 +18,7 @@ var urls = require('./urls');
  */
 function login(email, password) {
   var config = {
-    url: urls.LOGIN,
+    url: urls.login(),
     body: {
       email: email,
       password: password

@@ -8,14 +8,14 @@ var request = require('./request');
 var urls = require('./urls');
 
 function get(id) {
-  var url = urls.join(urls.WORKSPACES, id);
+  var url = urls.workspaces(id);
   return request.get(url).then(function(res) {
     return res.body;
   });
 }
 
 function search() {
-  var url = urls.WORKSPACES;
+  var url = urls.workspaces();
   return request.get(url).then(function(res) {
     return res.body;
   });
