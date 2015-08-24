@@ -60,3 +60,4 @@ function setKey(key) {
 exports.login = login;
 exports.logout = logout;
 exports.setKey = setKey;
+exports.getKey = store.getKey;
