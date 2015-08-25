@@ -6,8 +6,6 @@
 
 var querystring = require('querystring');
 
-var authStore = require('./auth-store');
-
 function addQueryParams(link, params) {
   var baseHash = link.split('#');
   var base = baseHash[0];
@@ -21,22 +19,6 @@ function addQueryParams(link, params) {
   }
   search = querystring.stringify(query);
   return parts[0] + '?' + search + (hash ? ('#' + hash) : '');
-}
-
-function augmentQuadLinks(quad) {
-  var key = authStore.getKey();
-
-  if (key) {
-    var links = quad.properties.links;
-    if (links.full) {
-      links.full = addQueryParams(links.full, {'api_key': key});
-    }
-    if (links.thumbnail) {
-      links.thumbnail = addQueryParams(links.thumbnail, {'api_key': key});
-    }
-  }
-
-  return quad;
 }
 
 /**
@@ -57,5 +39,4 @@ function assign(target, src) {
 }
 
 exports.addQueryParams = addQueryParams;
-exports.augmentQuadLinks = augmentQuadLinks;
 exports.assign = assign;
