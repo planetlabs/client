@@ -71,43 +71,6 @@ describe('api/mosaics', function() {
       }).catch(done);
     });
 
-    it('augments links if key is set', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: mosaic
-        });
-      };
-
-      var promise = mosaics.get('one');
-
-      promise.then(function(got) {
-        assert.equal(got.links.tiles,
-            'https://s{0-3}.example.com/v0/mosaics/one/{z}/{x}/{y}.png' +
-            '?api_key=my-key');
-        done();
-      }).catch(done);
-    });
-
-    it('can be told not to augment links', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: mosaic
-        });
-      };
-
-      var promise = mosaics.get('one', {augmentLinks: false});
-
-      promise.then(function(got) {
-        assert.equal(got.links.tiles,
-            'https://s{0-3}.example.com/v0/mosaics/one/{z}/{x}/{y}.png');
-        done();
-      }).catch(done);
-    });
-
   });
 
   describe('search()', function() {
@@ -139,45 +102,6 @@ describe('api/mosaics', function() {
         assert.instanceOf(got, Page);
         assert.lengthOf(got.data.mosaics, 1);
         assert.deepEqual(got.data.mosaics[0], mosaic);
-        done();
-      }).catch(done);
-    });
-
-    it('augments links if key is set', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: {
-            mosaics: [mosaic],
-            links: {}
-          }
-        });
-      };
-
-      mosaics.search({}).then(function(got) {
-        assert.equal(got.data.mosaics[0].links.tiles,
-            'https://s{0-3}.example.com/v0/mosaics/one/{z}/{x}/{y}.png?' +
-            'api_key=my-key');
-        done();
-      }).catch(done);
-    });
-
-    it('can be told not to augment links', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: {
-            mosaics: [mosaic],
-            links: {}
-          }
-        });
-      };
-
-      mosaics.search({}, {augmentLinks: false}).then(function(got) {
-        assert.equal(got.data.mosaics[0].links.tiles,
-            'https://s{0-3}.example.com/v0/mosaics/one/{z}/{x}/{y}.png');
         done();
       }).catch(done);
     });

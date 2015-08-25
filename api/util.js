@@ -39,22 +39,6 @@ function augmentQuadLinks(quad) {
   return quad;
 }
 
-function augmentMosaicLinks(mosaic) {
-  var key = authStore.getKey();
-
-  if (key) {
-    var links = mosaic.links;
-    if (links.tiles) {
-      links.tiles = addQueryParams(links.tiles, {'api_key': key});
-    }
-    if (links.quadmap) {
-      links.quadmap = addQueryParams(links.quadmap, {'api_key': key});
-    }
-  }
-
-  return mosaic;
-}
-
 /**
  * Simplified polyfill for ES6 Object.assign.
  * @param {Object} target The target object.
@@ -73,6 +57,5 @@ function assign(target, src) {
 }
 
 exports.addQueryParams = addQueryParams;
-exports.augmentMosaicLinks = augmentMosaicLinks;
 exports.augmentQuadLinks = augmentQuadLinks;
 exports.assign = assign;
