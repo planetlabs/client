@@ -237,45 +237,6 @@ describe('api/mosaics', function() {
       }).catch(done);
     });
 
-    it('augments links if key is set', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: {
-            features: [scene],
-            links: {}
-          }
-        });
-      };
-
-      quads.scenes('my-mosaic', 'my-quad').then(function(got) {
-        assert.equal(got.features[0].properties.links.full,
-            'http://example.com/?api_key=my-key#hash');
-        done();
-      }).catch(done);
-    });
-
-    it('can be told not to augment links', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: {
-            features: [scene],
-            links: {}
-          }
-        });
-      };
-
-      quads.scenes('my-mosaic', 'my-quad', {augmentLinks: false})
-        .then(function(got) {
-          assert.equal(got.features[0].properties.links.full,
-              'http://example.com/#hash');
-          done();
-        }).catch(done);
-    });
-
   });
 
 });

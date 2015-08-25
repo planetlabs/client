@@ -163,7 +163,7 @@ function main(opts) {
   return resolveQuery(opts)
     .then(function(query) {
       log.debug('query: %j', query);
-      return fetch(scenes.search(query, {augmentLinks: false}), [], opts.limit);
+      return fetch(scenes.search(query), [], opts.limit);
     }).then(function(features) {
       return JSON.stringify({
         type: 'FeatureCollection',
