@@ -142,6 +142,14 @@ describe('api/auth', function() {
     });
   });
 
+  describe('getKey()', function() {
+    it('gets any stored API key', function() {
+      var key = 'my-api-key';
+      auth.setKey(key);
+      assert.equal(auth.getKey(), key);
+    });
+  });
+
   describe('logout()', function() {
 
     it('clears any previously stored token', function() {
