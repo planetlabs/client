@@ -76,43 +76,6 @@ describe('api/mosaics', function() {
       }).catch(done);
     });
 
-    it('augments links if key is set', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: quad
-        });
-      };
-
-      var promise = quads.get('my-mosaic', 'my-quad');
-
-      promise.then(function(got) {
-        assert.equal(got.properties.links.full,
-            'https://example.com/mosaics/one/quads/two/full' +
-            '?api_key=my-key');
-        done();
-      }).catch(done);
-    });
-
-    it('can be told not to augment links', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: quad
-        });
-      };
-
-      var promise = quads.get('my-mosaic', 'my-quad', {augmentLinks: false});
-
-      promise.then(function(got) {
-        assert.equal(got.properties.links.full,
-            'https://example.com/mosaics/one/quads/two/full');
-        done();
-      }).catch(done);
-    });
-
   });
 
   describe('search()', function() {
@@ -144,45 +107,6 @@ describe('api/mosaics', function() {
         assert.instanceOf(got, Page);
         assert.lengthOf(got.data.features, 1);
         assert.deepEqual(got.data.features[0], quad);
-        done();
-      }).catch(done);
-    });
-
-    it('augments links if key is set', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: {
-            features: [quad],
-            links: {}
-          }
-        });
-      };
-
-      quads.search('my-mosaic', {}).then(function(got) {
-        assert.equal(got.data.features[0].properties.links.full,
-            'https://example.com/mosaics/one/quads/two/full' +
-            '?api_key=my-key');
-        done();
-      }).catch(done);
-    });
-
-    it('can be told not to augment links', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: {
-            features: [quad],
-            links: {}
-          }
-        });
-      };
-
-      quads.search('my-mosaic', {}, {augmentLinks: false}).then(function(got) {
-        assert.equal(got.data.features[0].properties.links.full,
-            'https://example.com/mosaics/one/quads/two/full');
         done();
       }).catch(done);
     });
@@ -235,45 +159,6 @@ describe('api/mosaics', function() {
         assert.deepEqual(got.features[0], scene);
         done();
       }).catch(done);
-    });
-
-    it('augments links if key is set', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: {
-            features: [scene],
-            links: {}
-          }
-        });
-      };
-
-      quads.scenes('my-mosaic', 'my-quad').then(function(got) {
-        assert.equal(got.features[0].properties.links.full,
-            'http://example.com/?api_key=my-key#hash');
-        done();
-      }).catch(done);
-    });
-
-    it('can be told not to augment links', function(done) {
-      auth.setKey('my-key');
-
-      request.get = function(config) {
-        return Promise.resolve({
-          body: {
-            features: [scene],
-            links: {}
-          }
-        });
-      };
-
-      quads.scenes('my-mosaic', 'my-quad', {augmentLinks: false})
-        .then(function(got) {
-          assert.equal(got.features[0].properties.links.full,
-              'http://example.com/#hash');
-          done();
-        }).catch(done);
     });
 
   });

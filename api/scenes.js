@@ -6,7 +6,6 @@
 var Page = require('./page');
 var request = require('./request');
 var urls = require('./urls');
-var util = require('./util');
 
 /**
  * Get metadata for a single scene.
@@ -14,8 +13,6 @@ var util = require('./util');
  *     a string is provided, it is assumed to be the id, and the type will be
  *     set to 'ortho'.
  * @param {Object} options Options.
- * @param {boolean} options.augmentLinks Add API key to links for image
- *     resources in the response.  True by default.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object>} A promise that resolves to scene metadata or is
@@ -36,9 +33,6 @@ function get(scene, options) {
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
-    if (options.augmentLinks !== false) {
-      util.augmentSceneLinks(res.body);
-    }
     return res.body;
   });
 }
@@ -47,8 +41,6 @@ function get(scene, options) {
  * Get a collection of scene metadata based on a query.
  * @param {Object} query A query object.
  * @param {Object} options Options.
- * @param {boolean} options.augmentLinks Add API key to links for image
- *     resources in the response.  True by default.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<module:planet-client/api/page~Page>} A promise that
@@ -72,12 +64,6 @@ function search(query, options) {
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
-    if (options.augmentLinks !== false) {
-      var scenes = res.body.features;
-      for (var i = 0, ii = scenes.length; i < ii; ++i) {
-        util.augmentSceneLinks(scenes[i]);
-      }
-    }
     return new Page(res.body, search);
   });
 }
