@@ -11,30 +11,29 @@ var url = require('url');
  * @param {Object} data Data with optional prev and next links.
  * @param {function(Object):Promise} factory Function that creates a promise of
  *     new data given a query object.
+ * @param {Object} options Query options.
  * @constructor
  * @ignore
  */
-function Page(data, factory) {
+function Page(data, factory, options) {
   var links = data.links;
 
   /**
    * Get the previous page.  If there is no previous page, `prev` will be
    * `null`.
-   * @param {Object} options Any request options.
    * @return {Promise.<module:planet-client/api/page~Page>} The previous page.
    * @method
    */
-  this.prev = !links.prev ? null : function(options) {
+  this.prev = !links.prev ? null : function() {
     return factory(url.parse(links.prev, true).query, options);
   };
 
   /**
    * Get the next page.  If there is no next page, `next` will be `null`.
-   * @param {Object} options Any request options.
    * @return {Promise.<module:planet-client/api/page~Page>} The next page.
    * @method
    */
-  this.next = !links.next ? null : function(options) {
+  this.next = !links.next ? null : function() {
     return factory(url.parse(links.next, true).query, options);
   };
 
