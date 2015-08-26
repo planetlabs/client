@@ -48,7 +48,7 @@ function search(query, options) {
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
-    return new Page(res.body, search);
+    return new Page(res.body, search, options);
   });
 }
 

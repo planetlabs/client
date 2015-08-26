@@ -50,7 +50,7 @@ function search(mosaicId, query, options) {
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
-    return new Page(res.body, search.bind(null, mosaicId));
+    return new Page(res.body, search.bind(null, mosaicId), options);
   });
 }
 

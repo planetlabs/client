@@ -63,11 +63,11 @@ describe('api/page', function() {
         }
       };
 
-      var page = new Page(data, spy);
+      var options = {};
+      var page = new Page(data, spy, options);
       assert.typeOf(page.next, 'function');
 
-      var options = {};
-      page.next(options);
+      page.next();
       assert.equal(spy.callCount, 1);
       var call = spy.getCall(0);
       assert.equal(call.args[1], options);
@@ -124,11 +124,11 @@ describe('api/page', function() {
         }
       };
 
-      var page = new Page(data, spy);
+      var options = {};
+      var page = new Page(data, spy, options);
       assert.typeOf(page.prev, 'function');
 
-      var options = {};
-      page.prev(options);
+      page.prev();
       assert.equal(spy.callCount, 1);
       var call = spy.getCall(0);
       assert.equal(call.args[1], options);
