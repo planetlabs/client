@@ -29,7 +29,18 @@ var defaultHeaders = {
  * @private
  */
 function parseConfig(config) {
-  var base = config.url ? url.parse(config.url, true) : {query: {}};
+  var base;
+  if (config.url) {
+    var resolved;
+    if (typeof location !== 'undefined') {
+      resolved = url.resolve(location.href, config.url);
+    } else {
+      resolved = config.url;
+    }
+    base = url.parse(resolved, true);
+  } else {
+    base = {query: {}};
+  }
   if (config.query) {
     config.path = url.format({
       pathname: base.pathname || config.pathname || '/',
