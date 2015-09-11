@@ -449,6 +449,14 @@ describe('api/request', function() {
     var parseConfig = req.parseConfig;
     var defaultHeaders = {accept: 'application/json'};
 
+    var existingLocation;
+    beforeEach(function() {
+      existingLocation = global.location;
+    });
+    afterEach(function() {
+      global.location = existingLocation;
+    });
+
     it('generates request options from a URL', function() {
       var config = {
         url: 'http://example.com'
@@ -459,6 +467,48 @@ describe('api/request', function() {
         port: '80',
         method: 'GET',
         path: '/',
+        headers: defaultHeaders
+      };
+
+      assert.deepEqual(parseConfig(config), options);
+    });
+
+    it('resolves a relative URL if location is defined', function() {
+      global.location = {
+        href: 'http://example.com/foo/bar.html'
+      };
+
+      var config = {
+        url: './relative/path/to/data.json'
+      };
+
+      var options = {
+        protocol: 'http:',
+        hostname: 'example.com',
+        port: '80',
+        method: 'GET',
+        path: '/foo/relative/path/to/data.json',
+        headers: defaultHeaders
+      };
+
+      assert.deepEqual(parseConfig(config), options);
+    });
+
+    it('works for root relative URLs', function() {
+      global.location = {
+        href: 'http://example.com/foo/bar.html'
+      };
+
+      var config = {
+        url: '/root/path/to/data.json'
+      };
+
+      var options = {
+        protocol: 'http:',
+        hostname: 'example.com',
+        port: '80',
+        method: 'GET',
+        path: '/root/path/to/data.json',
         headers: defaultHeaders
       };
 
