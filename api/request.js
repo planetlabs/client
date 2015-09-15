@@ -12,6 +12,7 @@ var url = require('url');
 var bole = require('bole');
 
 var assign = require('./util').assign;
+var util = require('./util');
 var authStore = require('./auth-store');
 var errors = require('./errors');
 
@@ -32,8 +33,10 @@ function parseConfig(config) {
   var base;
   if (config.url) {
     var resolved;
-    if (typeof location !== 'undefined') {
-      resolved = url.resolve(location.href, config.url);
+    var currentLocation = util.currentLocation();
+
+    if (typeof currentLocation !== 'undefined') {
+      resolved = url.resolve(currentLocation.href, config.url);
     } else {
       resolved = config.url;
     }

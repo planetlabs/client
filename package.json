@@ -13,8 +13,10 @@
   "main": "api/index.js",
   "scripts": {
     "pretest": "eslint bin examples api cli test",
-    "test": "nyc mocha --recursive test",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test-node": "nyc mocha --recursive test",
+    "test-browser": "mochify --require 'babel/polyfill' test/api/*.test.js",
+    "test": "npm run test-node && npm run test-browser",
+    "coverage": "nyc report --reporter=html",
     "test-debug": "mocha --debug-brk --recursive test",
     "start": "watchy --watch bin,examples,api,cli,test -- npm test",
     "postpublish": "npm run publish-doc",
@@ -32,6 +34,7 @@
     ]
   },
   "devDependencies": {
+    "babel": "^5.8.23",
     "browserify": "^7.0.3",
     "chai": "^3.0.0",
     "coveralls": "^2.11.3",
@@ -48,6 +51,7 @@
     "metalsmith-layouts": "^1.3.0",
     "minami": "^1.1.0",
     "mocha": "^2.2.5",
+    "mochify": "^2.13.0",
     "nyc": "^3.1.0",
     "sinon": "^1.15.3",
     "watchy": "^0.6.2"
