@@ -27,11 +27,22 @@ describe('api/request', function() {
       end: sinon.spy(),
       abort: sinon.spy()
     };
-    http.request = sinon.spy(function() {
+    var httpRequestMock = http.request = sinon.spy(function() {
       return mockRequest;
     });
-    https.request = sinon.spy(function() {
+    var httpsRequestMock = https.request = sinon.spy(function() {
       return mockRequest;
+    });
+
+    // When doing browser testing via mochify the http/s module required by
+    // request.js doesn't invoke the mock we've defined above.
+    httpRequestMock.get = http.get = sinon.spy(function() {
+      arguments[0].method = 'GET';
+      return httpRequestMock.apply(this, arguments);
+    });
+    httpsRequestMock.get = https.get = sinon.spy(function() {
+      arguments[0].method = 'GET';
+      return httpsRequestMock.apply(this, arguments);
     });
   });
 
@@ -473,46 +484,55 @@ describe('api/request', function() {
       assert.deepEqual(parseConfig(config), options);
     });
 
-    it('resolves a relative URL if location is defined', function() {
-      global.location = {
-        href: 'http://example.com/foo/bar.html'
-      };
+    describe('relative urls', function() {
+      var originalLocation = util.currentLocation;
 
-      var config = {
-        url: './relative/path/to/data.json'
-      };
+      beforeEach(function() {
+        util.currentLocation = function() {
+          return {
+            href: 'http://example.com/foo/bar.html'
+          };
+        };
+      });
 
-      var options = {
-        protocol: 'http:',
-        hostname: 'example.com',
-        port: '80',
-        method: 'GET',
-        path: '/foo/relative/path/to/data.json',
-        headers: defaultHeaders
-      };
+      afterEach(function() {
+        util.currentLocation = originalLocation;
+      });
 
-      assert.deepEqual(parseConfig(config), options);
-    });
+      it('resolves a relative URL if location is defined', function() {
+        var config = {
+          url: './relative/path/to/data.json'
+        };
 
-    it('works for root relative URLs', function() {
-      global.location = {
-        href: 'http://example.com/foo/bar.html'
-      };
+        var options = {
+          protocol: 'http:',
+          hostname: 'example.com',
+          port: '80',
+          method: 'GET',
+          path: '/foo/relative/path/to/data.json',
+          headers: defaultHeaders
+        };
 
-      var config = {
-        url: '/root/path/to/data.json'
-      };
+        assert.deepEqual(parseConfig(config), options);
+      });
 
-      var options = {
-        protocol: 'http:',
-        hostname: 'example.com',
-        port: '80',
-        method: 'GET',
-        path: '/root/path/to/data.json',
-        headers: defaultHeaders
-      };
+      it('works for root relative URLs', function() {
+        var config = {
+          url: '/root/path/to/data.json'
+        };
 
-      assert.deepEqual(parseConfig(config), options);
+        var options = {
+          protocol: 'http:',
+          hostname: 'example.com',
+          port: '80',
+          method: 'GET',
+          path: '/root/path/to/data.json',
+          headers: defaultHeaders
+        };
+
+        assert.deepEqual(parseConfig(config), options);
+      });
+
     });
 
     it('adds user provided headers', function() {
