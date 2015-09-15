@@ -2,7 +2,7 @@
 
 var http = require('http');
 var https = require('https');
-var stream = require('stream');
+var stream = require('readable-stream');
 
 var assert = require('chai').assert;
 var sinon = require('sinon');
