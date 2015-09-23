@@ -12,6 +12,7 @@ var url = require('url');
 var bole = require('bole');
 
 var assign = require('./util').assign;
+var util = require('./util');
 var authStore = require('./auth-store');
 var errors = require('./errors');
 
@@ -20,6 +21,8 @@ var log = bole(path.basename(__filename, '.js'));
 var defaultHeaders = {
   'accept': 'application/json'
 };
+
+var boundary = generateBoundary();
 
 /**
  * Generate request options provided a config object.
@@ -30,10 +33,13 @@ var defaultHeaders = {
  */
 function parseConfig(config) {
   var base;
+
   if (config.url) {
     var resolved;
-    if (typeof location !== 'undefined') {
-      resolved = url.resolve(location.href, config.url);
+    var currentLocation = util.currentLocation();
+
+    if (typeof currentLocation !== 'undefined') {
+      resolved = url.resolve(currentLocation.href, config.url);
     } else {
       resolved = config.url;
     }
@@ -64,6 +70,10 @@ function parseConfig(config) {
   if (config.body) {
     headers['content-type'] = 'application/json';
     headers['content-length'] = JSON.stringify(config.body).length;
+  }
+  if (config.file) {
+    headers['content-type'] = 'multipart/form-data; boundary=' + boundary;
+    headers['content-length'] = byteCount(toMultipartUpload(config.file));
   }
 
   if (config.withCredentials !== false) {
@@ -235,6 +245,9 @@ function request(config) {
     if (config.body) {
       client.write(JSON.stringify(config.body));
     }
+    if (config.file) {
+      client.write(toMultipartUpload(config.file));
+    }
     client.end();
 
     if (config.terminator) {
@@ -309,6 +322,53 @@ function put(config) {
  */
 function del(config) {
   return request(assign({method: 'DELETE'}, config));
+}
+
+/**
+ * Converts a file object to a multipart payload. The file is assumed to have
+ * textual content and to conform to the
+ * [File](https://developer.mozilla.org/en-US/docs/Web/API/File) interface.
+ *
+ * Note: this isn't binary-safe.
+ *
+ * @param {File} file A File-like object conforming to the HTML File api.
+ * @return {String} A multipart request body for a file upload.
+ */
+function toMultipartUpload(file) {
+  return [
+    '--' + boundary,
+    '\r\n',
+    'Content-Type: application/json; charset=utf-8',
+    '\r\n',
+    'Content-Disposition: form-data; name="file"; filename="' + file.name + '"',
+    '\r\n\r\n',
+    file.contents,
+    '\r\n',
+    '--' + boundary + '--'
+  ].join('');
+}
+
+/**
+ * Returns the length in bytes of a string.
+ * @param {String} source A string whose length we wish to count.
+ * @return {Number} The byte-length of a string
+ */
+function byteCount(source) {
+  return encodeURI(source).split(/%..|./).length - 1;
+}
+
+/**
+ * Returns a boundary, generating a new one and memoizing it if necessary.
+ *
+ * @return {String} A 24 character hex string string to use as a multipart
+ *   boundary.
+ */
+function generateBoundary() {
+  var newBoundary = [];
+  for (var i = 0; i < 24; i++) {
+    newBoundary.push(Math.floor(Math.random() * 16).toString(16));
+  }
+  return newBoundary.join('');
 }
 
 exports.get = get;

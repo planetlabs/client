@@ -38,5 +38,22 @@ function assign(target, src) {
   return target;
 }
 
+/**
+ * Get the current location. More readily mocked than using the global
+ * directly.
+ *
+ * @return {Location} The current location.
+ */
+function currentLocation() {
+  /* location is tricky to mock in the browser */
+  /* istanbul ignore if */
+  if (typeof location !== 'undefined') {
+    return location;
+  } else {
+    return undefined;
+  }
+}
+
 exports.addQueryParams = addQueryParams;
 exports.assign = assign;
+exports.currentLocation = currentLocation;
