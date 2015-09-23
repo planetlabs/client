@@ -121,6 +121,30 @@
     <hr>
     <h2><a href="../api/">API Modules</a></h2>
         <div class="module">
+          <a href="#module:planet-client/api/aois">
+            <code><span class="name">planet-client/api/aois</span></code>
+          </a>
+        </div>
+        <ul class="classes">
+        </ul>
+        <ul class="functions">
+          <li class="function">
+            <a href="#module:planet-client/api/aois~get">
+              <code><span class="name">get</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:planet-client/api/aois~list">
+              <code><span class="name">list</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:planet-client/api/aois~create">
+              <code><span class="name">create</span></code>
+            </a>
+          </li>
+        </ul>
+        <div class="module">
           <a href="#module:planet-client/api/auth">
             <code><span class="name">planet-client/api/auth</span></code>
           </a>
@@ -269,6 +293,227 @@
       The <code>planet-client</code> package is organized as a collection of modules that roughly follow the structure of the <a href="https://www.planet.com/docs/">HTTP API</a>.  The API provides access to individual <a href="#module:planet-client/api/scenes">scenes</a> from a variety of providers and <a href="#module:planet-client/api/mosaics">mosaics</a> of those scenes.
     </p>
   </section>
+    <section class="module separated" id="module:planet-client/api/aois">
+      <h1>
+        <a href="#module:planet-client/api/aois"><code><span class="name">planet-client/api/aois</span></code></a>
+      </h1>
+      <p class="description"><p>Provides methods for listing and creating areas of interest (AOI), or stored
+    geometries. AOIs allow you to query the scenes api without having to
+    transmit what may be very large geometries with every request.</p>
+    <p>After creating an AOI, we&#39;ll respond with a <code>json</code> payload containing an
+    <code>id</code> as well as the resulting <code>geojson</code>. The scenes api can then be queried
+    using the <code>aoi</code> parameter and setting it to the id of your uploaded AOI.</p>
+    </p>
+      <hr>
+      <h2><code>var mod = require('planet-client/api/aois')</code></h2>
+    
+    
+        <h3>Functions</h3>
+          <div class="function">
+            <h2 id="module:planet-client/api/aois~get">
+              <a href="#module:planet-client/api/aois~get">
+                <code>
+                  mod.<span class="name">get</span>(id, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Obtains the metadata for a single uploaded geometry. The response includes
+            the geometry inside the returned object&#39;s <code>geojson</code> field.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">id</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>A mosaic identifier.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>Options.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.terminator</code>
+                    </td>
+                    <td>
+                      <code class="type">function</code>
+               <span class="description"><p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Promise.&lt;Object&gt;</code>
+              </td>
+                  <td><p>A promise that resolves to aoi metadata or is
+                  rejected with any error.  See the <a href="#module:planet-client/api/errors"><code>errors</code>
+                  module</a> for a list of the possible
+                  error types.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:planet-client/api/aois~list">
+              <a href="#module:planet-client/api/aois~list">
+                <code>
+                  mod.<span class="name">list</span>(id, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>List all of your previously uploaded AOIs. Note that this does not include
+            the geometry geojson for each AOI.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">id</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>An AOI public id.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>Options.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.terminator</code>
+                    </td>
+                    <td>
+                      <code class="type">function</code>
+               <span class="description"><p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Promise.&lt;Array.&lt;Object&gt;&gt;</code>
+              </td>
+                  <td><p>A promise that resolves to an array of AOI
+                  metadata or is rejected with any error.  See the [<code>errors</code> module]
+                  (#module:planet-client/api/errors) for a list of the possible error
+                  types.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:planet-client/api/aois~create">
+              <a href="#module:planet-client/api/aois~create">
+                <code>
+                  mod.<span class="name">create</span>(name, file, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a new AOI using uploaded json data.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">name</code>
+                    </td>
+                    <td>
+                      <code class="type">String</code>
+               <span class="description"><p>The name of the AOI.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">file</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>An object representing a file and it&#39;s contents.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">file.name</code>
+                    </td>
+                    <td>
+                      <code class="type">String</code>
+               <span class="description"><p>The name of the originally uploaded file.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">file.contents</code>
+                    </td>
+                    <td>
+                      <code class="type">String</code>
+               <span class="description"><p>The file&#39;s contents as a string.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>Options.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.terminator</code>
+                    </td>
+                    <td>
+                      <code class="type">function</code>
+               <span class="description"><p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Promise.&lt;Array.&lt;Object&gt;&gt;</code>
+              </td>
+                  <td><p>A promise that resolves to an array of AOI
+                  metadata or is rejected with any error.  See the [<code>errors</code> module]
+                  (#module:planet-client/api/errors) for a list of the possible error
+                  types.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+    
+    </section>
     <section class="module separated" id="module:planet-client/api/auth">
       <h1>
         <a href="#module:planet-client/api/auth"><code><span class="name">planet-client/api/auth</span></code></a>
