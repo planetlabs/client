@@ -12,6 +12,7 @@ var assign = require('../../api/util').assign;
 var errors = require('../../api/errors');
 var req = require('../../api/request');
 var util = require('../../api/util');
+var createMockRequest = require('../util').createMockRequest;
 
 chai.config.truncateThreshold = 0;
 var assert = chai.assert;
@@ -23,11 +24,7 @@ describe('api/request', function() {
   var mockRequest = null;
 
   beforeEach(function() {
-    mockRequest = {
-      _read: sinon.spy(),
-      end: sinon.spy(),
-      abort: sinon.spy()
-    };
+    mockRequest = createMockRequest();
     var httpRequestMock = http.request = sinon.spy(function() {
       return mockRequest;
     });
@@ -313,6 +310,25 @@ describe('api/request', function() {
       callback(response);
       response.emit('data', JSON.stringify(body));
       response.emit('end');
+    });
+
+    it('rejects with ClientError when there is a client error', function(done) {
+
+      mockRequest.on = function(event, callback) {
+        setTimeout(function() {
+          callback(new Error('Network Error'));
+        }, 10);
+      };
+
+      var promise = request({url: 'http://example.com'});
+
+      promise.then(function(obj) {
+        done(new Error('Expected promise to be rejected'));
+      }, function(err) {
+        assert.instanceOf(err, errors.ClientError);
+        assert.equal(err.message, 'Network Error');
+        done();
+      }).catch(done);
     });
 
     it('accepts a terminator for aborting requests', function(done) {
