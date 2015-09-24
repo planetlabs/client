@@ -242,6 +242,9 @@ function request(config) {
   return new Promise(function(resolve, reject) {
     var handler = createResponseHandler(resolve, reject, info);
     var client = protocol.request(options, handler);
+    client.on('error', function(err) {
+      reject(new errors.ClientError(err.message));
+    });
     if (config.body) {
       client.write(JSON.stringify(config.body));
     }
