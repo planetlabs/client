@@ -7,6 +7,7 @@ var stream = require('readable-stream');
 var assert = require('chai').assert;
 var sinon = require('sinon');
 
+var createMockRequest = require('../util').createMockRequest;
 var auth = require('../../api/auth');
 var authStore = require('../../api/auth-store');
 var errors = require('../../api/errors');
@@ -22,11 +23,7 @@ describe('api/auth', function() {
       'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
 
   beforeEach(function() {
-    mockRequest = {
-      write: sinon.spy(),
-      end: sinon.spy(),
-      abort: sinon.spy()
-    };
+    mockRequest = createMockRequest();
     http.request = sinon.spy(function() {
       return mockRequest;
     });

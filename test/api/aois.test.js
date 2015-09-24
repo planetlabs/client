@@ -5,6 +5,7 @@ var http = require('http');
 var https = require('https');
 var sinon = require('sinon');
 var stream = require('readable-stream');
+var createMockRequest = require('../util').createMockRequest;
 
 var request = require('../../api/request');
 var aois = require('../../api/aois');
@@ -47,11 +48,7 @@ describe('api/aois', function() {
   describe('create()', function() {
 
     beforeEach(function() {
-      mockRequest = {
-        write: sinon.spy(),
-        end: sinon.spy(),
-        abort: sinon.spy()
-      };
+      mockRequest = createMockRequest();
       http.request = sinon.spy(function() {
         return mockRequest;
       });

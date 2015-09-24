@@ -122,9 +122,23 @@ function AbortedRequest(message) {
 AbortedRequest.prototype = new Error();
 AbortedRequest.prototype.name = 'AbortedRequest';
 
+/**
+ * An error generated on the client side, before issuing a request.
+ * @param {string} message Error message.
+ * @constructor
+ * @ignore
+ */
+function ClientError(message) {
+  this.message = message;
+  this.stack = (new Error()).stack;
+}
+ClientError.prototype = new Error();
+ClientError.prototype.name = 'ClientError';
+
 exports.ResponseError = ResponseError;
 exports.BadRequest = BadRequest;
 exports.Unauthorized = Unauthorized;
 exports.Forbidden = Forbidden;
 exports.UnexpectedResponse = UnexpectedResponse;
 exports.AbortedRequest = AbortedRequest;
+exports.ClientError = ClientError;
