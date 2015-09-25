@@ -48,19 +48,33 @@ To get set up, clone the repository and install the development dependencies:
     cd planet-client-js
     npm install
 
-Run the tests to ensure any changes meet the coding style and maintain the expected functionality:
+#### Running the tests
+
+The tests are run in a browser and in Node.  You can run the linter and all tests once with the following:
 
     npm test
 
-During development, you can start a file watcher that runs the linter and tests with any file changes:
+To start a file watcher that runs the linter and tests with any file changes:
 
     npm start
+
+With the `npm start` task running, you can attach any number of browsers to the [test server](http://localhost:9876/).  Every time you attach a new browser, tests run in all browsers.  To debug any failing test, visit the test runner [debug page](http://localhost:9876/debug.html) and open your development console.
+
+#### Building the docs
+
+The project docs are generated from templates in the `doc` directory.  The API docs are generated based on annotations in comments throughout the `api` modules.  You can build the docs with the following task:
+
+    npm run doc
+
+If you are making frequent changes and want to rebuild the docs with each change, use the `npm run start-doc` task.  You can view the doc output in the `build/doc` directory.
+
+#### Publishing a release
 
 Releases are published from the master branch.  To cut a new minor release, do this:
 
     npm version minor && git push --tags origin master && npm publish
 
-The `postpublish` script will update [the docs](http://planetlabs.github.io/planet-client-js/).
+The `postpublish` script will update the hosted version of [the docs](http://planetlabs.github.io/planet-client-js/).
 
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
