@@ -4,7 +4,6 @@ function createMockRequest() {
   return {
     write: spy(),
     end: spy(),
-    abort: spy(),
     on: spy()
   };
 }

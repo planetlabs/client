@@ -55,14 +55,6 @@ function parseConfig(config) {
   }
   config = assign(base, config);
 
-  // TODO: fix default port handling in http-browserify
-  var defaultPort;
-  if (config.protocol && config.protocol.indexOf('https') === 0) {
-    defaultPort = '443';
-  } else {
-    defaultPort = '80';
-  }
-
   var headers = assign({}, defaultHeaders);
   for (var key in config.headers) {
     headers[key.toLowerCase()] = config.headers[key];
@@ -89,11 +81,14 @@ function parseConfig(config) {
   var options = {
     protocol: config.protocol,
     hostname: config.hostname,
-    port: config.port || defaultPort,
     method: config.method || 'GET',
     path: config.path,
     headers: headers
   };
+
+  if (config.port) {
+    options.port = config.port;
+  }
 
   if ('withCredentials' in config) {
     options.withCredentials = config.withCredentials;
@@ -256,15 +251,7 @@ function request(config) {
     if (config.terminator) {
       config.terminator(function() {
         if (!info.aborted && !info.completed) {
-
           info.aborted = true;
-          if (client.abort) {
-            client.abort();
-          } else if (client.xhr && client.xhr.abort) {
-            // TODO: file a http-browserify issue for lack of abort
-            client.xhr.abort();
-          }
-
           reject(new errors.AbortedRequest('Request aborted'));
         }
       });
