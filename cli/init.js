@@ -87,12 +87,12 @@ function writeKey(key) {
  */
 function main(opts) {
   return assertConfigNotFound().then(function() {
-      return promptForMissing(opts);
-    }).then(function(fullOpts) {
-      return auth.login(fullOpts.email, fullOpts.password);
-    }).then(function() {
-      return writeKey(authStore.getKey());
-    });
+    return promptForMissing(opts);
+  }).then(function(fullOpts) {
+    return auth.login(fullOpts.email, fullOpts.password);
+  }).then(function() {
+    return writeKey(authStore.getKey());
+  });
 }
 
 exports.description = 'Initialize the Planet CLI';
