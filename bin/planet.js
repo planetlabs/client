@@ -83,9 +83,12 @@ function runner(commandName) {
     auth.setKey(options.key);
     command.main(options).then(function(output) {
       if (output) {
-        process.stdout.write(output);
+        process.stdout.write(output, function() {
+          process.exit(0);
+        });
+      } else {
+        process.exit(0);
       }
-      process.exit(0);
     }).catch(function(err) {
       log.error(err.message);
       if (err instanceof errors.ResponseError) {
