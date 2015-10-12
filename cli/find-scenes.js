@@ -132,18 +132,18 @@ function resolveQuery(opts) {
 }
 
 /**
- * Recursively fetch all pages until the limit is reached.
+ * Recursively request all pages until the limit is reached.
  * @param {Promise.<module:planet-client/api/page~Page>} promise A promise that
  *     resolves to a page of scenes.
  * @param {Array} features An array of scene metadata.
  * @param {number} limit The limit.
  * @return {Promise.<Array>} An array that resolves to an array of scenes.
  */
-function fetch(promise, features, limit) {
+function keepRequesting(promise, features, limit) {
   return promise.then(function(page) {
     features = features.concat(page.data.features);
     if (page.next && features.length < limit) {
-      return fetch(page.next(), features, limit);
+      return keepRequesting(page.next(), features, limit);
     } else {
       if (features.length > limit) {
         features.length = limit;
@@ -163,7 +163,7 @@ function main(opts) {
   return resolveQuery(opts)
     .then(function(query) {
       log.debug('query: %j', query);
-      return fetch(scenes.search(query), [], opts.limit);
+      return keepRequesting(scenes.search(query), [], opts.limit);
     }).then(function(features) {
       return JSON.stringify({
         type: 'FeatureCollection',
@@ -206,7 +206,7 @@ exports.description = 'Find scenes';
 exports.main = main;
 exports.options = options;
 
-exports.fetch = fetch;
+exports.keepRequesting = keepRequesting;
 exports.parseAcquired = parseAcquired;
 exports.parseWhere = parseWhere;
 exports.resolveIntersects = resolveIntersects;

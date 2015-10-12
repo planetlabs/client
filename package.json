@@ -34,7 +34,7 @@
     ]
   },
   "devDependencies": {
-    "browserify": "^7.0.3",
+    "browserify": "^11.2.0",
     "chai": "^3.0.0",
     "coveralls": "^2.11.3",
     "envify": "^3.2.0",

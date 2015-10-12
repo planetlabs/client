@@ -69,7 +69,6 @@ describe('api/request', function() {
       assert.deepEqual(call.args[0], {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'GET',
         path: '/',
         headers: {accept: 'application/json'}
@@ -342,29 +341,6 @@ describe('api/request', function() {
         done(new Error('Expected promise to be rejected'));
       }).catch(function(err) {
         assert.instanceOf(err, errors.AbortedRequest);
-        assert.equal(mockRequest.abort.callCount, 1);
-        done();
-      });
-    });
-
-    it('calls request.xhr.abort() if request.abort is absent', function(done) {
-      var promise = request({
-        url: 'http//example.com',
-        terminator: function(abort) {
-          setTimeout(abort, 10);
-        }
-      });
-
-      delete mockRequest.abort;
-      mockRequest.xhr = {
-        abort: sinon.spy()
-      };
-
-      promise.then(function() {
-        done(new Error('Expected promise to be rejected'));
-      }).catch(function(err) {
-        assert.instanceOf(err, errors.AbortedRequest);
-        assert.equal(mockRequest.xhr.abort.callCount, 1);
         done();
       });
     });
@@ -387,7 +363,6 @@ describe('api/request', function() {
       }).catch(function(err) {
         rejected = true;
         assert.instanceOf(err, errors.AbortedRequest);
-        assert.equal(mockRequest.abort.callCount, 1);
       });
 
       assert.equal(http.request.callCount, 1);
@@ -484,7 +459,6 @@ describe('api/request', function() {
       var options = {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'GET',
         path: '/',
         headers: defaultHeaders
@@ -516,7 +490,6 @@ describe('api/request', function() {
         var options = {
           protocol: 'http:',
           hostname: 'example.com',
-          port: '80',
           method: 'GET',
           path: '/foo/relative/path/to/data.json',
           headers: defaultHeaders
@@ -533,7 +506,6 @@ describe('api/request', function() {
         var options = {
           protocol: 'http:',
           hostname: 'example.com',
-          port: '80',
           method: 'GET',
           path: '/root/path/to/data.json',
           headers: defaultHeaders
@@ -554,26 +526,9 @@ describe('api/request', function() {
       var options = {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'GET',
         path: '/',
         headers: util.assign({}, defaultHeaders, config.headers)
-      };
-
-      assert.deepEqual(parseConfig(config), options);
-    });
-
-    it('uses the correct default port for https', function() {
-      var config = {
-        url: 'https://example.com'
-      };
-      var options = {
-        protocol: 'https:',
-        hostname: 'example.com',
-        port: '443',
-        method: 'GET',
-        path: '/',
-        headers: defaultHeaders
       };
 
       assert.deepEqual(parseConfig(config), options);
@@ -586,7 +541,6 @@ describe('api/request', function() {
       var options = {
         protocol: 'https:',
         hostname: 'example.com',
-        port: '443',
         method: 'GET',
         path: '/page/1?foo=bar',
         headers: defaultHeaders
@@ -628,7 +582,6 @@ describe('api/request', function() {
       var options = {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'POST',
         path: '/page',
         headers: headers
@@ -644,7 +597,6 @@ describe('api/request', function() {
       var options = {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'GET',
         path: '/page?foo=bar',
         headers: defaultHeaders
@@ -663,7 +615,6 @@ describe('api/request', function() {
       var options = {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'GET',
         path: '/page?foo=bar%20bam',
         headers: defaultHeaders
@@ -682,7 +633,6 @@ describe('api/request', function() {
       var options = {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'GET',
         path: '/page?foo=bar&bam=baz',
         headers: defaultHeaders
@@ -701,7 +651,6 @@ describe('api/request', function() {
       var options = {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'GET',
         path: '/?foo=bam',
         headers: defaultHeaders
@@ -718,7 +667,6 @@ describe('api/request', function() {
       var options = {
         protocol: 'http:',
         hostname: 'example.com',
-        port: '80',
         method: 'GET',
         path: '/',
         headers: defaultHeaders,
