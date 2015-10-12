@@ -58,46 +58,46 @@ function organizeDocs(docs) {
     var doc = docs[i];
     var module, cls;
     switch (doc.kind) {
-      case 'module':
-        module = getNamed(doc.name, modules);
-        assign(module, doc);
-        break;
-      case 'class':
-        module = getModule(doc.longname, modules);
+    case 'module':
+      module = getNamed(doc.name, modules);
+      assign(module, doc);
+      break;
+    case 'class':
+      module = getModule(doc.longname, modules);
+      if (!module.classes) {
+        module.classes = [];
+      }
+      cls = getClass(doc.longname, module.classes);
+      assign(cls, doc);
+      break;
+    case 'member':
+      module = getModule(doc.longname, modules);
+      cls = getClass(doc.memberof, module.classes);
+      if (!cls.members) {
+        cls.members = [];
+      }
+      cls.members.push(doc);
+      break;
+    case 'function':
+      module = getModule(doc.longname, modules);
+      if (doc.scope === 'instance') {
         if (!module.classes) {
           module.classes = [];
         }
-        cls = getClass(doc.longname, module.classes);
-        assign(cls, doc);
-        break;
-      case 'member':
-        module = getModule(doc.longname, modules);
         cls = getClass(doc.memberof, module.classes);
-        if (!cls.members) {
-          cls.members = [];
+        if (!cls.methods) {
+          cls.methods = [];
         }
-        cls.members.push(doc);
-        break;
-      case 'function':
-        module = getModule(doc.longname, modules);
-        if (doc.scope === 'instance') {
-          if (!module.classes) {
-            module.classes = [];
-          }
-          cls = getClass(doc.memberof, module.classes);
-          if (!cls.methods) {
-            cls.methods = [];
-          }
-          cls.methods.push(doc);
-        } else {
-          if (!module.functions) {
-            module.functions = [];
-          }
-          module.functions.push(doc);
+        cls.methods.push(doc);
+      } else {
+        if (!module.functions) {
+          module.functions = [];
         }
-        break;
-      default:
-        //pass
+        module.functions.push(doc);
+      }
+      break;
+    default:
+      //pass
     }
   }
   return modules;
