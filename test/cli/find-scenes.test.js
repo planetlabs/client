@@ -8,7 +8,7 @@ var util = require('../../cli/util');
 
 describe('cli/find-scenes', function() {
 
-  describe('fetch()', function() {
+  describe('keepRequesting()', function() {
 
     var numPages = 10;
     var fetched = 0;
@@ -36,7 +36,7 @@ describe('cli/find-scenes', function() {
     it('concatenates pages of features', function(done) {
       var promise = Promise.resolve(makePage());
 
-      findScenes.fetch(promise, [], 100).then(function(features) {
+      findScenes.keepRequesting(promise, [], 100).then(function(features) {
         assert.lengthOf(features, 20);
         done();
       }).catch(done);
@@ -45,7 +45,7 @@ describe('cli/find-scenes', function() {
     it('stops when the limit is reached', function(done) {
       var promise = Promise.resolve(makePage());
 
-      findScenes.fetch(promise, [], 11).then(function(features) {
+      findScenes.keepRequesting(promise, [], 11).then(function(features) {
         assert.lengthOf(features, 11);
         done();
       }).catch(done);

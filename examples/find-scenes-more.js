@@ -13,17 +13,17 @@ var query = {
 var scenes = [];
 var limit = 500;
 
-function fetch(promise) {
+function keepRequesting(promise) {
   return promise.then(function(page) {
     scenes = scenes.concat(page.data.features);
     console.log('got ' + scenes.length + ' scenes');
     if (page.next && scenes.length < limit) {
-      return fetch(page.next());
+      return keepRequesting(page.next());
     }
   });
 }
 
-fetch(planet.scenes.search(query))
+keepRequesting(planet.scenes.search(query))
   .then(function() {
     console.log('done fetching');
   }).catch(function(err) {
