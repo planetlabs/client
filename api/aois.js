@@ -44,9 +44,9 @@ function get(id, options) {
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object[]>} A promise that resolves to an array of AOI
- *     metadata or is rejected with any error.  See the [`errors` module]
- *     (#module:planet-client/api/errors) for a list of the possible error
- *     types.
+ *     metadata or is rejected with any error.  See the [`errors`
+ *     module](#module:planet-client/api/errors) for a list of the possible
+ *     error types.
  * @see {@link get} to obtain an individual AOI's GeoJSON and metadata.
  */
 function list(id, options) {
@@ -70,9 +70,9 @@ function list(id, options) {
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object[]>} A promise that resolves to an array of AOI
- *     metadata or is rejected with any error.  See the [`errors` module]
- *     (#module:planet-client/api/errors) for a list of the possible error
- *     types.
+ *     metadata or is rejected with any error.  See the [`errors`
+ *     module](#module:planet-client/api/errors) for a list of the possible
+ *     error types.
  */
 function create(name, file, options) {
   options = options || {};
