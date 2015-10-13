@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "browserify": "^11.2.0",
-    "chai": "^3.0.0",
+    "chai": "^3.3.0",
     "coveralls": "^2.11.3",
     "eslint": "^1.6.0",
     "eslint-config-planet": "^4.0.0",
