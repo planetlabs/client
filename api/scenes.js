@@ -64,7 +64,10 @@ function search(query, options) {
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
-    return new Page(res.body, search, options);
+    return new Page(res.body, function(pageQuery, opts) {
+      pageQuery.type = type;
+      return search(pageQuery, opts);
+    }, options);
   });
 }
 

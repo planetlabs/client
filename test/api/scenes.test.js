@@ -168,6 +168,38 @@ describe('api/scenes', function() {
       }).catch(done);
     });
 
+    it('maintains the provider when paging', function(done) {
+      var calls = [];
+      var provider = 'landsat';
+
+      request.get = function(config) {
+        calls.push(config);
+        return Promise.resolve({
+          body: {
+            features: [scene],
+            links: {
+              next: 'http://example.com/foo/'
+            }
+          }
+        });
+      };
+
+      var query = {
+        'acquired.lte': new Date().toISOString(),
+        type: provider
+      };
+
+      var promise = scenes.search(query);
+
+      promise.then(function(page) {
+        page.next().then(function(nextPage) {
+          assert.lengthOf(calls, 2);
+          assert.equal(calls[1].url, urls.join(SCENES, provider, ''));
+          done();
+        }).catch(done);
+      }).catch(done);
+    });
+
   });
 
 });
