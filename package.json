@@ -19,6 +19,8 @@
     "test": "npm run test-node && npm run test-browser-once",
     "start": "npm run test-browser-forever & watchy --watch bin,examples,api,cli,test -- bash -c '(npm run pretest && npm run test-node)'",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dist": "mkdir -p build/dist && browserify api/index.js --standalone planet | uglifyjs --compress > build/dist/planet.js",
+    "deploy": "npm run dist && surge --domain planet-client.surge.sh --project build/dist",
     "postpublish": "npm run publish-doc",
     "apidoc": "mkdir -p build && jsdoc --template jsdoc-json --destination build/api.json api",
     "doc": "npm run apidoc && node tasks/build-docs.js",
@@ -56,6 +58,7 @@
     "nyc": "^3.2.2",
     "readable-stream": "^2.0.2",
     "sinon": "^1.17.1",
+    "surge": "^0.16.0",
     "watchy": "^0.6.5"
   },
   "dependencies": {
