@@ -12,7 +12,7 @@
   "license": "Apache-2.0",
   "main": "api/index.js",
   "scripts": {
-    "pretest": "eslint bin examples api cli test",
+    "pretest": "eslint bin examples api cli test tasks",
     "test-node": "nyc mocha --recursive test",
     "test-browser-once": "karma start test/karma.config.js --single-run",
     "test-browser-forever": "karma start test/karma.config.js",
