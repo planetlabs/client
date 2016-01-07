@@ -61,13 +61,13 @@
     "watchy": "^0.6.5"
   },
   "dependencies": {
-    "batch": "^0.5.2",
+    "batch": "^0.5.3",
     "bistre": "^1.0.1",
     "bole": "^2.0.0",
-    "envify": "^3.2.0",
+    "envify": "^3.4.0",
     "jwt-claims": "^1.0.1",
-    "os-homedir": "^1.0.0",
+    "os-homedir": "^1.0.1",
     "prompt": "^0.2.14",
-    "yargs": "^3.27.0"
+    "yargs": "^3.31.0"
   }
 }
