@@ -1,0 +1,6 @@
+/.nyc_output/
+/build/
+/examples/
+/doc/
+/tasks/
+/test/
