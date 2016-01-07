@@ -14,6 +14,12 @@ The `planet-client` package provides a library for use in your application and a
 
 The `planet-client` package can be used in a Node based project or in the browser with a CommonJS module loader (like [Browserify](http://browserify.org/) or [Webpack](http://webpack.github.io/)).
 
+It is also possible to load a standalone bundle of the library in a script tag.  Without a module loader, this will create a global `planet` object:
+
+    <script src="https://npmcdn.com/planet-client/dist/planet.js"></script>
+
+This will redirect to the most recent release.  To avoid the redirect, you can include a specific version number (e.g. https://npmcdn.com/planet-client@1.2.0/dist/planet.js).
+
 The library requires a global [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) implementation.  This comes with Node >= 0.12 and [modern browsers](http://caniuse.com/#search=promise).  To use `planet-client` in an environment without `Promise`, you can [use a polyfill](https://www.google.com/search?q=promise+polyfill).
 
 See the `examples` directory for example use of the library.
