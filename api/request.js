@@ -27,8 +27,7 @@ var boundary = generateBoundary();
 /**
  * Generate request options provided a config object.
  * @param {Object} config A request config.
- * @return {Promise<IncomingMessage>} A promise that resolves to a successful
- *     response.  Any non 200 status will result in a rejection.
+ * @return {Object} Options for the request function.
  * @private
  */
 function parseConfig(config) {
@@ -126,11 +125,13 @@ function errorCheck(response, body) {
  * @param {Object} info Request storage object with aborted and completed
  *     properties.  If info.stream is true, resolve will be called with the
  *     response stream.
+ * @param {function(Promise)} makeRequest Function that creates a promise for
+ *     a response.
  * @return {function(IncomingMessage)} A function that handles an http(s)
  *     incoming message.
  * @private
  */
-function createResponseHandler(resolve, reject, info) {
+function createResponseHandler(resolve, reject, info, makeRequest) {
   return function(response) {
     var status = response.statusCode;
     if (status === 302) {
@@ -181,7 +182,12 @@ function createResponseHandler(resolve, reject, info) {
       err = errorCheck(response, body) || err;
 
       if (err) {
-        reject(err);
+        if (info.retries && err instanceof errors.UnexpectedResponse) {
+          --info.retries;
+          makeRequest().then(resolve).catch(reject);
+        } else {
+          reject(err);
+        }
       } else {
         resolve({
           response: response,
@@ -212,6 +218,7 @@ function createResponseHandler(resolve, reject, info) {
  *     token will be added to an authorization header.
  * @param {boolean} config.withCredentials - Determines whether
  *     `XMLHttpRequest.withCredentials` is set (`true` by default).
+ * @param {number} config.retries - Number of retries (`0` by default).
  * @return {Promise<Object>} A promise that resolves on a successful
  *     response.  The object includes response and body properties, where the
  *     body is a JSON decoded object representing the response body.  Any
@@ -219,6 +226,7 @@ function createResponseHandler(resolve, reject, info) {
  */
 function request(config) {
   var options = parseConfig(config);
+  var retries = Number(config.retries) || 0;
 
   var protocol;
   if (options.protocol && options.protocol.indexOf('https') === 0) {
@@ -231,32 +239,36 @@ function request(config) {
   var info = {
     aborted: false,
     completed: false,
-    stream: config.stream
+    stream: config.stream,
+    retries: retries
   };
 
-  return new Promise(function(resolve, reject) {
-    var handler = createResponseHandler(resolve, reject, info);
-    var client = protocol.request(options, handler);
-    client.on('error', function(err) {
-      reject(new errors.ClientError(err.message));
-    });
-    if (config.body) {
-      client.write(JSON.stringify(config.body));
-    }
-    if (config.file) {
-      client.write(toMultipartUpload(config.file));
-    }
-    client.end();
-
-    if (config.terminator) {
-      config.terminator(function() {
-        if (!info.aborted && !info.completed) {
-          info.aborted = true;
-          reject(new errors.AbortedRequest('Request aborted'));
-        }
+  function makeRequest() {
+    return new Promise(function(resolve, reject) {
+      var handler = createResponseHandler(resolve, reject, info, makeRequest);
+      var client = protocol.request(options, handler);
+      client.on('error', function(err) {
+        reject(new errors.ClientError(err.message));
       });
-    }
-  });
+      if (config.body) {
+        client.write(JSON.stringify(config.body));
+      }
+      if (config.file) {
+        client.write(toMultipartUpload(config.file));
+      }
+      client.end();
+
+      if (config.terminator) {
+        config.terminator(function() {
+          if (!info.aborted && !info.completed) {
+            info.aborted = true;
+            reject(new errors.AbortedRequest('Request aborted'));
+          }
+        });
+      }
+    });
+  }
+  return makeRequest();
 }
 
 /**
