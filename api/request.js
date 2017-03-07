@@ -4,31 +4,21 @@
  * @private
  */
 
-var http = require('http');
-var https = require('https');
-var path = require('path');
 var url = require('url');
-
-var bole = require('bole');
-
 var assign = require('./util').assign;
 var util = require('./util');
 var authStore = require('./auth-store');
 var errors = require('./errors');
 
-var log = bole(path.basename(__filename, '.js'));
-
 var defaultHeaders = {
   'accept': 'application/json'
 };
 
-var boundary = generateBoundary();
-
 /**
  * Generate request options provided a config object.
  * @param {Object} config A request config.
- * @return {Promise<IncomingMessage>} A promise that resolves to a successful
- *     response.  Any non 200 status will result in a rejection.
+ * @return {Object} An object with method, headers, url, and withCredentials
+ * properties.
  * @private
  */
 function parseConfig(config) {
@@ -61,11 +51,6 @@ function parseConfig(config) {
   }
   if (config.body) {
     headers['content-type'] = 'application/json';
-    headers['content-length'] = JSON.stringify(config.body).length;
-  }
-  if (config.file) {
-    headers['content-type'] = 'multipart/form-data; boundary=' + boundary;
-    headers['content-length'] = byteCount(toMultipartUpload(config.file));
   }
 
   if (config.withCredentials !== false) {
@@ -79,16 +64,10 @@ function parseConfig(config) {
   }
 
   var options = {
-    protocol: config.protocol,
-    hostname: config.hostname,
     method: config.method || 'GET',
-    path: config.path,
-    headers: headers
+    headers: headers,
+    url: config.protocol + '//' + config.hostname + (config.port ? ':' + config.port : '') + config.path
   };
-
-  if (config.port) {
-    options.port = config.port;
-  }
 
   if ('withCredentials' in config) {
     options.withCredentials = config.withCredentials;
@@ -126,69 +105,53 @@ function errorCheck(response, body) {
  * @param {Object} info Request storage object with aborted and completed
  *     properties.  If info.stream is true, resolve will be called with the
  *     response stream.
- * @return {function(IncomingMessage)} A function that handles an http(s)
+ * @return {function(XMLHttpRequest)} A function that handles an http(s)
  *     incoming message.
  * @private
  */
 function createResponseHandler(resolve, reject, info) {
-  return function(response) {
-    var status = response.statusCode;
-    if (status === 302) {
-      log.debug('Following redirect: ', response.headers.location);
-      https.get(response.headers.location,
-          createResponseHandler(resolve, reject, info));
+  return function(event) {
+    var client = event.target;
+
+    if (client.status === 302) {
+      client = new XMLHttpRequest();
+      client.addEventListener('load', createResponseHandler(resolve, reject, info));
+      client.addEventListener('error', function(event) {
+        reject(new errors.ClientError('Request failed'));
+      });
+      client.open('GET', client.getResponseHeader('Location'));
       return;
     }
 
-    if (info.stream) {
-      var streamErr = errorCheck(response, null);
-      if (streamErr) {
-        reject(streamErr);
-      } else {
-        resolve({response: response, body: null});
-      }
+    client.statusCode = client.status; // backwards compatibility with http response
+
+    info.completed = true;
+    if (info.aborted) {
       return;
     }
-
-    var data = '';
-    response.on('data', function(chunk) {
-      data += String(chunk);
-    });
-
-    response.on('error', function(err) {
-      if (!info.aborted) {
-        reject(err);
+    var body = null;
+    var err = null;
+    var data = client.responseText;
+    if (data) {
+      try {
+        body = JSON.parse(data);
+      } catch (parseErr) {
+        err = new errors.UnexpectedResponse(
+            'Trouble parsing response body as JSON: ' + data + '\n' +
+            parseErr.stack + '\n', client, data);
       }
-    });
+    }
 
-    response.on('end', function() {
-      info.completed = true;
-      if (info.aborted) {
-        return;
-      }
-      var body = null;
-      var err = null;
-      if (data) {
-        try {
-          body = JSON.parse(data);
-        } catch (parseErr) {
-          err = new errors.UnexpectedResponse(
-              'Trouble parsing response body as JSON: ' + data + '\n' +
-              parseErr.stack + '\n', response, data);
-        }
-      }
+    err = errorCheck(client, body) || err;
 
-      err = errorCheck(response, body) || err;
-
-      if (err) {
-        reject(err);
-      } else {
-        resolve({
-          response: response,
-          body: body
-        });
-      }
-    });
+    if (err) {
+      reject(err);
+    } else {
+      resolve({
+        response: client,
+        body: body
+      });
+    }
   };
 }
 
@@ -220,38 +183,43 @@ function createResponseHandler(resolve, reject, info) {
 function request(config) {
   var options = parseConfig(config);
 
-  var protocol;
-  if (options.protocol && options.protocol.indexOf('https') === 0) {
-    protocol = https;
-  } else {
-    protocol = http;
-  }
-  log.debug('request options: %j', options);
-
   var info = {
     aborted: false,
-    completed: false,
-    stream: config.stream
+    completed: false
   };
 
   return new Promise(function(resolve, reject) {
+    var client = new XMLHttpRequest();
     var handler = createResponseHandler(resolve, reject, info);
-    var client = protocol.request(options, handler);
-    client.on('error', function(err) {
-      reject(new errors.ClientError(err.message));
+
+    client.addEventListener('load', handler);
+
+    client.addEventListener('error', function(event) {
+      reject(new errors.ClientError('Request failed'));
     });
+
+    var body = null;
     if (config.body) {
-      client.write(JSON.stringify(config.body));
+      body = JSON.stringify(config.body);
     }
-    if (config.file) {
-      client.write(toMultipartUpload(config.file));
+
+    client.open(options.method, options.url, true);
+
+    for (var header in options.headers) {
+      client.setRequestHeader(header, options.headers[header]);
     }
-    client.end();
+
+    if ('withCredentials' in options) {
+      client.withCredentials = options.withCredentials;
+    }
+
+    client.send(body);
 
     if (config.terminator) {
       config.terminator(function() {
-        if (!info.aborted && !info.completed) {
+        if (!info.completed && !info.aborted) {
           info.aborted = true;
+          client.abort();
           reject(new errors.AbortedRequest('Request aborted'));
         }
       });
@@ -312,53 +280,6 @@ function put(config) {
  */
 function del(config) {
   return request(assign({method: 'DELETE'}, config));
-}
-
-/**
- * Converts a file object to a multipart payload. The file is assumed to have
- * textual content and to conform to the
- * [File](https://developer.mozilla.org/en-US/docs/Web/API/File) interface.
- *
- * Note: this isn't binary-safe.
- *
- * @param {File} file A File-like object conforming to the HTML File api.
- * @return {String} A multipart request body for a file upload.
- */
-function toMultipartUpload(file) {
-  return [
-    '--' + boundary,
-    '\r\n',
-    'Content-Type: application/json; charset=utf-8',
-    '\r\n',
-    'Content-Disposition: form-data; name="file"; filename="' + file.name + '"',
-    '\r\n\r\n',
-    file.contents,
-    '\r\n',
-    '--' + boundary + '--'
-  ].join('');
-}
-
-/**
- * Returns the length in bytes of a string.
- * @param {String} source A string whose length we wish to count.
- * @return {Number} The byte-length of a string
- */
-function byteCount(source) {
-  return encodeURI(source).split(/%..|./).length - 1;
-}
-
-/**
- * Returns a boundary, generating a new one and memoizing it if necessary.
- *
- * @return {String} A 24 character hex string string to use as a multipart
- *   boundary.
- */
-function generateBoundary() {
-  var newBoundary = [];
-  for (var i = 0; i < 24; i++) {
-    newBoundary.push(Math.floor(Math.random() * 16).toString(16));
-  }
-  return newBoundary.join('');
 }
 
 exports.get = get;
