@@ -24,28 +24,6 @@ The library requires a global [`Promise`](https://developer.mozilla.org/en-US/do
 
 See the `examples` directory for example use of the library.
 
-### Using the CLI
-
-The `planet-client` package provides a `planet` executable.  This can be installed globally (`npm install --global planet-client`), or if you install it locally, you can add the executable to your path (`export PATH=path/to/node_modules/.bin:$PATH`).
-
-The general syntax for the `planet` executable is `planet <command> [options]`.  To see a list of commands, run the following:
-
-    planet --help
-
-You can get help for a specific command by adding `--help` to the command name (e.g. `planet find-scenes --help`).
-
-To take advantage of command line completion with the `planet` executable, you can run the following in bash:
-
-    eval "$(planet completion)"
-
-To enable this every time you start a new shell, you can append the output of `planet completion` to your `.bashrc`:
-
-    planet completion >> ~/.bashrc
-
-The CLI will be fully documented when it is a bit more stable.  For now, you can get a preview of what's available with this video:
-
-[![screen shot][video-image]][video-url]
-
 ### Contributing
 
 To get set up, clone the repository and install the development dependencies:
@@ -97,8 +75,6 @@ Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See [the License](http://www.apache.org/licenses/LICENSE-2.0) for the specific language governing permissions and limitations under the License.
 
-[video-url]: https://vimeo.com/134018559
-[video-image]: https://raw.githubusercontent.com/wiki/planetlabs/planet-client-js/planet-client.png
 [travis-url]: https://travis-ci.org/planetlabs/planet-client-js
 [travis-image]: https://img.shields.io/travis/planetlabs/planet-client-js.svg
 [coveralls-url]: https://coveralls.io/github/planetlabs/planet-client-js
