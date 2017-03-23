@@ -13,21 +13,16 @@
   "main": "api/index.js",
   "scripts": {
     "pretest": "eslint bin examples api cli test tasks",
-    "test-node": "nyc mocha --recursive test",
     "test-browser-once": "karma start test/karma.config.js --single-run",
-    "test-browser-forever": "karma start test/karma.config.js",
-    "test": "npm run test-node && npm run test-browser-once",
-    "start": "npm run test-browser-forever & watchy --watch bin,examples,api,cli,test -- bash -c '(npm run pretest && npm run test-node)'",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test-forever": "karma start test/karma.config.js",
+    "test": "karma start test/karma.config.js --single-run",
+    "start": "npm run test-forever & watchy --watch bin,examples,api,cli,test -- npm run pretest",
     "prepublish": "in-publish && rm -rf dist && mkdir dist && browserify api/index.js --standalone planet | uglifyjs --compress 'warnings=false' > dist/planet.js || not-in-publish",
     "postpublish": "npm run publish-doc",
     "apidoc": "mkdir -p build && jsdoc --template jsdoc-json --destination build/api.json api",
     "doc": "npm run apidoc && node tasks/build-docs.js",
     "start-doc": "watchy --watch doc,api,tasks -- npm run doc",
     "publish-doc": "npm run doc && gh-pages --dist build/doc"
-  },
-  "bin": {
-    "planet": "bin/planet.js"
   },
   "browserify": {
     "transform": [
@@ -37,7 +32,6 @@
   "devDependencies": {
     "browserify": "^14.1.0",
     "chai": "^3.5.0",
-    "coveralls": "^2.12.0",
     "eslint": "^3.18.0",
     "eslint-config-planet": "^12.0.0",
     "gh-pages": "^0.12.0",
@@ -50,12 +44,12 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-mocha": "^1.2.0",
     "karma-sauce-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
     "marked": "^0.3.6",
     "metalsmith": "^2.2.0",
     "metalsmith-in-place": "^1.4.4",
     "metalsmith-layouts": "^1.8.0",
     "mocha": "^3.1.2",
-    "nyc": "^8.3.1",
     "readable-stream": "^2.1.5",
     "sinon": "^1.17.6",
     "uglify-js": "^2.8.15",

@@ -83,7 +83,7 @@ function parseConfig(config) {
  */
 function errorCheck(response, body) {
   var err = null;
-  var status = response.statusCode;
+  var status = response.status;
   if (status === 400) {
     err = new errors.BadRequest('Bad request', response, body);
   } else if (status === 401) {
@@ -114,16 +114,15 @@ function createResponseHandler(resolve, reject, info) {
     var client = event.target;
 
     if (client.status === 302) {
+      var redirectLocation = client.getResponseHeader('Location');
       client = new XMLHttpRequest();
       client.addEventListener('load', createResponseHandler(resolve, reject, info));
       client.addEventListener('error', function(event) {
         reject(new errors.ClientError('Request failed'));
       });
-      client.open('GET', client.getResponseHeader('Location'));
+      client.open('GET', redirectLocation);
       return;
     }
-
-    client.statusCode = client.status; // backwards compatibility with http response
 
     info.completed = true;
     if (info.aborted) {
@@ -203,17 +202,20 @@ function request(config) {
       body = JSON.stringify(config.body);
     }
 
-    client.open(options.method, options.url, true);
-
-    for (var header in options.headers) {
-      client.setRequestHeader(header, options.headers[header]);
+    try {
+      // Old Firefox throws NetworkError instead of firing the 'error' event
+      client.open(options.method, options.url);
+      for (var header in options.headers) {
+        client.setRequestHeader(header, options.headers[header]);
+      }
+      if ('withCredentials' in options) {
+        client.withCredentials = options.withCredentials;
+      }
+      client.send(body);
+    } catch (err) {
+      reject(new errors.ClientError('Request failed: ' + err.message));
+      return;
     }
-
-    if ('withCredentials' in options) {
-      client.withCredentials = options.withCredentials;
-    }
-
-    client.send(body);
 
     if (config.terminator) {
       config.terminator(function() {

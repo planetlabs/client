@@ -1,11 +1,25 @@
 var spy = require('sinon').spy;
 
-function createMockRequest() {
-  return {
-    write: spy(),
-    end: spy(),
-    on: spy()
-  };
-}
+var GlobalXHR = global.XMLHttpRequest;
 
-exports.createMockRequest = createMockRequest;
+exports.mockXHR = function() {
+  var mock = {
+    open: spy(),
+    addEventListener: spy(),
+    setRequestHeader: spy(),
+    send: spy(),
+    abort: spy()
+  };
+
+  global.XMLHttpRequest = function() {
+    for (var method in mock) {
+      this[method] = mock[method];
+    }
+  };
+
+  return mock;
+};
+
+exports.unmockXHR = function() {
+  global.XMLHttpRequest = GlobalXHR;
+};

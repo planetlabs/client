@@ -1,41 +1,24 @@
 /* eslint-env mocha */
 
-var http = require('http');
-var https = require('https');
-var stream = require('readable-stream');
-
 var assert = require('chai').assert;
-var sinon = require('sinon');
-
-var createMockRequest = require('../util').createMockRequest;
 var auth = require('../../api/auth');
 var authStore = require('../../api/auth-store');
 var errors = require('../../api/errors');
+var testUtil = require('../util');
 
 describe('api/auth', function() {
-
-  var httpRequest = http.request;
-  var httpsRequest = https.request;
-  var mockRequest = null;
 
   // {api_key: 'my-api-key'}
   var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +
       'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
 
+  var mock;
   beforeEach(function() {
-    mockRequest = createMockRequest();
-    http.request = sinon.spy(function() {
-      return mockRequest;
-    });
-    https.request = sinon.spy(function() {
-      return mockRequest;
-    });
+    mock = testUtil.mockXHR();
   });
 
   afterEach(function() {
-    http.request = httpRequest;
-    https.request = httpsRequest;
-    mockRequest = null;
+    testUtil.unmockXHR();
     authStore.clear();
     auth.logout();
   });
@@ -43,28 +26,26 @@ describe('api/auth', function() {
   describe('login()', function() {
 
     it('posts credentials to login endpoint', function() {
-      var response = new stream.Readable();
-      response.statusCode = 200;
-
       var email = 'user@email.com';
       var password = 'psswd';
       auth.login(email, password);
 
-      assert.equal(https.request.callCount, 1);
-      var args = https.request.getCall(0).args;
-      assert.lengthOf(args, 2);
-      var config = args[0];
-      assert.equal(config.method, 'POST');
+      assert.equal(mock.open.callCount, 1);
+      assert.equal(mock.open.getCall(0).args[0], 'POST');
 
-      assert.equal(mockRequest.write.callCount, 1);
-      var body = mockRequest.write.getCall(0).args[0];
+      assert.equal(mock.send.callCount, 1);
+      var body = mock.send.getCall(0).args[0];
       assert.deepEqual(JSON.parse(body), {email: email, password: password});
     });
 
     it('expects a JWT token member in the response body', function(done) {
-      var response = new stream.Readable();
-      response.statusCode = 200;
       var body = {token: token};
+      var loadEvent = {
+        target: {
+          status: 200,
+          responseText: JSON.stringify(body)
+        }
+      };
 
       var email = 'user@email.com';
       var password = 'psswd';
@@ -75,19 +56,22 @@ describe('api/auth', function() {
         done();
       }).catch(done);
 
-      assert.equal(https.request.callCount, 1);
-      var args = https.request.getCall(0).args;
-      assert.lengthOf(args, 2);
-      var callback = args[1];
-      callback(response);
-      response.emit('data', JSON.stringify(body));
-      response.emit('end');
+      // mock the load event for the response
+      assert.equal(mock.addEventListener.callCount, 2);
+      var args = mock.addEventListener.getCall(0).args;
+      assert.equal(args[0], 'load');
+      var listener = args[1];
+      listener(loadEvent);
     });
 
     it('rejects if body does not contain a token', function(done) {
-      var response = new stream.Readable();
-      response.statusCode = 200;
       var body = {foo: 'bar'};
+      var loadEvent = {
+        target: {
+          status: 200,
+          responseText: JSON.stringify(body)
+        }
+      };
 
       var email = 'user@email.com';
       var password = 'psswd';
@@ -98,19 +82,22 @@ describe('api/auth', function() {
         done();
       }).catch(done);
 
-      assert.equal(https.request.callCount, 1);
-      var args = https.request.getCall(0).args;
-      assert.lengthOf(args, 2);
-      var callback = args[1];
-      callback(response);
-      response.emit('data', JSON.stringify(body));
-      response.emit('end');
+      // mock the load event for the response
+      assert.equal(mock.addEventListener.callCount, 2);
+      var args = mock.addEventListener.getCall(0).args;
+      assert.equal(args[0], 'load');
+      var listener = args[1];
+      listener(loadEvent);
     });
 
     it('rejects if body contains a bogus token', function(done) {
-      var response = new stream.Readable();
-      response.statusCode = 200;
       var body = {token: 'bogus'};
+      var loadEvent = {
+        target: {
+          status: 200,
+          responseText: JSON.stringify(body)
+        }
+      };
 
       var email = 'user@email.com';
       var password = 'psswd';
@@ -121,13 +108,12 @@ describe('api/auth', function() {
         done();
       }).catch(done);
 
-      assert.equal(https.request.callCount, 1);
-      var args = https.request.getCall(0).args;
-      assert.lengthOf(args, 2);
-      var callback = args[1];
-      callback(response);
-      response.emit('data', JSON.stringify(body));
-      response.emit('end');
+      // mock the load event for the response
+      assert.equal(mock.addEventListener.callCount, 2);
+      var args = mock.addEventListener.getCall(0).args;
+      assert.equal(args[0], 'load');
+      var listener = args[1];
+      listener(loadEvent);
     });
   });
 

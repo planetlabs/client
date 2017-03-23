@@ -6,7 +6,7 @@ module.exports = function(karma) {
     frameworks: ['browserify', 'mocha'],
     files: ['api/*.test.js'],
     preprocessors: {
-      'api/*.test.js': ['browserify']
+      'api/*.test.js': ['browserify', 'sourcemap']
     },
     browserify: {
       debug: true,
