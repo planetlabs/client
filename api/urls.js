@@ -45,8 +45,6 @@ function rootUrl() {
 exports.api = rootUrl();
 exports.mosaics = rootUrl('mosaics', '');
 exports.scenes = rootUrl('scenes', '');
-exports.workspaces = rootUrl('workspaces', '');
 exports.login = rootUrl('auth', 'login');
-exports.aois = rootUrl('aois', '');
 
 exports.join = join;
