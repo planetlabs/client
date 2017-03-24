@@ -3,7 +3,7 @@ var pkg = require('../package.json');
 module.exports = function(karma) {
 
   karma.set({
-    frameworks: ['browserify', 'mocha'],
+    frameworks: ['polyfill', 'browserify', 'mocha'],
     files: ['api/*.test.js'],
     preprocessors: {
       'api/*.test.js': ['browserify', 'sourcemap']
@@ -11,7 +11,8 @@ module.exports = function(karma) {
     browserify: {
       debug: true,
       transform: ['envify']
-    }
+    },
+    polyfill: ['Promise']
   });
 
   if (process.env.TRAVIS) {
@@ -21,6 +22,8 @@ module.exports = function(karma) {
       process.exit(1);
     }
 
+    // see https://wiki.saucelabs.com/display/DOCS/Platform+Configurator
+    // for platform and browserName options (Selenium API, node.js code)
     var customLaunchers = {
       'SL_Chrome': {
         base: 'SauceLabs',
@@ -29,6 +32,21 @@ module.exports = function(karma) {
       'SL_Firefox': {
         base: 'SauceLabs',
         browserName: 'firefox'
+      },
+      'SL_IE': {
+        base: 'SauceLabs',
+        platform: 'Windows 10',
+        browserName: 'internet explorer'
+      },
+      'SL_Edge': {
+        base: 'SauceLabs',
+        platform: 'Windows 10',
+        browserName: 'MicrosoftEdge'
+      },
+      'SL_Safari': {
+        base: 'SauceLabs',
+        platform: 'macos 10.12',
+        browserName: 'safari'
       }
     };
     karma.set({
