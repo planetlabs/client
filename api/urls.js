@@ -4,7 +4,10 @@
  * @private
  */
 
-var config = require('./config');
+var API_URL = 'https://api.planet.com/';
+exports.setBase = function(base) {
+  API_URL = base;
+};
 
 /**
  * Join multiple URL parts with slashes.  Note that any trailing and preceeding
@@ -16,7 +19,8 @@ function join() {
   var components = Array.prototype.map.call(arguments, function(part) {
     if (!(typeof part === 'string' || typeof part === 'number')) {
       throw new Error(
-          'join must be called with strings or numbers, got: ' + part);
+        'join must be called with strings or numbers, got: ' + part
+      );
     }
     return String(part).replace(/^\/?(.*?)\/?$/, '$1');
   });
@@ -31,20 +35,18 @@ function join() {
     .join('/');
 }
 
-function rootUrl() {
-  var baseComponents = Array.prototype.slice.call(arguments);
+function getter() {
+  var parts = Array.prototype.slice.call(arguments);
   return function() {
-    return join.apply(null,
-      [config.API_URL]
-      .concat(baseComponents)
-      .concat(Array.prototype.slice.call(arguments))
+    return join.apply(
+      null,
+      [API_URL].concat(parts).concat(Array.prototype.slice.call(arguments))
     );
   };
 }
 
-exports.api = rootUrl();
-exports.mosaics = rootUrl('mosaics', '');
-exports.scenes = rootUrl('scenes', '');
-exports.login = rootUrl('auth', 'login');
+exports.base = getter('');
+exports.login = getter('v0', 'auth', 'login');
+exports.itemTypes = getter('data', 'v1', 'item-types', '');
 
 exports.join = join;
