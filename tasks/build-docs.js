@@ -97,7 +97,7 @@ function organizeDocs(docs) {
         }
         break;
       default:
-        //pass
+      //pass
     }
   }
   return modules;
@@ -111,22 +111,24 @@ function assign(target, source) {
 }
 
 function main(callback) {
-
-  var modules = organizeDocs(api.docs).filter(function(module) {
-    return module.access !== 'private';
-  }).sort(function(a, b) {
-    return a.name < b.name ? -1 : 1;
-  });
+  var modules = organizeDocs(api.docs)
+    .filter(function(module) {
+      return module.access !== 'private';
+    })
+    .sort(function(a, b) {
+      return a.name < b.name ? -1 : 1;
+    });
 
   var smith = new Metalsmith('.')
-      .source('doc/src')
-      .destination('build/doc')
-      .concurrency(25)
-      .metadata({
-        version: pkg.version,
-        modules: modules
-      })
-      .use(inPlace({
+    .source('doc/src')
+    .destination('build/doc')
+    .concurrency(25)
+    .metadata({
+      version: pkg.version,
+      modules: modules
+    })
+    .use(
+      inPlace({
         engine: 'handlebars',
         partials: 'doc/partials',
         helpers: {
@@ -138,24 +140,33 @@ function main(callback) {
             if (!params) {
               return '';
             }
-            return params.map(function(param) {
-              return param.name;
-            }).filter(function(name) {
-              return name.indexOf('.') === -1;
-            }).join(', ');
+            return params
+              .map(function(param) {
+                return param.name;
+              })
+              .filter(function(name) {
+                return name.indexOf('.') === -1;
+              })
+              .join(', ');
           },
           linkType: function(type) {
             var openIndex = type.lastIndexOf('<');
             var closeIndex = type.indexOf('>');
             var match, link;
             if (openIndex >= 0 && closeIndex > openIndex) {
-              match = type.slice(openIndex + 1, closeIndex).match(
-                  CLASS_NAME_RE);
+              match = type
+                .slice(openIndex + 1, closeIndex)
+                .match(CLASS_NAME_RE);
               if (match) {
                 link = new handlebars.SafeString(
-                    type.slice(0, openIndex + 1).replace('<', '&lt;') +
-                    '<a href="#' + match[0] + '">' + match[1] + '</a>' +
-                    type.slice(closeIndex).replace('>', '&gt;'));
+                  type.slice(0, openIndex + 1).replace('<', '&lt;') +
+                    '<a href="#' +
+                    match[0] +
+                    '">' +
+                    match[1] +
+                    '</a>' +
+                    type.slice(closeIndex).replace('>', '&gt;')
+                );
               } else {
                 link = type;
               }
@@ -163,7 +174,8 @@ function main(callback) {
               match = type.match(CLASS_NAME_RE);
               if (match) {
                 link = new handlebars.SafeString(
-                    '<a href="#' + match[0] + '>' + match[1] + '</a>');
+                  '<a href="#' + match[0] + '>' + match[1] + '</a>'
+                );
               } else {
                 link = type;
               }
@@ -177,14 +189,17 @@ function main(callback) {
             return new handlebars.SafeString(marked(str));
           }
         }
-      }))
-      .use(layouts({
+      })
+    )
+    .use(
+      layouts({
         engine: 'handlebars',
         directory: 'doc/layouts'
-      }))
-      .build(function(err) {
-        callback(err);
-      });
+      })
+    )
+    .build(function(err) {
+      callback(err);
+    });
 
   return smith;
 }
@@ -193,8 +208,10 @@ if (require.main === module) {
   main(function(err) {
     if (err) {
       process.stderr.write(
-          'Building docs failed.  See the full trace below.\n\n' +
-          err.stack + '\n');
+        'Building docs failed.  See the full trace below.\n\n' +
+          err.stack +
+          '\n'
+      );
       process.exit(1);
     } else {
       process.exit(0);

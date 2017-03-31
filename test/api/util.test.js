@@ -4,61 +4,62 @@ var assert = require('chai').assert;
 var util = require('../../api/util');
 
 describe('api/util', function() {
-
   describe('addQueryParams()', function() {
-
     it('adds params from a query object', function() {
-
-      var cases = [{
-        url: 'http://example.com/',
-        query: {
-          foo: 'bar'
+      var cases = [
+        {
+          url: 'http://example.com/',
+          query: {
+            foo: 'bar'
+          },
+          expect: 'http://example.com/?foo=bar'
         },
-        expect: 'http://example.com/?foo=bar'
-      }, {
-        url: 'http://example.com/?foo=bam',
-        query: {
-          baz: 'bar'
+        {
+          url: 'http://example.com/?foo=bam',
+          query: {
+            baz: 'bar'
+          },
+          expect: 'http://example.com/?foo=bam&baz=bar'
         },
-        expect: 'http://example.com/?foo=bam&baz=bar'
-      }, {
-        url: 'http://example.com/?foo=bam',
-        query: {
-          foo: 'bar'
+        {
+          url: 'http://example.com/?foo=bam',
+          query: {
+            foo: 'bar'
+          },
+          expect: 'http://example.com/?foo=bar'
         },
-        expect: 'http://example.com/?foo=bar'
-      }, {
-        url: 'http://example.com/#anchor',
-        query: {
-          foo: 'bar'
+        {
+          url: 'http://example.com/#anchor',
+          query: {
+            foo: 'bar'
+          },
+          expect: 'http://example.com/?foo=bar#anchor'
         },
-        expect: 'http://example.com/?foo=bar#anchor'
-      }, {
-        url: 'http://example.com/?bam=baz#anchor',
-        query: {
-          foo: 'bar'
+        {
+          url: 'http://example.com/?bam=baz#anchor',
+          query: {
+            foo: 'bar'
+          },
+          expect: 'http://example.com/?bam=baz&foo=bar#anchor'
         },
-        expect: 'http://example.com/?bam=baz&foo=bar#anchor'
-      }, {
-        url: 'http://example.com/?foo=bam#anchor',
-        query: {
-          foo: 'bar'
-        },
-        expect: 'http://example.com/?foo=bar#anchor'
-      }];
+        {
+          url: 'http://example.com/?foo=bam#anchor',
+          query: {
+            foo: 'bar'
+          },
+          expect: 'http://example.com/?foo=bar#anchor'
+        }
+      ];
 
       var add = util.addQueryParams;
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
         assert.equal(add(c.url, c.query), c.expect, 'case ' + i);
       }
-
     });
-
   });
 
   describe('assign()', function() {
-
     it('assigns source properties to target object', function() {
       var source = {
         foo: 'bar'
@@ -124,7 +125,5 @@ describe('api/util', function() {
       assert.deepEqual(target, {foo: 'baz'});
       assert.deepEqual(source1, {foo: 'bam'});
     });
-
   });
-
 });

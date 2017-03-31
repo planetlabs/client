@@ -13,6 +13,7 @@
   "main": "api/index.js",
   "scripts": {
     "pretest": "eslint bin examples api cli test tasks",
+    "fix-lint": "npm run pretest -- --fix",
     "test-browser-once": "karma start test/karma.config.js --single-run",
     "test-forever": "karma start test/karma.config.js",
     "test": "karma start test/karma.config.js --single-run",
@@ -33,7 +34,7 @@
     "browserify": "^14.1.0",
     "chai": "^3.5.0",
     "eslint": "^3.18.0",
-    "eslint-config-planet": "^12.0.0",
+    "eslint-config-planet": "^13.0.0-beta.2",
     "gh-pages": "^0.12.0",
     "handlebars": "^4.0.6",
     "in-publish": "^2.0.0",

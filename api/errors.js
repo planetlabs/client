@@ -15,7 +15,6 @@
  * @ignore
  */
 function ResponseError(message, response, body) {
-
   /**
    * A message providing details about the error.
    * @type {string}
@@ -39,8 +38,7 @@ function ResponseError(message, response, body) {
    * The stack trace for the error.
    * @type {string}
    */
-  this.stack = (new Error()).stack;
-
+  this.stack = new Error().stack;
 }
 ResponseError.prototype = new Error();
 ResponseError.prototype.name = 'ResponseError';
@@ -117,7 +115,7 @@ UnexpectedResponse.prototype.name = 'UnexpectedResponse';
  */
 function AbortedRequest(message) {
   this.message = message;
-  this.stack = (new Error()).stack;
+  this.stack = new Error().stack;
 }
 AbortedRequest.prototype = new Error();
 AbortedRequest.prototype.name = 'AbortedRequest';
@@ -130,7 +128,7 @@ AbortedRequest.prototype.name = 'AbortedRequest';
  */
 function ClientError(message) {
   this.message = message;
-  this.stack = (new Error()).stack;
+  this.stack = new Error().stack;
 }
 ClientError.prototype = new Error();
 ClientError.prototype.name = 'ClientError';

@@ -4,7 +4,6 @@ var assert = require('chai').assert;
 var errors = require('../../api/errors');
 
 describe('api/errors', function() {
-
   describe('ResponseError', function() {
     it('is a base class for response errors', function() {
       var message = 'foo';
@@ -63,6 +62,4 @@ describe('api/errors', function() {
       assert.instanceOf(err, Error);
     });
   });
-
 });
-

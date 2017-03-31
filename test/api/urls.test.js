@@ -5,23 +5,26 @@ var assert = require('chai').assert;
 var urls = require('../../api/urls');
 
 describe('api/urls', function() {
-
   describe('join()', function() {
-
     it('joins URL parts', function() {
-      var cases = [{
-        actual: urls.join('http://example.com', 'foo'),
-        expected: 'http://example.com/foo'
-      }, {
-        actual: urls.join('http://example.com', 'foo', 'bar'),
-        expected: 'http://example.com/foo/bar'
-      }, {
-        actual: urls.join('http://example.com', 'foo', 'bar', 'bam'),
-        expected: 'http://example.com/foo/bar/bam'
-      }, {
-        actual: urls.join('http://example.com', 'foo', 'bar', 'bam', ''),
-        expected: 'http://example.com/foo/bar/bam/'
-      }];
+      var cases = [
+        {
+          actual: urls.join('http://example.com', 'foo'),
+          expected: 'http://example.com/foo'
+        },
+        {
+          actual: urls.join('http://example.com', 'foo', 'bar'),
+          expected: 'http://example.com/foo/bar'
+        },
+        {
+          actual: urls.join('http://example.com', 'foo', 'bar', 'bam'),
+          expected: 'http://example.com/foo/bar/bam'
+        },
+        {
+          actual: urls.join('http://example.com', 'foo', 'bar', 'bam', ''),
+          expected: 'http://example.com/foo/bar/bam/'
+        }
+      ];
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
@@ -30,19 +33,24 @@ describe('api/urls', function() {
     });
 
     it('removes extra slashes', function() {
-      var cases = [{
-        actual: urls.join('http://example.com/', 'foo'),
-        expected: 'http://example.com/foo'
-      }, {
-        actual: urls.join('http://example.com/', '/foo', 'bar'),
-        expected: 'http://example.com/foo/bar'
-      }, {
-        actual: urls.join('http://example.com', 'foo/', '/bar/', 'bam/'),
-        expected: 'http://example.com/foo/bar/bam'
-      }, {
-        actual: urls.join('http://example.com', '', 'foo/', 'bam/', '', ''),
-        expected: 'http://example.com/foo/bam/'
-      }];
+      var cases = [
+        {
+          actual: urls.join('http://example.com/', 'foo'),
+          expected: 'http://example.com/foo'
+        },
+        {
+          actual: urls.join('http://example.com/', '/foo', 'bar'),
+          expected: 'http://example.com/foo/bar'
+        },
+        {
+          actual: urls.join('http://example.com', 'foo/', '/bar/', 'bam/'),
+          expected: 'http://example.com/foo/bar/bam'
+        },
+        {
+          actual: urls.join('http://example.com', '', 'foo/', 'bam/', '', ''),
+          expected: 'http://example.com/foo/bam/'
+        }
+      ];
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
@@ -51,16 +59,20 @@ describe('api/urls', function() {
     });
 
     it('works with numbers', function() {
-      var cases = [{
-        actual: urls.join('http://example.com', 42),
-        expected: 'http://example.com/42'
-      }, {
-        actual: urls.join('http://example.com', 0, 'foo'),
-        expected: 'http://example.com/0/foo'
-      }, {
-        actual: urls.join('http://example.com', 10, 'bar', 20),
-        expected: 'http://example.com/10/bar/20'
-      }];
+      var cases = [
+        {
+          actual: urls.join('http://example.com', 42),
+          expected: 'http://example.com/42'
+        },
+        {
+          actual: urls.join('http://example.com', 0, 'foo'),
+          expected: 'http://example.com/0/foo'
+        },
+        {
+          actual: urls.join('http://example.com', 10, 'bar', 20),
+          expected: 'http://example.com/10/bar/20'
+        }
+      ];
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
@@ -76,20 +88,21 @@ describe('api/urls', function() {
     });
 
     it('works with degenerate cases', function() {
-      var cases = [{
-        actual: urls.join(),
-        expected: ''
-      }, {
-        actual: urls.join('', ''),
-        expected: ''
-      }];
+      var cases = [
+        {
+          actual: urls.join(),
+          expected: ''
+        },
+        {
+          actual: urls.join('', ''),
+          expected: ''
+        }
+      ];
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
         assert.deepEqual(c.actual, c.expected, 'case ' + i);
       }
     });
-
   });
-
 });

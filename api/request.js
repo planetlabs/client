@@ -11,7 +11,7 @@ var authStore = require('./auth-store');
 var errors = require('./errors');
 
 var defaultHeaders = {
-  'accept': 'application/json'
+  accept: 'application/json'
 };
 
 /**
@@ -66,7 +66,11 @@ function parseConfig(config) {
   var options = {
     method: config.method || 'GET',
     headers: headers,
-    url: config.protocol + '//' + config.hostname + (config.port ? ':' + config.port : '') + config.path
+    url: config.protocol +
+      '//' +
+      config.hostname +
+      (config.port ? ':' + config.port : '') +
+      config.path
   };
 
   if ('withCredentials' in config) {
@@ -91,8 +95,10 @@ function errorCheck(response, body) {
   } else if (status === 403) {
     err = new errors.Forbidden('Forbidden', response, body);
   } else if (!(status >= 200 && status < 300)) {
-    err = new errors.UnexpectedResponse('Unexpected response status: ' +
-        status, response);
+    err = new errors.UnexpectedResponse(
+      'Unexpected response status: ' + status,
+      response
+    );
   }
   return err;
 }
@@ -116,7 +122,10 @@ function createResponseHandler(resolve, reject, info) {
     if (client.status === 302) {
       var redirectLocation = client.getResponseHeader('Location');
       client = new XMLHttpRequest();
-      client.addEventListener('load', createResponseHandler(resolve, reject, info));
+      client.addEventListener(
+        'load',
+        createResponseHandler(resolve, reject, info)
+      );
       client.addEventListener('error', function(event) {
         reject(new errors.ClientError('Request failed'));
       });
@@ -136,8 +145,14 @@ function createResponseHandler(resolve, reject, info) {
         body = JSON.parse(data);
       } catch (parseErr) {
         err = new errors.UnexpectedResponse(
-            'Trouble parsing response body as JSON: ' + data + '\n' +
-            parseErr.stack + '\n', client, data);
+          'Trouble parsing response body as JSON: ' +
+            data +
+            '\n' +
+            parseErr.stack +
+            '\n',
+          client,
+          data
+        );
       }
     }
 

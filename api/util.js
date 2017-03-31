@@ -18,7 +18,7 @@ function addQueryParams(link, params) {
     query[name] = params[name];
   }
   search = querystring.stringify(query);
-  return parts[0] + '?' + search + (hash ? ('#' + hash) : '');
+  return parts[0] + '?' + search + (hash ? '#' + hash : '');
 }
 
 /**

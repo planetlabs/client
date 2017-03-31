@@ -28,13 +28,19 @@ function login(email, password) {
   return request.post(config).then(function(obj) {
     if (!obj.body || !obj.body.token) {
       throw new errors.UnexpectedResponse(
-          'Missing token', obj.response, obj.body);
+        'Missing token',
+        obj.response,
+        obj.body
+      );
     }
     try {
       store.setToken(obj.body.token);
     } catch (err) {
       throw new errors.UnexpectedResponse(
-          'Unable to decode token', obj.response, obj.body);
+        'Unable to decode token',
+        obj.response,
+        obj.body
+      );
     }
     return true;
   });

@@ -11,7 +11,7 @@ describe('api/auth-store', function() {
   describe('setToken()', function() {
     // {api_key: 'my-api-key'}
     var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +
-        'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
+      'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
 
     it('stores a token', function() {
       authStore.setToken(token);
@@ -26,14 +26,13 @@ describe('api/auth-store', function() {
     it('throws if the token does not contain an api_key claim', function() {
       // {foo: 'bar'}
       var bogus = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmb28iOiJiYXIifQ.' +
-          'yPmf5QFV26W-3ldVCrsvRdnecy7QjA0fnCWCDLDZ-M4';
+        'yPmf5QFV26W-3ldVCrsvRdnecy7QjA0fnCWCDLDZ-M4';
 
       function call() {
         authStore.setToken(bogus);
       }
       assert.throws(call, Error, 'Expected api_key in token payload');
     });
-
   });
 
   describe('getToken()', function() {
@@ -69,5 +68,4 @@ describe('api/auth-store', function() {
       assert.isUndefined(authStore.getKey());
     });
   });
-
 });

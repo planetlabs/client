@@ -1,7 +1,6 @@
 var pkg = require('../package.json');
 
 module.exports = function(karma) {
-
   karma.set({
     frameworks: ['polyfill', 'browserify', 'mocha'],
     files: ['api/*.test.js'],
@@ -16,7 +15,6 @@ module.exports = function(karma) {
   });
 
   if (process.env.TRAVIS) {
-
     if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
       process.stderr.write('SAUCE_USERNAME or SAUCE_ACCESS_KEY not set\n');
       process.exit(1);
@@ -25,25 +23,25 @@ module.exports = function(karma) {
     // see https://wiki.saucelabs.com/display/DOCS/Platform+Configurator
     // for platform and browserName options (Selenium API, node.js code)
     var customLaunchers = {
-      'SL_Chrome': {
+      SL_Chrome: {
         base: 'SauceLabs',
         browserName: 'chrome'
       },
-      'SL_Firefox': {
+      SL_Firefox: {
         base: 'SauceLabs',
         browserName: 'firefox'
       },
-      'SL_IE': {
+      SL_IE: {
         base: 'SauceLabs',
         platform: 'Windows 10',
         browserName: 'internet explorer'
       },
-      'SL_Edge': {
+      SL_Edge: {
         base: 'SauceLabs',
         platform: 'Windows 10',
         browserName: 'MicrosoftEdge'
       },
-      'SL_Safari': {
+      SL_Safari: {
         base: 'SauceLabs',
         platform: 'macos 10.12',
         browserName: 'safari'
@@ -67,13 +65,9 @@ module.exports = function(karma) {
       customLaunchers: customLaunchers,
       browsers: Object.keys(customLaunchers)
     });
-
   } else {
-
     karma.set({
       browsers: ['Chrome']
     });
-
   }
-
 };

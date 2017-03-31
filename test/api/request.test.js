@@ -12,7 +12,6 @@ chai.config.truncateThreshold = 0;
 var assert = chai.assert;
 
 describe('api/request', function() {
-
   describe('using a mock XMLHttpRequest', function() {
     var mock;
 
@@ -34,18 +33,30 @@ describe('api/request', function() {
         request({url: 'http://example.com'});
 
         assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, ['GET', 'http://example.com/']);
+        assert.deepEqual(mock.open.getCall(0).args, [
+          'GET',
+          'http://example.com/'
+        ]);
 
         assert.equal(mock.setRequestHeader.callCount, 1);
-        assert.deepEqual(mock.setRequestHeader.getCall(0).args, ['accept', 'application/json']);
+        assert.deepEqual(mock.setRequestHeader.getCall(0).args, [
+          'accept',
+          'application/json'
+        ]);
 
         assert.equal(mock.addEventListener.callCount, 2);
 
         assert.equal(mock.addEventListener.getCall(0).args[0], 'load');
-        assert.equal(typeof mock.addEventListener.getCall(0).args[1], 'function');
+        assert.equal(
+          typeof mock.addEventListener.getCall(0).args[1],
+          'function'
+        );
 
         assert.equal(mock.addEventListener.getCall(1).args[0], 'error');
-        assert.equal(typeof mock.addEventListener.getCall(1).args[1], 'function');
+        assert.equal(
+          typeof mock.addEventListener.getCall(1).args[1],
+          'function'
+        );
       });
 
       it('resolves to an object with body and response', function(done) {
@@ -58,11 +69,13 @@ describe('api/request', function() {
         };
 
         var promise = request({url: 'http://example.com'});
-        promise.then(function(obj) {
-          assert.equal(obj.response, loadEvent.target);
-          assert.deepEqual(obj.body, body);
-          done();
-        }).catch(done);
+        promise
+          .then(function(obj) {
+            assert.equal(obj.response, loadEvent.target);
+            assert.deepEqual(obj.body, body);
+            done();
+          })
+          .catch(done);
 
         // mock the load event for the response
         assert.equal(mock.addEventListener.callCount, 2);
@@ -97,11 +110,13 @@ describe('api/request', function() {
         var promise = request({
           url: 'https://example.com'
         });
-        promise.then(function(obj) {
-          assert.equal(obj.response, secondLoadEvent.target);
-          assert.deepEqual(obj.body, body);
-          done();
-        }).catch(done);
+        promise
+          .then(function(obj) {
+            assert.equal(obj.response, secondLoadEvent.target);
+            assert.deepEqual(obj.body, body);
+            done();
+          })
+          .catch(done);
 
         // mock the first response load event (302)
         assert.equal(mock.addEventListener.callCount, 2);
@@ -126,14 +141,22 @@ describe('api/request', function() {
         };
 
         var promise = request({url: 'http://example.com'});
-        promise.then(function(obj) {
-          done(new Error('Expected promise to be rejected'));
-        }, function(err) {
-          assert.instanceOf(err, errors.UnexpectedResponse);
-          assert.include(err.message, 'Trouble parsing response body as JSON');
-          assert.equal(err.body, body);
-          done();
-        }).catch(done);
+        promise
+          .then(
+            function(obj) {
+              done(new Error('Expected promise to be rejected'));
+            },
+            function(err) {
+              assert.instanceOf(err, errors.UnexpectedResponse);
+              assert.include(
+                err.message,
+                'Trouble parsing response body as JSON'
+              );
+              assert.equal(err.body, body);
+              done();
+            }
+          )
+          .catch(done);
 
         // mock the response load event
         assert.equal(mock.addEventListener.callCount, 2);
@@ -153,14 +176,19 @@ describe('api/request', function() {
         };
 
         var promise = request({url: 'http://example.com'});
-        promise.then(function(obj) {
-          done(new Error('Expected promise to be rejected'));
-        }, function(err) {
-          assert.instanceOf(err, errors.UnexpectedResponse);
-          assert.include(err.message, 'Unexpected response status: 500');
-          assert.equal(err.body, null); // don't leak unexpected responses
-          done();
-        }).catch(done);
+        promise
+          .then(
+            function(obj) {
+              done(new Error('Expected promise to be rejected'));
+            },
+            function(err) {
+              assert.instanceOf(err, errors.UnexpectedResponse);
+              assert.include(err.message, 'Unexpected response status: 500');
+              assert.equal(err.body, null); // don't leak unexpected responses
+              done();
+            }
+          )
+          .catch(done);
 
         // mock the response load event
         assert.equal(mock.addEventListener.callCount, 2);
@@ -180,14 +208,19 @@ describe('api/request', function() {
         };
 
         var promise = request({url: 'http://example.com'});
-        promise.then(function(obj) {
-          done(new Error('Expected promise to be rejected'));
-        }, function(err) {
-          assert.instanceOf(err, errors.BadRequest);
-          assert.include(err.message, 'Bad request');
-          assert.deepEqual(err.body, body);
-          done();
-        }).catch(done);
+        promise
+          .then(
+            function(obj) {
+              done(new Error('Expected promise to be rejected'));
+            },
+            function(err) {
+              assert.instanceOf(err, errors.BadRequest);
+              assert.include(err.message, 'Bad request');
+              assert.deepEqual(err.body, body);
+              done();
+            }
+          )
+          .catch(done);
 
         // mock the response load event
         assert.equal(mock.addEventListener.callCount, 2);
@@ -207,14 +240,19 @@ describe('api/request', function() {
         };
 
         var promise = request({url: 'http://example.com'});
-        promise.then(function(obj) {
-          done(new Error('Expected promise to be rejected'));
-        }, function(err) {
-          assert.instanceOf(err, errors.Unauthorized);
-          assert.include(err.message, 'Unauthorized');
-          assert.deepEqual(err.body, body);
-          done();
-        }).catch(done);
+        promise
+          .then(
+            function(obj) {
+              done(new Error('Expected promise to be rejected'));
+            },
+            function(err) {
+              assert.instanceOf(err, errors.Unauthorized);
+              assert.include(err.message, 'Unauthorized');
+              assert.deepEqual(err.body, body);
+              done();
+            }
+          )
+          .catch(done);
 
         // mock the response load event
         assert.equal(mock.addEventListener.callCount, 2);
@@ -234,14 +272,19 @@ describe('api/request', function() {
         };
 
         var promise = request({url: 'http://example.com'});
-        promise.then(function(obj) {
-          done(new Error('Expected promise to be rejected'));
-        }, function(err) {
-          assert.instanceOf(err, errors.Forbidden);
-          assert.include(err.message, 'Forbidden');
-          assert.deepEqual(err.body, body);
-          done();
-        }).catch(done);
+        promise
+          .then(
+            function(obj) {
+              done(new Error('Expected promise to be rejected'));
+            },
+            function(err) {
+              assert.instanceOf(err, errors.Forbidden);
+              assert.include(err.message, 'Forbidden');
+              assert.deepEqual(err.body, body);
+              done();
+            }
+          )
+          .catch(done);
 
         // mock the response load event
         assert.equal(mock.addEventListener.callCount, 2);
@@ -258,88 +301,97 @@ describe('api/request', function() {
             setTimeout(abort, 10);
           }
         });
-        promise.then(function() {
-          done(new Error('Expected promise to be rejected'));
-        }).catch(function(err) {
-          assert.instanceOf(err, errors.AbortedRequest);
-          done();
-        });
+        promise
+          .then(function() {
+            done(new Error('Expected promise to be rejected'));
+          })
+          .catch(function(err) {
+            assert.instanceOf(err, errors.AbortedRequest);
+            done();
+          });
       });
-
     });
 
     describe('get()', function() {
-
       it('calls request() with method set to GET', function() {
         req.get({url: 'http://example.com'});
         assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, ['GET', 'http://example.com/']);
+        assert.deepEqual(mock.open.getCall(0).args, [
+          'GET',
+          'http://example.com/'
+        ]);
       });
 
       it('accepts a string for the URL', function() {
         req.get('http://example.com');
         assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, ['GET', 'http://example.com/']);
+        assert.deepEqual(mock.open.getCall(0).args, [
+          'GET',
+          'http://example.com/'
+        ]);
       });
-
     });
 
     describe('post()', function() {
-
       it('calls request() with method set to POST', function() {
         req.post({url: 'http://example.com'});
         assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, ['POST', 'http://example.com/']);
+        assert.deepEqual(mock.open.getCall(0).args, [
+          'POST',
+          'http://example.com/'
+        ]);
       });
-
     });
 
     describe('put()', function() {
-
       it('calls request() with method set to PUT', function() {
         req.put({url: 'http://example.com'});
         assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, ['PUT', 'http://example.com/']);
+        assert.deepEqual(mock.open.getCall(0).args, [
+          'PUT',
+          'http://example.com/'
+        ]);
       });
-
     });
 
     describe('del()', function() {
-
       it('calls request() with method set to DELETE', function() {
         req.del({url: 'http://example.com'});
         assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, ['DELETE', 'http://example.com/']);
+        assert.deepEqual(mock.open.getCall(0).args, [
+          'DELETE',
+          'http://example.com/'
+        ]);
       });
-
     });
-
   });
 
   describe('using the real XMLHttpRequest', function() {
-
     describe('request()', function() {
       var request = req.request;
 
       it('rejects with ClientError when there is a client error', function(done) {
-
         var promise = request({url: 'xyz:pdq'});
 
-        promise.then(function(obj) {
-          done(new Error('Expected promise to be rejected'));
-        }, function(err) {
-          assert.instanceOf(err, errors.ClientError, err.stack);
-          assert.include(err.message, 'Request failed');
-          done();
-        }).catch(done);
+        promise
+          .then(
+            function(obj) {
+              done(new Error('Expected promise to be rejected'));
+            },
+            function(err) {
+              assert.instanceOf(err, errors.ClientError, err.stack);
+              assert.include(err.message, 'Request failed');
+              done();
+            }
+          )
+          .catch(done);
       });
-
     });
 
     describe('parseConfig()', function() {
       // {api_key: 'my-api-key'}
       var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +
-          'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
+        'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
       var parseConfig = req.parseConfig;
       var defaultHeaders = {accept: 'application/json'};
 
@@ -411,9 +463,12 @@ describe('api/request', function() {
           }
         };
 
-        var headers = assign({
-          'content-type': 'application/json'
-        }, defaultHeaders);
+        var headers = assign(
+          {
+            'content-type': 'application/json'
+          },
+          defaultHeaders
+        );
 
         var options = {
           method: 'POST',
@@ -534,9 +589,6 @@ describe('api/request', function() {
         var headers = options.headers;
         assert.equal(headers.authorization, 'Bearer ' + token);
       });
-
     });
-
   });
-
 });
