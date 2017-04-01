@@ -11,6 +11,9 @@
   },
   "license": "Apache-2.0",
   "main": "api/index.js",
+  "bin": {
+    "planet": "./bin/planet.js"
+  },
   "scripts": {
     "pretest": "eslint bin examples api cli test tasks",
     "fix-lint": "npm run pretest -- --fix",
@@ -56,7 +59,8 @@
     "sinon": "^1.17.6",
     "uglify-js": "^2.8.15",
     "watchify": "^3.7.0",
-    "watchy": "^0.6.6"
+    "watchy": "^0.6.6",
+    "xhr2": "^0.1.4"
   },
   "dependencies": {
     "batch": "^0.5.3",

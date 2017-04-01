@@ -1,3 +1,3 @@
 exports.auth = require('./auth');
-exports.mosaics = require('./mosaics');
-exports.scenes = require('./scenes');
+exports.itemTypes = require('./item-types');
+exports.items = require('./items');
