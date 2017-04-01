@@ -237,7 +237,6 @@ function request(config) {
         if (!info.completed && !info.aborted) {
           info.aborted = true;
           client.abort();
-          reject(new errors.AbortedRequest('Request aborted'));
         }
       });
     }

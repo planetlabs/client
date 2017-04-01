@@ -108,19 +108,6 @@ UnexpectedResponse.prototype = new ResponseError();
 UnexpectedResponse.prototype.name = 'UnexpectedResponse';
 
 /**
- * An error generated when the request is terminated.
- * @param {string} message Error message.
- * @constructor
- * @ignore
- */
-function AbortedRequest(message) {
-  this.message = message;
-  this.stack = new Error().stack;
-}
-AbortedRequest.prototype = new Error();
-AbortedRequest.prototype.name = 'AbortedRequest';
-
-/**
  * An error generated on the client side, before issuing a request.
  * @param {string} message Error message.
  * @constructor
@@ -138,5 +125,4 @@ exports.BadRequest = BadRequest;
 exports.Unauthorized = Unauthorized;
 exports.Forbidden = Forbidden;
 exports.UnexpectedResponse = UnexpectedResponse;
-exports.AbortedRequest = AbortedRequest;
 exports.ClientError = ClientError;

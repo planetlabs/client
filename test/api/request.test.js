@@ -301,13 +301,18 @@ describe('api/request', function() {
             setTimeout(abort, 10);
           }
         });
+        setTimeout(
+          function() {
+            done();
+          },
+          200
+        );
         promise
           .then(function() {
-            done(new Error('Expected promise to be rejected'));
+            done(new Error('Expected promise not to be resolved'));
           })
           .catch(function(err) {
-            assert.instanceOf(err, errors.AbortedRequest);
-            done();
+            done(new Error('Expected promise not to be rejected'));
           });
       });
     });

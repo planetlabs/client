@@ -1,6 +1,17 @@
 var request = require('./request');
 
 module.exports = function(config, key, each) {
+  let aborted = false;
+  var terminator = config.terminator;
+  config.terminator = function(abort) {
+    if (terminator) {
+      terminator(function() {
+        aborted = true;
+        abort();
+      });
+    }
+  };
+
   return new Promise(function(resolve, reject) {
     var all;
     if (!each) {
@@ -16,14 +27,16 @@ module.exports = function(config, key, each) {
     function handler(response) {
       var data = response.body[key];
       each(data);
-      var links = response.body._links || {};
-      if (links._next) {
-        request
-          .get({url: links._next, terminator: config.terminator})
-          .then(handler)
-          .catch(reject);
-      } else {
-        resolve(all);
+      if (!aborted) {
+        var links = response.body._links || {};
+        if (links._next) {
+          request
+            .get({url: links._next, terminator: config.terminator})
+            .then(handler)
+            .catch(reject);
+        } else {
+          resolve(all);
+        }
       }
     }
 

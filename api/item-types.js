@@ -51,7 +51,7 @@ function search(options) {
     query: options.query,
     terminator: options.terminator
   };
-  return pager(config, 'item_types', options.callback);
+  return pager(config, 'item_types', options.each);
 }
 
 exports.search = search;
