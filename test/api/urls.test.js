@@ -5,6 +5,14 @@ var assert = require('chai').assert;
 var urls = require('../../api/urls');
 
 describe('api/urls', function() {
+  var originalBase;
+  beforeEach(function() {
+    originalBase = urls.base();
+  });
+  afterEach(function() {
+    urls.setBase(originalBase);
+  });
+
   describe('join()', function() {
     it('joins URL parts', function() {
       var cases = [
@@ -103,6 +111,106 @@ describe('api/urls', function() {
         var c = cases[i];
         assert.deepEqual(c.actual, c.expected, 'case ' + i);
       }
+    });
+  });
+
+  describe('setBase()', function() {
+    it('sets the base URL for the API', function() {
+      var base = 'http://example.com/';
+      urls.setBase(base);
+      assert.equal(urls.base(), base);
+    });
+  });
+
+  describe('base()', function() {
+    it('returns the base URL for the API', function() {
+      assert.equal(urls.base(), 'https://api.planet.com/');
+    });
+  });
+
+  describe('login()', function() {
+    it('returns the login URL', function() {
+      assert.equal(urls.login(), 'https://api.planet.com/v0/auth/login');
+    });
+
+    it('works with a custom base URL', function() {
+      urls.setBase('http://example.com/');
+      assert.equal(urls.login(), 'http://example.com/v0/auth/login');
+    });
+  });
+
+  describe('itemTypes()', function() {
+    it('returns the item types URL', function() {
+      assert.equal(
+        urls.itemTypes(),
+        'https://api.planet.com/data/v1/item-types/'
+      );
+    });
+
+    it('returns the URL for a single item type', function() {
+      assert.equal(
+        urls.itemTypes('foo'),
+        'https://api.planet.com/data/v1/item-types/foo'
+      );
+    });
+  });
+
+  describe('items()', function() {
+    it('returns the URL for items of a specific type', function() {
+      assert.equal(
+        urls.items('mysat'),
+        'https://api.planet.com/data/v1/item-types/mysat/items/'
+      );
+    });
+
+    it('returns the URL for a single item', function() {
+      assert.equal(
+        urls.itemTypes('mysat', 'item-id'),
+        'https://api.planet.com/data/v1/item-types/mysat/item-id'
+      );
+    });
+
+    it('works with a custom base', function() {
+      urls.setBase('https://example.com/');
+      assert.equal(
+        urls.itemTypes('mysat', 'item-id'),
+        'https://example.com/data/v1/item-types/mysat/item-id'
+      );
+    });
+  });
+
+  describe('quickSearch()', function() {
+    it('returns the quick-search URL', function() {
+      assert.equal(
+        urls.quickSearch(),
+        'https://api.planet.com/data/v1/quick-search'
+      );
+    });
+
+    it('works with a custom base', function() {
+      urls.setBase('https://example.com/');
+      assert.equal(
+        urls.quickSearch(),
+        'https://example.com/data/v1/quick-search'
+      );
+    });
+  });
+
+  describe('searches()', function() {
+    it('returns the searches URL', function() {
+      assert.equal(urls.searches(), 'https://api.planet.com/data/v1/searches/');
+    });
+
+    it('returns a single search URL', function() {
+      assert.equal(
+        urls.searches('foo'),
+        'https://api.planet.com/data/v1/searches/foo'
+      );
+    });
+
+    it('works with a custom base', function() {
+      urls.setBase('https://example.com/');
+      assert.equal(urls.searches(), 'https://example.com/data/v1/searches/');
     });
   });
 });

@@ -48,11 +48,11 @@ function getter() {
 exports.base = getter('');
 exports.login = getter('v0', 'auth', 'login');
 exports.itemTypes = getter('data', 'v1', 'item-types', '');
-exports.items = function(type, id) {
-  var rest = Array.prototype.slice.call(arguments, 2);
-  var get = getter('data', 'v1', 'item-types', type, 'items', id);
+exports.items = function(type) {
+  var rest = Array.prototype.slice.call(arguments, 1);
+  var get = getter('data', 'v1', 'item-types', type, 'items', '');
   return get.apply(null, rest);
 };
 exports.quickSearch = getter('data', 'v1', 'quick-search');
-exports.search = getter('data', 'v1', 'searches');
+exports.searches = getter('data', 'v1', 'searches', '');
 exports.join = join;

@@ -65,7 +65,7 @@ function search(options) {
       item_types: options.types
     };
   } else if (options.id) {
-    config.url = urls.search(options.id, 'results');
+    config.url = urls.searches(options.id, 'results');
   } else {
     throw new Error('Expected both `filter` and `itemTypes` or a serach `id`.');
   }
