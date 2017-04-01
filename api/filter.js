@@ -1,0 +1,144 @@
+/**
+ * Convenience functions for creating search filters.
+ *
+ * @module planet-client/api/filter
+ */
+
+/**
+ * Creates a logical `AndFilter`.
+ * @param {Array<Object>} filters A list of filter objects.
+ * @return {Object} A filter that will match items that match all of the child
+ *     filters.
+ */
+exports.and = function(filters) {
+  return {
+    type: 'AndFilter',
+    config: filters
+  };
+};
+
+/**
+ * Creates a logical `OrFilter`.
+ * @param {Array<Object>} filters A list of filter objects.
+ * @return {Object} A filter that will match items that match any of the child
+ *     filters.
+ */
+exports.or = function(filters) {
+  return {
+    type: 'OrFilter',
+    config: filters
+  };
+};
+
+/**
+ * Creates a logical `NotFilter`.
+ * @param {Array<Object>} filters A list of filter objects.
+ * @return {Object} A filter that will match items that do not match any of the
+ *     child filters.
+ */
+exports.not = function(filters) {
+  return {
+    type: 'NotFilter',
+    config: filters
+  };
+};
+
+/**
+ * Creates a `DateRangeFilter`.
+ * @param {string} field The name of the date field to use in the filter.
+ * @param {Object} range An object with `gte`, `gt`, `lt`, or `lte` properties
+ *     with dates (for "greater than or equal to", "greater than", "less than",
+ *     and "less than or equal to").  Open ended ranges are possible.
+ * @return {Object} A filter that will match items with dates in the range of
+ *     provided dates.
+ */
+exports.dates = function(field, range) {
+  var config;
+  for (var key in range) {
+    if (range[key] instanceof Date) {
+      config[key] = range[key].toISOString();
+    } else {
+      config[key] = range[key];
+    }
+  }
+  return {
+    type: 'DateRangeFilter',
+    field_name: field,
+    config: config
+  };
+};
+
+/**
+ * Creates a `GeometryFilter`.
+ * @param {string} field The name of the geometry field to use in the filter.
+ * @param {Object} geometry A GeoJSON geometry.
+ * @return {Object} A filter that will match items that intersect the provided
+ *     geometry.
+ */
+exports.geometry = function(field, geometry) {
+  return {
+    type: 'GeometryFilter',
+    field_name: field,
+    config: geometry
+  };
+};
+
+/**
+ * Creates a `NumberInFilter`.
+ * @param {string} field The name of the numeric field to use in the filter.
+ * @param {Array<number>} values A list of numbers.
+ * @return {Object} A filter that will match items whose field value matches
+ *     any of the provided numbers.
+ */
+exports.numbers = function(field, values) {
+  return {
+    type: 'NumberInFilter',
+    field_name: field,
+    config: values
+  };
+};
+
+/**
+ * Creates a `RangeFilter`.
+ * @param {string} field The name of the numeric field to use in the filter.
+ * @param {Object} range An object with `gte`, `gt`, `lt`, or `lte` properties
+ *     with dates (for "greater than or equal to", "greater than", "less than",
+ *     and "less than or equal to").  Open ended ranges are possible.
+ * @return {Object} A filter that will match items with values in the range of
+ *     provided numbers.
+ */
+exports.range = function(field, range) {
+  return {
+    type: 'RangeFilter',
+    field_name: field,
+    config: range
+  };
+};
+
+/**
+ * Creates a `StringInFilter`.
+ * @param {string} field The name of the string field to use in the filter.
+ * @param {Array<string>} values A list of strings.
+ * @return {Object} A filter that will match items whose field value matches
+ *     any of the provided strings.
+ */
+exports.strings = function(field, values) {
+  return {
+    type: 'StringInFilter',
+    field_name: field,
+    config: values
+  };
+};
+
+/**
+ * Creates a `PermissionFilter`.
+ * @param {Array<string>} values A list of permissions.
+ * @return {Object} A filter that will match items that have all of the
+ *     provided permissions.
+ */
+exports.permissions = function(values) {
+  return {
+    type: 'PermissionFilter',
+    config: values
+  };
+};
