@@ -10,12 +10,12 @@
  * @return {Object} A filter that will match items that match all of the child
  *     filters.
  */
-exports.and = function(filters) {
+function and(filters) {
   return {
     type: 'AndFilter',
     config: filters
   };
-};
+}
 
 /**
  * Creates a logical `OrFilter`.
@@ -23,12 +23,12 @@ exports.and = function(filters) {
  * @return {Object} A filter that will match items that match any of the child
  *     filters.
  */
-exports.or = function(filters) {
+function or(filters) {
   return {
     type: 'OrFilter',
     config: filters
   };
-};
+}
 
 /**
  * Creates a logical `NotFilter`.
@@ -36,12 +36,12 @@ exports.or = function(filters) {
  * @return {Object} A filter that will match items that do not match any of the
  *     child filters.
  */
-exports.not = function(filters) {
+function not(filters) {
   return {
     type: 'NotFilter',
     config: filters
   };
-};
+}
 
 /**
  * Creates a `DateRangeFilter`.
@@ -52,7 +52,7 @@ exports.not = function(filters) {
  * @return {Object} A filter that will match items with dates in the range of
  *     provided dates.
  */
-exports.dates = function(field, range) {
+function dates(field, range) {
   var config;
   for (var key in range) {
     if (range[key] instanceof Date) {
@@ -66,7 +66,7 @@ exports.dates = function(field, range) {
     field_name: field,
     config: config
   };
-};
+}
 
 /**
  * Creates a `GeometryFilter`.
@@ -75,13 +75,13 @@ exports.dates = function(field, range) {
  * @return {Object} A filter that will match items that intersect the provided
  *     geometry.
  */
-exports.geometry = function(field, geometry) {
+function geometry(field, geometry) {
   return {
     type: 'GeometryFilter',
     field_name: field,
     config: geometry
   };
-};
+}
 
 /**
  * Creates a `NumberInFilter`.
@@ -90,13 +90,13 @@ exports.geometry = function(field, geometry) {
  * @return {Object} A filter that will match items whose field value matches
  *     any of the provided numbers.
  */
-exports.numbers = function(field, values) {
+function numbers(field, values) {
   return {
     type: 'NumberInFilter',
     field_name: field,
     config: values
   };
-};
+}
 
 /**
  * Creates a `RangeFilter`.
@@ -107,13 +107,13 @@ exports.numbers = function(field, values) {
  * @return {Object} A filter that will match items with values in the range of
  *     provided numbers.
  */
-exports.range = function(field, range) {
+function range(field, range) {
   return {
     type: 'RangeFilter',
     field_name: field,
     config: range
   };
-};
+}
 
 /**
  * Creates a `StringInFilter`.
@@ -122,13 +122,13 @@ exports.range = function(field, range) {
  * @return {Object} A filter that will match items whose field value matches
  *     any of the provided strings.
  */
-exports.strings = function(field, values) {
+function strings(field, values) {
   return {
     type: 'StringInFilter',
     field_name: field,
     config: values
   };
-};
+}
 
 /**
  * Creates a `PermissionFilter`.
@@ -136,9 +136,19 @@ exports.strings = function(field, values) {
  * @return {Object} A filter that will match items that have all of the
  *     provided permissions.
  */
-exports.permissions = function(values) {
+function permissions(values) {
   return {
     type: 'PermissionFilter',
     config: values
   };
-};
+}
+
+exports.and = and;
+exports.or = or;
+exports.not = not;
+exports.dates = dates;
+exports.geometry = geometry;
+exports.numbers = numbers;
+exports.range = range;
+exports.strings = strings;
+exports.permissions = permissions;

@@ -132,6 +132,9 @@ function main(callback) {
         engine: 'handlebars',
         partials: 'doc/partials',
         helpers: {
+          short: function(name) {
+            return name.replace(/^planet-client\/api\//, '');
+          },
           instance: function(memberof) {
             var className = getClassName(memberof);
             return className.charAt(0).toLowerCase() + className.slice(1);
