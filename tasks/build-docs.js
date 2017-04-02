@@ -133,7 +133,10 @@ function main(callback) {
         partials: 'doc/partials',
         helpers: {
           short: function(name) {
-            return name.replace(/^planet-client\/api\//, '');
+            return name.replace(/^api\//, '');
+          },
+          long: function(name) {
+            return '@planet/client/' + name;
           },
           instance: function(memberof) {
             var className = getClassName(memberof);

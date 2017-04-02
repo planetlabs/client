@@ -1,26 +1,26 @@
-## planet-client
+## @planet/client
 
 A JavaScript client for [Planet's imagery API](https://www.planet.com/docs/).
 
 ### Installation
 
-The `planet-client` requires Node >= 0.12.  Install the `planet-client` package `npm` (which comes with [Node](https://nodejs.org/)).
+The `@planet/client` requires Node >= 0.12.  Install the `@planet/client` package `npm` (which comes with [Node](https://nodejs.org/)).
 
-    npm install planet-client
+    npm install @planet/client
 
-The `planet-client` package provides a library for use in your application and a `planet` executable for command line use.  See details on both below.
+The `@planet/client` package provides a library for use in your application and a `planet` executable for command line use.  See details on both below.
 
 ### Using the Library
 
-The `planet-client` package can be used in a Node based project or in the browser with a CommonJS module loader (like [Browserify](http://browserify.org/) or [Webpack](http://webpack.github.io/)).
+The `@planet/client` package can be used in a Node based project or in the browser with a CommonJS module loader (like [Browserify](http://browserify.org/) or [Webpack](http://webpack.github.io/)).
 
 It is also possible to load a standalone bundle of the library in a script tag.  Without a module loader, this will create a global `planet` object:
 
-    <script src="https://unpkg.com/planet-client/dist/planet.js"></script>
+    <script src="https://unpkg.com/@planet/client/dist/planet.js"></script>
 
-This will redirect to the most recent release.  To avoid the redirect, you can include a specific version number (e.g. https://unpkg.com/planet-client@1.2.0/dist/planet.js).
+This will redirect to the most recent release.  To avoid the redirect, you can include a specific version number (e.g. https://unpkg.com/@planet/client@1.2.0/dist/planet.js).
 
-The library requires a global [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) implementation.  This comes with Node >= 0.12 and [modern browsers](http://caniuse.com/#search=promise).  To use `planet-client` in an environment without `Promise`, you can [use a polyfill](https://www.google.com/search?q=promise+polyfill).
+The library requires a global [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) implementation.  This comes with Node >= 0.12 and [modern browsers](http://caniuse.com/#search=promise).  To use `@planet/client` in an environment without `Promise`, you can [use a polyfill](https://www.google.com/search?q=promise+polyfill).
 
 See the `examples` directory for example use of the library.
 

@@ -1,6 +1,6 @@
 /**
  * Provides methods for issuing API requests.
- * @module planet-client/api/request
+ * @module api/request
  * @private
  */
 

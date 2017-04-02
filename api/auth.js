@@ -2,10 +2,10 @@
  * Provides methods for authenticating with a Planet API account.
  * Authentication is required when searching for imagery, and clients can
  * authenticate by either providing a valid email/password pair or an API
- * key.  Use the [`auth.login()`](#module:planet-client/api/auth~login) method
- * with an email and password or the [`auth.setKey()`](#module:planet-client/api/auth~setKey)
+ * key.  Use the [`auth.login()`](#module:api/auth~login) method
+ * with an email and password or the [`auth.setKey()`](#module:api/auth~setKey)
  * method with an API key.
- * @module planet-client/api/auth
+ * @module api/auth
  */
 
 var errors = require('./errors');
@@ -60,7 +60,7 @@ function logout() {
 
 /**
  * Set an API key to be used for subsequent requests.  This is an alternative
- * to submitting credentials with the [`login`](#module:planet-client/api/auth~login)
+ * to submitting credentials with the [`login`](#module:api/auth~login)
  * method.  The stored key will be used for subsequent API requests.
  * @param {string} key An API key.
  */

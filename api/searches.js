@@ -1,6 +1,6 @@
 /**
  * Provides methods for working with saved searches.
- * @module planet-client/api/searches
+ * @module api/searches
  */
 
 var pager = require('./pager');
@@ -15,7 +15,7 @@ var urls = require('./urls');
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object>} A promise that resolves to search metadata or
  *     is rejected with any error.  See the [`errors`
- *     module](#module:planet-client/api/errors) for a list of the possible
+ *     module](#module:api/errors) for a list of the possible
  *     error types.
  */
 function get(id, options) {
@@ -43,14 +43,14 @@ function get(id, options) {
  * @return {Promise<Array>} A promise that resolves when all data is finished
  *     loading or is rejected with any error.  If an `each` callback is not
  *     provided, the promise will resolve with all data concatenated.
- *     See the [`errors` module](#module:planet-client/api/errors) for a list of
+ *     See the [`errors` module](#module:api/errors) for a list of
  *     the possible error types.
  */
 function search(options) {
   options = options || {};
   var query = Object.assign({search_type: 'saved'}, options.query);
   var config = {
-    url: urls.types(),
+    url: urls.searches(),
     query: query,
     terminator: options.terminator
   };
@@ -67,7 +67,7 @@ function search(options) {
  *     imagery matches search criteria (`false` by default).
  * @return {Promise<Object>} A promise that resolves to the new search or
  *     is rejected with any error.  See the [`errors`
- *     module](#module:planet-client/api/errors) for a list of the possible
+ *     module](#module:api/errors) for a list of the possible
  *     error types.
  */
 function create(options) {
@@ -111,7 +111,7 @@ function create(options) {
  *     imagery matches search criteria.
  * @return {Promise<Object>} A promise that resolves to the updated search or
  *     is rejected with any error.  See the [`errors`
- *     module](#module:planet-client/api/errors) for a list of the possible
+ *     module](#module:api/errors) for a list of the possible
  *     error types.
  */
 function update(id, options) {
@@ -145,7 +145,7 @@ function update(id, options) {
  * @param {string} id Search identifier.
  * @return {Promise} A promise that resolves if the search was removed or
  *     is rejected with any error.  See the [`errors`
- *     module](#module:planet-client/api/errors) for a list of the possible
+ *     module](#module:api/errors) for a list of the possible
  *     error types.
  */
 function remove(id) {

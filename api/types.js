@@ -1,6 +1,6 @@
 /**
  * Provides methods to get information on the available item types.
- * @module planet-client/api/types
+ * @module api/types
  */
 
 var pager = require('./pager');
@@ -15,7 +15,7 @@ var urls = require('./urls');
  *     with a function that can be called back to terminate the request.
  * @return {Promise.<Object>} A promise that resolves to item type metadata or
  *     is rejected with any error.  See the [`errors`
- *     module](#module:planet-client/api/errors) for a list of the possible
+ *     module](#module:api/errors) for a list of the possible
  *     error types.
  */
 function get(id, options) {
@@ -41,7 +41,7 @@ function get(id, options) {
  * @return {Promise<Array>} A promise that resolves when all data is finished
  *     loading or is rejected with any error.  If an `each` callback is not
  *     provided, the promise will resolve with all data concatenated.
- *     See the [`errors` module](#module:planet-client/api/errors) for a list of
+ *     See the [`errors` module](#module:api/errors) for a list of
  *     the possible error types.
  */
 function search(options) {

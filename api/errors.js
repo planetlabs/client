@@ -3,7 +3,7 @@
  * method returns a promise that is rejected, you can use `instanceof` to
  * determine what type of error you have.
  *
- * @module planet-client/api/errors
+ * @module api/errors
  */
 
 /**
@@ -48,7 +48,7 @@ ResponseError.prototype.name = 'ResponseError';
  * @param {string} message Error message.
  * @param {XMLHttpRequest} response The response.
  * @param {Object} body Any parsed response body (as JSON).
- * @extends {module:planet-client/api/errors~ResponseError}
+ * @extends {module:api/errors~ResponseError}
  * @constructor
  * @ignore
  */
@@ -64,7 +64,7 @@ BadRequest.prototype.name = 'BadRequest';
  * @param {string} message Error message.
  * @param {XMLHttpRequest} response The response.
  * @param {Object} body Any parsed response body (as JSON).
- * @extends {module:planet-client/api/errors~ResponseError}
+ * @extends {module:api/errors~ResponseError}
  * @constructor
  * @ignore
  */
@@ -80,7 +80,7 @@ Unauthorized.prototype.name = 'Unauthorized';
  * @param {string} message Error message.
  * @param {XMLHttpRequest} response The response.
  * @param {Object} body Any parsed response body (as JSON).
- * @extends {module:planet-client/api/errors~ResponseError}
+ * @extends {module:api/errors~ResponseError}
  * @constructor
  * @ignore
  */
@@ -96,7 +96,7 @@ Forbidden.prototype.name = 'Forbidden';
  * @param {string} message Error message.
  * @param {XMLHttpRequest} response The response.
  * @param {string} body Any parsed response body.
- * @extends {module:planet-client/api/errors~ResponseError}
+ * @extends {module:api/errors~ResponseError}
  * @constructor
  * @ignore
  */
