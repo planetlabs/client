@@ -2,21 +2,22 @@
 <html>
   <head>
     <title>Planet Client</title>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Montserrat" rel="stylesheet">
     <style>
       html, body {
-        margin: 1em;
+        margin: 0;
         padding; 0;
-        font-family: "Open Sans",sans-serif,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-family: "Montserrat", sans-serif;
         background: #FFF;
         color: #666;
       }
-      a {
-        color: #00a9e9;
+      a,
+      a code {
+        color: #009da5;
         text-decoration: none;
       }
       a:hover,
       a:focus {
-        color: #00729d;
         text-decoration: none;
       }
       hr {
@@ -29,27 +30,29 @@
         padding: 1em;
       }
       code {
-        font-family: "Lucida Console", Monaco, monospace;
-        font-size: 0.9em;
+        font-family: "Droid Sans Mono", monospace;
+        font-size: 0.8em;
         color: #666;
-        background: #f3f6f9;
+        background: #f7f7f8;
         padding: 0.2em 0.5em;
       }
       a code .name {
-        color: #00a9e9;
-      }
-      a:hover code .name,
-      a:focus code .name {
-        color: #00729d;
+        color: #009da5;
       }
       #sidebar {
+        background: #006c72;
+        color: #fff;
         position: fixed;
         top: 0;
         bottom: 0;
         overflow: scroll;
-        width: 200px;
-        padding: 2em 2em 0 0;
+        padding: 2em 1em 0 1em;
         box-sizing: border-box;
+        width: 13em;
+      }
+      #sidebar a,
+      #sidebar a code .name {
+        color: #fff;
       }
       #sidebar h1 {
         margin-top: 0.5em;
@@ -62,13 +65,25 @@
       #sidebar ul {
         margin: 0.5em 0;
         list-style-type: circle;
-        padding: 0 20px;
+        padding: 0 2em;
+      }
+      .toc-header img {
+        height: 6em;
       }
       #content {
         margin-left: 200px;
       }
+      #content h1 {
+        font-size: 2em;
+      }
+      #content h2 {
+        margin-top: 2.5em;
+      }
       #content h3 {
-        margin-top: 1.5em;
+        margin-top: 2em;
+      }
+      #content h4 {
+        margin: 2em 0 0.5em;
       }
       section.separated {
         border: 1px solid #eee;
@@ -112,67 +127,78 @@
       .toc .class {
         margin: 0;
       }
+      section.license {
+        margin-top: 4em;
+        font-size: 0.8em;
+        color: #f7f7f8;
+      }
+      #sidebar section.license a {
+        color: #f7f7f8;
+      }
     </style>
   </head>
   <body>
   
 <section id="sidebar">
   <div class="toc">
-    <h1><a href="./">Planet Client</a></h1>
-    <hr>
+    <div class="toc-header">
+      <a href=".">
+        <img src="./assets/logo.svg">
+        <h1>JavaScript Client</h1>
+      </a>
+    </div>
+  
     <h2><a href="./api/">API Modules</a></h2>
-    <h2><a href="./cli/">CLI Usage</a></h2>
+    <section class="license">
+      <p>
+        © Planet Labs, Inc.
+      </p>
+      <p>
+        Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.
+      </p>
+    </section>
   </div>
 </section>
 
 <section id="content" class="separated">
-  <h1><code>planet-client</code></h1>
+  <h1><a href="#content"><code><span class="name">@planet/client</span></code></a></h1>
 
   <p>
     A JavaScript client for <a href="https://www.planet.com/docs/">Planet's imagery API</a>.
   </p>
 
-  <h2 id="installation">Installation</h2>
+  <h2 id="installation"><a href="#installation">Installation</a></h2>
 
   <p>
-    Install the <code>planet-client</code> package with <code>npm</code> (which comes with <a href="https://nodejs.org/">Node</a>).
+    Install the <code>@planet/client</code> package with <code>npm</code> (which comes with <a href="https://nodejs.org/">Node</a>).
   </p>
 
-  <pre><code>npm install planet-client</code></pre>
+  <pre><code>npm install --save @planet/client</code></pre>
 
   <p>
-    The <code>planet-client</code> package provides <a href="#using-the-library">a library</a> for use in your application and a <code>planet</code> executable for <a href="#using-the-cli">command line use</a>. See details on both below.
+    It is also possible to load a standalone bundle of the library in a script tag.  Without a module loader, this will create a global <code>planet</code> object:
   </p>
 
-  <h2 id="using-the-library">Using the Library</h2>
+  <pre><code>&lt;script src="https://unpkg.com/@planet/client/dist/planet.js"&gt;&lt;/script&gt;</code></pre>
 
   <p>
-    The <code>planet-client</code> package can be used in a Node based project or in the browser with a CommonJS module loader (like <a href="http://browserify.org/">Browserify</a> or <a href="http://webpack.github.io/">Webpack</a>).
+    This will redirect to the most recent release.  To avoid the redirect, you can include a specific version number (e.g. <code>https://unpkg.com/@planet/client@2.0.0/dist/planet.js</code>).
   </p>
 
-  <p>
-    The library requires a global <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a> implementation.  This comes with Node &gt;= 0.12 and <a href="http://caniuse.com/#search=promise">modern browsers</a>.  To use <code>planet-client</code> in an environment without <code>Promise</code>, you can <a href="https://www.google.com/search?q=promise+polyfill">use a polyfill</a>.
-  </p>
+  <h2 id="using-the-library"><a href="#using-the-library">Using the Library</a></h2>
 
   <p>
-    With the above prerequisites, you can start using the <code>planet-client</code> package in your application.  See the <a href="./api/">client API documentation</a> for details on using the library.
-  </p>
-
-  <h2 id="using-the-cli">Using the CLI</h2>
-
-  <p>
-    The <code>planet-client</code> package provides a <code>planet</code> executable. This can be installed globally (<code>npm install --global planet-client</code>), or if you install it locally, you can add the executable to your path (<code>export PATH=$PATH:path/to/node_modules/.bin</code>).
+    The <code>@planet/client</code> package can be used in a Node based project or in the browser with a CommonJS module loader (like <a href="http://browserify.org/">Browserify</a> or <a href="https://webpack.js.org/">Webpack</a>).
   </p>
 
   <p>
-    The general syntax for the planet executable is planet <command> [options]. To see a list of commands, run the following:
+    The library requires a global <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a> implementation.  This comes with Node &gt;= 0.12 and <a href="http://caniuse.com/#search=promise">modern browsers</a>.  To use <code>@planet/client</code> in an environment without <code>Promise</code>, you can <a href="https://www.google.com/search?q=promise+polyfill">use a polyfill</a>.
   </p>
-
-  <pre><code>planet --help</code></pre>
 
   <p>
-    See the <a href="./cli/">CLI docs</a> for more details on using the <code>planet</code> command.
+    With the above prerequisites, you can start using the <code>@planet/client</code> package in your application.  See the <a href="./api/">client API documentation</a> for details on using the library.
   </p>
+
 </section>
 
   </body>

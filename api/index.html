@@ -2,21 +2,22 @@
 <html>
   <head>
     <title>API Docs</title>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Montserrat" rel="stylesheet">
     <style>
       html, body {
-        margin: 1em;
+        margin: 0;
         padding; 0;
-        font-family: "Open Sans",sans-serif,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-family: "Montserrat", sans-serif;
         background: #FFF;
         color: #666;
       }
-      a {
-        color: #00a9e9;
+      a,
+      a code {
+        color: #009da5;
         text-decoration: none;
       }
       a:hover,
       a:focus {
-        color: #00729d;
         text-decoration: none;
       }
       hr {
@@ -29,27 +30,29 @@
         padding: 1em;
       }
       code {
-        font-family: "Lucida Console", Monaco, monospace;
-        font-size: 0.9em;
+        font-family: "Droid Sans Mono", monospace;
+        font-size: 0.8em;
         color: #666;
-        background: #f3f6f9;
+        background: #f7f7f8;
         padding: 0.2em 0.5em;
       }
       a code .name {
-        color: #00a9e9;
-      }
-      a:hover code .name,
-      a:focus code .name {
-        color: #00729d;
+        color: #009da5;
       }
       #sidebar {
+        background: #006c72;
+        color: #fff;
         position: fixed;
         top: 0;
         bottom: 0;
         overflow: scroll;
-        width: 200px;
-        padding: 2em 2em 0 0;
+        padding: 2em 1em 0 1em;
         box-sizing: border-box;
+        width: 13em;
+      }
+      #sidebar a,
+      #sidebar a code .name {
+        color: #fff;
       }
       #sidebar h1 {
         margin-top: 0.5em;
@@ -62,13 +65,25 @@
       #sidebar ul {
         margin: 0.5em 0;
         list-style-type: circle;
-        padding: 0 20px;
+        padding: 0 2em;
+      }
+      .toc-header img {
+        height: 6em;
       }
       #content {
         margin-left: 200px;
       }
+      #content h1 {
+        font-size: 2em;
+      }
+      #content h2 {
+        margin-top: 2.5em;
+      }
       #content h3 {
-        margin-top: 1.5em;
+        margin-top: 2em;
+      }
+      #content h4 {
+        margin: 2em 0 0.5em;
       }
       section.separated {
         border: 1px solid #eee;
@@ -112,100 +127,84 @@
       .toc .class {
         margin: 0;
       }
+      section.license {
+        margin-top: 4em;
+        font-size: 0.8em;
+        color: #f7f7f8;
+      }
+      #sidebar section.license a {
+        color: #f7f7f8;
+      }
     </style>
   </head>
   <body>
   <section id="sidebar">
   <div class="toc">
-    <h1><a href="../">Planet Client</a></h1>
-    <hr>
+    <div class="toc-header">
+      <a href="..">
+        <img src="../assets/logo.svg">
+        <h1>JavaScript Client</h1>
+      </a>
+    </div>
+  
     <h2><a href="../api/">API Modules</a></h2>
         <div class="module">
-          <a href="#module:planet-client/api/aois">
-            <code><span class="name">planet-client/api/aois</span></code>
+          <a href="#module:api/auth">
+            <code><span class="name">auth</span></code>
           </a>
         </div>
         <ul class="classes">
         </ul>
         <ul class="functions">
           <li class="function">
-            <a href="#module:planet-client/api/aois~get">
-              <code><span class="name">get</span></code>
-            </a>
-          </li>
-          <li class="function">
-            <a href="#module:planet-client/api/aois~list">
-              <code><span class="name">list</span></code>
-            </a>
-          </li>
-          <li class="function">
-            <a href="#module:planet-client/api/aois~create">
-              <code><span class="name">create</span></code>
-            </a>
-          </li>
-        </ul>
-        <div class="module">
-          <a href="#module:planet-client/api/auth">
-            <code><span class="name">planet-client/api/auth</span></code>
-          </a>
-        </div>
-        <ul class="classes">
-        </ul>
-        <ul class="functions">
-          <li class="function">
-            <a href="#module:planet-client/api/auth~login">
+            <a href="#module:api/auth~login">
               <code><span class="name">login</span></code>
             </a>
           </li>
           <li class="function">
-            <a href="#module:planet-client/api/auth~logout">
+            <a href="#module:api/auth~logout">
               <code><span class="name">logout</span></code>
             </a>
           </li>
           <li class="function">
-            <a href="#module:planet-client/api/auth~setKey">
+            <a href="#module:api/auth~setKey">
               <code><span class="name">setKey</span></code>
             </a>
           </li>
         </ul>
         <div class="module">
-          <a href="#module:planet-client/api/errors">
-            <code><span class="name">planet-client/api/errors</span></code>
+          <a href="#module:api/errors">
+            <code><span class="name">errors</span></code>
           </a>
         </div>
         <ul class="classes">
           <li class="class">
-            <a href="#module:planet-client/api/errors~ResponseError">
+            <a href="#module:api/errors~ResponseError">
               <code><span class="name">ResponseError</span></code>
             </a>
           </li>
           <li class="class">
-            <a href="#module:planet-client/api/errors~BadRequest">
+            <a href="#module:api/errors~BadRequest">
               <code><span class="name">BadRequest</span></code>
             </a>
           </li>
           <li class="class">
-            <a href="#module:planet-client/api/errors~Unauthorized">
+            <a href="#module:api/errors~Unauthorized">
               <code><span class="name">Unauthorized</span></code>
             </a>
           </li>
           <li class="class">
-            <a href="#module:planet-client/api/errors~Forbidden">
+            <a href="#module:api/errors~Forbidden">
               <code><span class="name">Forbidden</span></code>
             </a>
           </li>
           <li class="class">
-            <a href="#module:planet-client/api/errors~UnexpectedResponse">
+            <a href="#module:api/errors~UnexpectedResponse">
               <code><span class="name">UnexpectedResponse</span></code>
             </a>
           </li>
           <li class="class">
-            <a href="#module:planet-client/api/errors~AbortedRequest">
-              <code><span class="name">AbortedRequest</span></code>
-            </a>
-          </li>
-          <li class="class">
-            <a href="#module:planet-client/api/errors~ClientError">
+            <a href="#module:api/errors~ClientError">
               <code><span class="name">ClientError</span></code>
             </a>
           </li>
@@ -213,328 +212,168 @@
         <ul class="functions">
         </ul>
         <div class="module">
-          <a href="#module:planet-client/api/mosaics">
-            <code><span class="name">planet-client/api/mosaics</span></code>
+          <a href="#module:api/filter">
+            <code><span class="name">filter</span></code>
           </a>
         </div>
         <ul class="classes">
         </ul>
         <ul class="functions">
           <li class="function">
-            <a href="#module:planet-client/api/mosaics~get">
+            <a href="#module:api/filter~and">
+              <code><span class="name">and</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/filter~or">
+              <code><span class="name">or</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/filter~not">
+              <code><span class="name">not</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/filter~dates">
+              <code><span class="name">dates</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/filter~geometry">
+              <code><span class="name">geometry</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/filter~numbers">
+              <code><span class="name">numbers</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/filter~range">
+              <code><span class="name">range</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/filter~strings">
+              <code><span class="name">strings</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/filter~permissions">
+              <code><span class="name">permissions</span></code>
+            </a>
+          </li>
+        </ul>
+        <div class="module">
+          <a href="#module:api/items">
+            <code><span class="name">items</span></code>
+          </a>
+        </div>
+        <ul class="classes">
+        </ul>
+        <ul class="functions">
+          <li class="function">
+            <a href="#module:api/items~get">
               <code><span class="name">get</span></code>
             </a>
           </li>
           <li class="function">
-            <a href="#module:planet-client/api/mosaics~search">
+            <a href="#module:api/items~search">
               <code><span class="name">search</span></code>
             </a>
           </li>
         </ul>
         <div class="module">
-          <a href="#module:planet-client/api/page">
-            <code><span class="name">planet-client/api/page</span></code>
-          </a>
-        </div>
-        <ul class="classes">
-          <li class="class">
-            <a href="#module:planet-client/api/page~Page">
-              <code><span class="name">Page</span></code>
-            </a>
-          </li>
-        </ul>
-        <ul class="functions">
-        </ul>
-        <div class="module">
-          <a href="#module:planet-client/api/quads">
-            <code><span class="name">planet-client/api/quads</span></code>
+          <a href="#module:api/searches">
+            <code><span class="name">searches</span></code>
           </a>
         </div>
         <ul class="classes">
         </ul>
         <ul class="functions">
           <li class="function">
-            <a href="#module:planet-client/api/quads~get">
+            <a href="#module:api/searches~get">
               <code><span class="name">get</span></code>
             </a>
           </li>
           <li class="function">
-            <a href="#module:planet-client/api/quads~search">
+            <a href="#module:api/searches~search">
               <code><span class="name">search</span></code>
             </a>
           </li>
           <li class="function">
-            <a href="#module:planet-client/api/quads~scenes">
-              <code><span class="name">scenes</span></code>
+            <a href="#module:api/searches~create">
+              <code><span class="name">create</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/searches~update">
+              <code><span class="name">update</span></code>
+            </a>
+          </li>
+          <li class="function">
+            <a href="#module:api/searches~remove">
+              <code><span class="name">remove</span></code>
             </a>
           </li>
         </ul>
         <div class="module">
-          <a href="#module:planet-client/api/scenes">
-            <code><span class="name">planet-client/api/scenes</span></code>
+          <a href="#module:api/types">
+            <code><span class="name">types</span></code>
           </a>
         </div>
         <ul class="classes">
         </ul>
         <ul class="functions">
           <li class="function">
-            <a href="#module:planet-client/api/scenes~get">
+            <a href="#module:api/types~get">
               <code><span class="name">get</span></code>
             </a>
           </li>
           <li class="function">
-            <a href="#module:planet-client/api/scenes~search">
+            <a href="#module:api/types~search">
               <code><span class="name">search</span></code>
             </a>
           </li>
         </ul>
-    <h2><a href="../cli/">CLI Usage</a></h2>
+    <section class="license">
+      <p>
+        © Planet Labs, Inc.
+      </p>
+      <p>
+        Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.
+      </p>
+    </section>
   </div>
 </section>
 <div id="content">
   <section class="separated">
     <h1>API Modules</h1>
     <p>
-      The <code>planet-client</code> package is organized as a collection of modules that roughly follow the structure of the <a href="https://www.planet.com/docs/">HTTP API</a>.  The API provides access to individual <a href="#module:planet-client/api/scenes">scenes</a> from a variety of providers and <a href="#module:planet-client/api/mosaics">mosaics</a> of those scenes.
+      The <code>@planet/client</code> package is organized as a collection of modules that roughly follow the structure of the <a href="https://www.planet.com/docs/">HTTP API</a>.  The API provides access to <a href="#module:api/items">imagery (items)</a> organized by <a href="#module:api/types">type</a>.
     </p>
   </section>
-    <section class="module separated" id="module:planet-client/api/aois">
+    <section class="module separated" id="module:api/auth">
       <h1>
-        <a href="#module:planet-client/api/aois"><code><span class="name">planet-client/api/aois</span></code></a>
+        <a href="#module:api/auth"><code><span class="name">@planet/client/api/auth</span></code></a>
       </h1>
-      <p class="description"><p>Provides methods for listing and creating areas of interest (AOI), or stored
-    geometries. AOIs allow you to query the scenes api without having to
-    transmit what may be very large geometries with every request.</p>
-    <p>After creating an AOI, we&#39;ll respond with a <code>json</code> payload containing an
-    <code>id</code> as well as the resulting <code>geojson</code>. The scenes api can then be queried
-    using the <code>aoi</code> parameter and setting it to the id of your uploaded AOI.</p>
+      <p class="description"><p>Provides methods for authenticating with a Planet API account.
+    Authentication is required when searching for imagery, and clients can
+    authenticate by either providing a valid email/password pair or an API
+    key.  Use the <a href="#module:api/auth~login"><code>auth.login()</code></a> method
+    with an email and password or the <a href="#module:api/auth~setKey"><code>auth.setKey()</code></a>
+    method with an API key.</p>
     </p>
       <hr>
-      <h2><code>var mod = require('planet-client/api/aois')</code></h2>
+      <h2><code>var auth = require('@planet/client/api/auth');</code></h2>
     
     
-        <h3>Functions</h3>
           <div class="function">
-            <h2 id="module:planet-client/api/aois~get">
-              <a href="#module:planet-client/api/aois~get">
+            <h2 id="module:api/auth~login">
+              <a href="#module:api/auth~login">
                 <code>
-                  mod.<span class="name">get</span>(id, options)
-                </code>
-              </a>
-            </h2>
-            <p><p>Obtains the metadata for a single uploaded geometry. The response includes
-            the geometry inside the returned object&#39;s <code>geojson</code> field.</p>
-            </p>
-              <h4>Arguments</h4>
-              <table class="params">
-                  <tr class="param">
-                    <td>
-                      <code class="name">id</code>
-                    </td>
-                    <td>
-                      <code class="type">string</code>
-               <span class="description"><p>A mosaic identifier.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>Options.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options.terminator</code>
-                    </td>
-                    <td>
-                      <code class="type">function</code>
-               <span class="description"><p>A function that is called
-                  with a function that can be called back to terminate the request.</p>
-              </span>
-                    </td>
-                  </tr>
-              </table>
-              <h4>Returns</h4>
-              <table class="returns">
-                <tr>
-                  <td><code class="type">Promise.&lt;Object&gt;</code>
-              </td>
-                  <td><p>A promise that resolves to aoi metadata or is
-                  rejected with any error.  See the <a href="#module:planet-client/api/errors"><code>errors</code>
-                  module</a> for a list of the possible
-                  error types.</p>
-              </td>
-                </tr>
-              </table>
-          </div>
-          <div class="function">
-            <h2 id="module:planet-client/api/aois~list">
-              <a href="#module:planet-client/api/aois~list">
-                <code>
-                  mod.<span class="name">list</span>(id, options)
-                </code>
-              </a>
-            </h2>
-            <p><p>List all of your previously uploaded AOIs. Note that this does not include
-            the geometry geojson for each AOI.</p>
-            </p>
-              <h4>Arguments</h4>
-              <table class="params">
-                  <tr class="param">
-                    <td>
-                      <code class="name">id</code>
-                    </td>
-                    <td>
-                      <code class="type">string</code>
-               <span class="description"><p>An AOI public id.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>Options.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options.terminator</code>
-                    </td>
-                    <td>
-                      <code class="type">function</code>
-               <span class="description"><p>A function that is called
-                  with a function that can be called back to terminate the request.</p>
-              </span>
-                    </td>
-                  </tr>
-              </table>
-              <h4>Returns</h4>
-              <table class="returns">
-                <tr>
-                  <td><code class="type">Promise.&lt;Array.&lt;Object&gt;&gt;</code>
-              </td>
-                  <td><p>A promise that resolves to an array of AOI
-                  metadata or is rejected with any error.  See the <a href="#module:planet-client/api/errors"><code>errors</code>
-                  module</a> for a list of the possible
-                  error types.</p>
-              </td>
-                </tr>
-              </table>
-          </div>
-          <div class="function">
-            <h2 id="module:planet-client/api/aois~create">
-              <a href="#module:planet-client/api/aois~create">
-                <code>
-                  mod.<span class="name">create</span>(name, file, options)
-                </code>
-              </a>
-            </h2>
-            <p><p>Creates a new AOI using uploaded json data.</p>
-            </p>
-              <h4>Arguments</h4>
-              <table class="params">
-                  <tr class="param">
-                    <td>
-                      <code class="name">name</code>
-                    </td>
-                    <td>
-                      <code class="type">String</code>
-               <span class="description"><p>The name of the AOI.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">file</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>An object representing a file and it&#39;s contents.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">file.name</code>
-                    </td>
-                    <td>
-                      <code class="type">String</code>
-               <span class="description"><p>The name of the originally uploaded file.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">file.contents</code>
-                    </td>
-                    <td>
-                      <code class="type">String</code>
-               <span class="description"><p>The file&#39;s contents as a string.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>Options.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options.terminator</code>
-                    </td>
-                    <td>
-                      <code class="type">function</code>
-               <span class="description"><p>A function that is called
-                  with a function that can be called back to terminate the request.</p>
-              </span>
-                    </td>
-                  </tr>
-              </table>
-              <h4>Returns</h4>
-              <table class="returns">
-                <tr>
-                  <td><code class="type">Promise.&lt;Array.&lt;Object&gt;&gt;</code>
-              </td>
-                  <td><p>A promise that resolves to an array of AOI
-                  metadata or is rejected with any error.  See the <a href="#module:planet-client/api/errors"><code>errors</code>
-                  module</a> for a list of the possible
-                  error types.</p>
-              </td>
-                </tr>
-              </table>
-          </div>
-    
-    </section>
-    <section class="module separated" id="module:planet-client/api/auth">
-      <h1>
-        <a href="#module:planet-client/api/auth"><code><span class="name">planet-client/api/auth</span></code></a>
-      </h1>
-      <p class="description"><p>Provides methods for authenticating with a Planet API account.</p>
-    </p>
-      <hr>
-      <h2><code>var mod = require('planet-client/api/auth')</code></h2>
-    
-    
-        <h3>Functions</h3>
-          <div class="function">
-            <h2 id="module:planet-client/api/auth~login">
-              <a href="#module:planet-client/api/auth~login">
-                <code>
-                  mod.<span class="name">login</span>(email, password)
+                  auth.<span class="name">login</span>(email, password)
                 </code>
               </a>
             </h2>
@@ -576,10 +415,10 @@
               </table>
           </div>
           <div class="function">
-            <h2 id="module:planet-client/api/auth~logout">
-              <a href="#module:planet-client/api/auth~logout">
+            <h2 id="module:api/auth~logout">
+              <a href="#module:api/auth~logout">
                 <code>
-                  mod.<span class="name">logout</span>()
+                  auth.<span class="name">logout</span>()
                 </code>
               </a>
             </h2>
@@ -587,15 +426,15 @@
             </p>
           </div>
           <div class="function">
-            <h2 id="module:planet-client/api/auth~setKey">
-              <a href="#module:planet-client/api/auth~setKey">
+            <h2 id="module:api/auth~setKey">
+              <a href="#module:api/auth~setKey">
                 <code>
-                  mod.<span class="name">setKey</span>(key)
+                  auth.<span class="name">setKey</span>(key)
                 </code>
               </a>
             </h2>
             <p><p>Set an API key to be used for subsequent requests.  This is an alternative
-            to submitting credentials with the <a href="#module:planet-client/api/auth~login"><code>login</code></a>
+            to submitting credentials with the <a href="#module:api/auth~login"><code>login</code></a>
             method.  The stored key will be used for subsequent API requests.</p>
             </p>
               <h4>Arguments</h4>
@@ -614,22 +453,21 @@
           </div>
     
     </section>
-    <section class="module separated" id="module:planet-client/api/errors">
+    <section class="module separated" id="module:api/errors">
       <h1>
-        <a href="#module:planet-client/api/errors"><code><span class="name">planet-client/api/errors</span></code></a>
+        <a href="#module:api/errors"><code><span class="name">@planet/client/api/errors</span></code></a>
       </h1>
       <p class="description"><p>Includes specific <code>Error</code> types generated by API requests.  When a request
     method returns a promise that is rejected, you can use <code>instanceof</code> to
     determine what type of error you have.</p>
     </p>
       <hr>
-      <h2><code>var mod = require('planet-client/api/errors')</code></h2>
+      <h2><code>var errors = require('@planet/client/api/errors');</code></h2>
     
-        <h3>Classes</h3>
           <div class="class">
-            <h2 id="module:planet-client/api/errors~ResponseError">
-              <a href="#module:planet-client/api/errors~ResponseError">
-                  <code>mod.<span class="name">ResponseError</span></code>
+            <h2 id="module:api/errors~ResponseError">
+              <a href="#module:api/errors~ResponseError">
+                  <code>errors.<span class="name">ResponseError</span></code>
               </a>
             </h2>
             <p class="description"><p>The base class for all response errors.</p>
@@ -637,7 +475,7 @@
               <h3>Properties</h3>
               <table class="members">
                 <tbody>
-                    <tr id="module:planet-client/api/errors~ResponseError#message">
+                    <tr id="module:api/errors~ResponseError#message">
                       <td>
                         <code><span class="name">message</span></code>
                       </td>
@@ -647,7 +485,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~ResponseError#response">
+                    <tr id="module:api/errors~ResponseError#response">
                       <td>
                         <code><span class="name">response</span></code>
                       </td>
@@ -657,7 +495,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~ResponseError#body">
+                    <tr id="module:api/errors~ResponseError#body">
                       <td>
                         <code><span class="name">body</span></code>
                       </td>
@@ -668,7 +506,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~ResponseError#stack">
+                    <tr id="module:api/errors~ResponseError#stack">
                       <td>
                         <code><span class="name">stack</span></code>
                       </td>
@@ -682,9 +520,9 @@
               </table>
           </div>
           <div class="class">
-            <h2 id="module:planet-client/api/errors~BadRequest">
-              <a href="#module:planet-client/api/errors~BadRequest">
-                  <code>mod.<span class="name">BadRequest</span></code>
+            <h2 id="module:api/errors~BadRequest">
+              <a href="#module:api/errors~BadRequest">
+                  <code>errors.<span class="name">BadRequest</span></code>
               </a>
             </h2>
             <p class="description"><p>The request was bad (status <code>400</code>).</p>
@@ -692,7 +530,7 @@
               <h3>Properties</h3>
               <table class="members">
                 <tbody>
-                    <tr id="module:planet-client/api/errors~BadRequest#message">
+                    <tr id="module:api/errors~BadRequest#message">
                       <td>
                         <code><span class="name">message</span></code>
                       </td>
@@ -702,7 +540,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~BadRequest#response">
+                    <tr id="module:api/errors~BadRequest#response">
                       <td>
                         <code><span class="name">response</span></code>
                       </td>
@@ -712,7 +550,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~BadRequest#body">
+                    <tr id="module:api/errors~BadRequest#body">
                       <td>
                         <code><span class="name">body</span></code>
                       </td>
@@ -723,7 +561,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~BadRequest#stack">
+                    <tr id="module:api/errors~BadRequest#stack">
                       <td>
                         <code><span class="name">stack</span></code>
                       </td>
@@ -737,9 +575,9 @@
               </table>
           </div>
           <div class="class">
-            <h2 id="module:planet-client/api/errors~Unauthorized">
-              <a href="#module:planet-client/api/errors~Unauthorized">
-                  <code>mod.<span class="name">Unauthorized</span></code>
+            <h2 id="module:api/errors~Unauthorized">
+              <a href="#module:api/errors~Unauthorized">
+                  <code>errors.<span class="name">Unauthorized</span></code>
               </a>
             </h2>
             <p class="description"><p>The request requires user authentication (status <code>401</code>).</p>
@@ -747,7 +585,7 @@
               <h3>Properties</h3>
               <table class="members">
                 <tbody>
-                    <tr id="module:planet-client/api/errors~Unauthorized#message">
+                    <tr id="module:api/errors~Unauthorized#message">
                       <td>
                         <code><span class="name">message</span></code>
                       </td>
@@ -757,7 +595,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~Unauthorized#response">
+                    <tr id="module:api/errors~Unauthorized#response">
                       <td>
                         <code><span class="name">response</span></code>
                       </td>
@@ -767,7 +605,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~Unauthorized#body">
+                    <tr id="module:api/errors~Unauthorized#body">
                       <td>
                         <code><span class="name">body</span></code>
                       </td>
@@ -778,7 +616,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~Unauthorized#stack">
+                    <tr id="module:api/errors~Unauthorized#stack">
                       <td>
                         <code><span class="name">stack</span></code>
                       </td>
@@ -792,9 +630,9 @@
               </table>
           </div>
           <div class="class">
-            <h2 id="module:planet-client/api/errors~Forbidden">
-              <a href="#module:planet-client/api/errors~Forbidden">
-                  <code>mod.<span class="name">Forbidden</span></code>
+            <h2 id="module:api/errors~Forbidden">
+              <a href="#module:api/errors~Forbidden">
+                  <code>errors.<span class="name">Forbidden</span></code>
               </a>
             </h2>
             <p class="description"><p>The client is forbidden from making the request (status <code>403</code>).</p>
@@ -802,7 +640,7 @@
               <h3>Properties</h3>
               <table class="members">
                 <tbody>
-                    <tr id="module:planet-client/api/errors~Forbidden#message">
+                    <tr id="module:api/errors~Forbidden#message">
                       <td>
                         <code><span class="name">message</span></code>
                       </td>
@@ -812,7 +650,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~Forbidden#response">
+                    <tr id="module:api/errors~Forbidden#response">
                       <td>
                         <code><span class="name">response</span></code>
                       </td>
@@ -822,7 +660,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~Forbidden#body">
+                    <tr id="module:api/errors~Forbidden#body">
                       <td>
                         <code><span class="name">body</span></code>
                       </td>
@@ -833,7 +671,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~Forbidden#stack">
+                    <tr id="module:api/errors~Forbidden#stack">
                       <td>
                         <code><span class="name">stack</span></code>
                       </td>
@@ -847,9 +685,9 @@
               </table>
           </div>
           <div class="class">
-            <h2 id="module:planet-client/api/errors~UnexpectedResponse">
-              <a href="#module:planet-client/api/errors~UnexpectedResponse">
-                  <code>mod.<span class="name">UnexpectedResponse</span></code>
+            <h2 id="module:api/errors~UnexpectedResponse">
+              <a href="#module:api/errors~UnexpectedResponse">
+                  <code>errors.<span class="name">UnexpectedResponse</span></code>
               </a>
             </h2>
             <p class="description"><p>The API returns an unexpected response.</p>
@@ -857,7 +695,7 @@
               <h3>Properties</h3>
               <table class="members">
                 <tbody>
-                    <tr id="module:planet-client/api/errors~UnexpectedResponse#message">
+                    <tr id="module:api/errors~UnexpectedResponse#message">
                       <td>
                         <code><span class="name">message</span></code>
                       </td>
@@ -867,7 +705,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~UnexpectedResponse#response">
+                    <tr id="module:api/errors~UnexpectedResponse#response">
                       <td>
                         <code><span class="name">response</span></code>
                       </td>
@@ -877,7 +715,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~UnexpectedResponse#body">
+                    <tr id="module:api/errors~UnexpectedResponse#body">
                       <td>
                         <code><span class="name">body</span></code>
                       </td>
@@ -888,7 +726,7 @@
             </span>
                       </td>
                     </tr>
-                    <tr id="module:planet-client/api/errors~UnexpectedResponse#stack">
+                    <tr id="module:api/errors~UnexpectedResponse#stack">
                       <td>
                         <code><span class="name">stack</span></code>
                       </td>
@@ -902,18 +740,9 @@
               </table>
           </div>
           <div class="class">
-            <h2 id="module:planet-client/api/errors~AbortedRequest">
-              <a href="#module:planet-client/api/errors~AbortedRequest">
-                  <code>mod.<span class="name">AbortedRequest</span></code>
-              </a>
-            </h2>
-            <p class="description"><p>An error generated when the request is terminated.</p>
-            </p>
-          </div>
-          <div class="class">
-            <h2 id="module:planet-client/api/errors~ClientError">
-              <a href="#module:planet-client/api/errors~ClientError">
-                  <code>mod.<span class="name">ClientError</span></code>
+            <h2 id="module:api/errors~ClientError">
+              <a href="#module:api/errors~ClientError">
+                  <code>errors.<span class="name">ClientError</span></code>
               </a>
             </h2>
             <p class="description"><p>An error generated on the client side, before issuing a request.</p>
@@ -922,26 +751,586 @@
     
     
     </section>
-    <section class="module separated" id="module:planet-client/api/mosaics">
+    <section class="module separated" id="module:api/filter">
       <h1>
-        <a href="#module:planet-client/api/mosaics"><code><span class="name">planet-client/api/mosaics</span></code></a>
+        <a href="#module:api/filter"><code><span class="name">@planet/client/api/filter</span></code></a>
       </h1>
-      <p class="description"><p>Provides methods for getting scene metadata.</p>
+      <p class="description"><p>Convenience functions for creating search filters.  These functions return
+    objects that can be used as the <code>filter</code> property when searching for items
+    with <a href="#module:api/items~search"><code>items.search()</code></a> or when
+    saving a search with <a href="#module:api/searches~create"><code>searches.create()</code></a>.</p>
     </p>
       <hr>
-      <h2><code>var mod = require('planet-client/api/mosaics')</code></h2>
+      <h2><code>var filter = require('@planet/client/api/filter');</code></h2>
     
     
-        <h3>Functions</h3>
           <div class="function">
-            <h2 id="module:planet-client/api/mosaics~get">
-              <a href="#module:planet-client/api/mosaics~get">
+            <h2 id="module:api/filter~and">
+              <a href="#module:api/filter~and">
                 <code>
-                  mod.<span class="name">get</span>(id, options)
+                  filter.<span class="name">and</span>(filters)
                 </code>
               </a>
             </h2>
-            <p><p>Get metadata for a single mosaic.</p>
+            <p><p>Creates a logical <code>AndFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">filters</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;Object&gt;</code>
+               <span class="description"><p>A list of filter objects.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items that match all of the child
+                  filters.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/filter~or">
+              <a href="#module:api/filter~or">
+                <code>
+                  filter.<span class="name">or</span>(filters)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a logical <code>OrFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">filters</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;Object&gt;</code>
+               <span class="description"><p>A list of filter objects.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items that match any of the child
+                  filters.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/filter~not">
+              <a href="#module:api/filter~not">
+                <code>
+                  filter.<span class="name">not</span>(filters)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a logical <code>NotFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">filters</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;Object&gt;</code>
+               <span class="description"><p>A list of filter objects.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items that do not match any of the
+                  child filters.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/filter~dates">
+              <a href="#module:api/filter~dates">
+                <code>
+                  filter.<span class="name">dates</span>(field, range)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a <code>DateRangeFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">field</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>The name of the date field to use in the filter.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">range</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>An object with <code>gte</code>, <code>gt</code>, <code>lt</code>, or <code>lte</code> properties
+                  with dates (for &quot;greater than or equal to&quot;, &quot;greater than&quot;, &quot;less than&quot;,
+                  and &quot;less than or equal to&quot;).  Open ended ranges are possible.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items with dates in the range of
+                  provided dates.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/filter~geometry">
+              <a href="#module:api/filter~geometry">
+                <code>
+                  filter.<span class="name">geometry</span>(field, geometry)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a <code>GeometryFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">field</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>The name of the geometry field to use in the filter.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">geometry</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>A GeoJSON geometry.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items that intersect the provided
+                  geometry.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/filter~numbers">
+              <a href="#module:api/filter~numbers">
+                <code>
+                  filter.<span class="name">numbers</span>(field, values)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a <code>NumberInFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">field</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>The name of the numeric field to use in the filter.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">values</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;number&gt;</code>
+               <span class="description"><p>A list of numbers.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items whose field value matches
+                  any of the provided numbers.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/filter~range">
+              <a href="#module:api/filter~range">
+                <code>
+                  filter.<span class="name">range</span>(field, range)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a <code>RangeFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">field</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>The name of the numeric field to use in the filter.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">range</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>An object with <code>gte</code>, <code>gt</code>, <code>lt</code>, or <code>lte</code> properties
+                  with dates (for &quot;greater than or equal to&quot;, &quot;greater than&quot;, &quot;less than&quot;,
+                  and &quot;less than or equal to&quot;).  Open ended ranges are possible.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items with values in the range of
+                  provided numbers.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/filter~strings">
+              <a href="#module:api/filter~strings">
+                <code>
+                  filter.<span class="name">strings</span>(field, values)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a <code>StringInFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">field</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>The name of the string field to use in the filter.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">values</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;string&gt;</code>
+               <span class="description"><p>A list of strings.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items whose field value matches
+                  any of the provided strings.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/filter~permissions">
+              <a href="#module:api/filter~permissions">
+                <code>
+                  filter.<span class="name">permissions</span>(values)
+                </code>
+              </a>
+            </h2>
+            <p><p>Creates a <code>PermissionFilter</code>.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">values</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;string&gt;</code>
+               <span class="description"><p>A list of permissions.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Object</code>
+              </td>
+                  <td><p>A filter that will match items that have all of the
+                  provided permissions.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+    
+    </section>
+    <section class="module separated" id="module:api/items">
+      <h1>
+        <a href="#module:api/items"><code><span class="name">@planet/client/api/items</span></code></a>
+      </h1>
+      <p class="description"><p>Provides methods to get imagery (or item) metadata.  Individual images are
+    identified by an item <code>type</code> and <code>id</code>.  To access metadata for a single
+    image, use <a href="#module:api/items~get"><code>items.get()</code></a>.  To
+    search for metadata about multiple items, use
+    <a href="#module:api/items~search"><code>items.search()</code></a>.</p>
+    </p>
+      <hr>
+      <h2><code>var items = require('@planet/client/api/items');</code></h2>
+    
+    
+          <div class="function">
+            <h2 id="module:api/items~get">
+              <a href="#module:api/items~get">
+                <code>
+                  items.<span class="name">get</span>(type, id, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get metadata for a single item.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">type</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>An item type identifier.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">id</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>An item identifier.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>Options.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.terminator</code>
+                    </td>
+                    <td>
+                      <code class="type">function</code>
+               <span class="description"><p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Promise.&lt;Object&gt;</code>
+              </td>
+                  <td><p>A promise that resolves to item metadata or
+                  is rejected with any error.  See the <a href="#module:api/errors"><code>errors</code>
+                  module</a> for a list of the possible
+                  error types.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/items~search">
+              <a href="#module:api/items~search">
+                <code>
+                  items.<span class="name">search</span>(options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get metadata for multiple items.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">options</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>Options.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.types</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;string&gt;</code>
+               <span class="description"><p>A list of item type identifiers.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.filter</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>A filter object for the search.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.id</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>A saved search identifier.  This can be provided
+                  as an alternative to <code>types</code> and <code>filter</code> to get items from a
+                  previously saved search.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.query</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>An object with optional <code>_page_size</code> and
+                  <code>_sort</code> parameters.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.each</code>
+                    </td>
+                    <td>
+                      <code class="type">function</code>
+               <span class="description"><p>A function that is called once for
+                  each page of data.  If the <code>each</code> callback is absent, all data will be
+                  concatenated and provided when the promise resolves.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.terminator</code>
+                    </td>
+                    <td>
+                      <code class="type">function</code>
+               <span class="description"><p>A function that is called
+                  with a function that can be called back to terminate the request.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Promise.&lt;Array&gt;</code>
+              </td>
+                  <td><p>A promise that resolves when all data is finished
+                  loading or is rejected with any error.  If an <code>each</code> callback is not
+                  provided, the promise will resolve with all data concatenated.
+                  See the <a href="#module:api/errors"><code>errors</code> module</a> for a list of
+                  the possible error types.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+    
+    </section>
+    <section class="module separated" id="module:api/searches">
+      <h1>
+        <a href="#module:api/searches"><code><span class="name">@planet/client/api/searches</span></code></a>
+      </h1>
+      <p class="description"><p>Provides methods for working with saved searches.</p>
+    </p>
+      <hr>
+      <h2><code>var searches = require('@planet/client/api/searches');</code></h2>
+    
+    
+          <div class="function">
+            <h2 id="module:api/searches~get">
+              <a href="#module:api/searches~get">
+                <code>
+                  searches.<span class="name">get</span>(id, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Get metadata for a single search.</p>
             </p>
               <h4>Arguments</h4>
               <table class="params">
@@ -951,7 +1340,7 @@
                     </td>
                     <td>
                       <code class="type">string</code>
-               <span class="description"><p>A mosaic identifier.</p>
+               <span class="description"><p>A search identifier.</p>
               </span>
                     </td>
                   </tr>
@@ -982,8 +1371,8 @@
                 <tr>
                   <td><code class="type">Promise.&lt;Object&gt;</code>
               </td>
-                  <td><p>A promise that resolves to mosaic metadata or is
-                  rejected with any error.  See the <a href="#module:planet-client/api/errors"><code>errors</code>
+                  <td><p>A promise that resolves to search metadata or
+                  is rejected with any error.  See the <a href="#module:api/errors"><code>errors</code>
                   module</a> for a list of the possible
                   error types.</p>
               </td>
@@ -991,27 +1380,17 @@
               </table>
           </div>
           <div class="function">
-            <h2 id="module:planet-client/api/mosaics~search">
-              <a href="#module:planet-client/api/mosaics~search">
+            <h2 id="module:api/searches~search">
+              <a href="#module:api/searches~search">
                 <code>
-                  mod.<span class="name">search</span>(query, options)
+                  searches.<span class="name">search</span>(options)
                 </code>
               </a>
             </h2>
-            <p><p>Get a collection of mosaic metadata.</p>
+            <p><p>Get metadata for multiple searches.</p>
             </p>
               <h4>Arguments</h4>
               <table class="params">
-                  <tr class="param">
-                    <td>
-                      <code class="name">query</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>A query object.</p>
-              </span>
-                    </td>
-                  </tr>
                   <tr class="param">
                     <td>
                       <code class="name">options</code>
@@ -1019,6 +1398,30 @@
                     <td>
                       <code class="type">Object</code>
                <span class="description"><p>Options.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.query</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>A query object.  By default <code>search_type</code> is
+                  set to <code>&#39;saved&#39;</code>, so only saved searches will be returned.  To get
+                  metadata on saved and quick searches, set <code>query: {search_type: &#39;all&#39;}</code>.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.each</code>
+                    </td>
+                    <td>
+                      <code class="type">function</code>
+               <span class="description"><p>A function that is called once for
+                  each page of data.  If the <code>each</code> callback is absent, all data will be
+                  concatenated and provided when the promise resolves.</p>
               </span>
                     </td>
                   </tr>
@@ -1037,122 +1440,248 @@
               <h4>Returns</h4>
               <table class="returns">
                 <tr>
-                  <td><code class="type">Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;</code>
+                  <td><code class="type">Promise.&lt;Array&gt;</code>
               </td>
-                  <td><p>A promise that
-                  resolves to a page of mosaic metadata or is rejected with any error.
-                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
+                  <td><p>A promise that resolves when all data is finished
+                  loading or is rejected with any error.  If an <code>each</code> callback is not
+                  provided, the promise will resolve with all data concatenated.
+                  See the <a href="#module:api/errors"><code>errors</code> module</a> for a list of
                   the possible error types.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/searches~create">
+              <a href="#module:api/searches~create">
+                <code>
+                  searches.<span class="name">create</span>(options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Create a new saved search.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">options</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>Options.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.name</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>Search name (required).</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.types</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;string&gt;</code>
+               <span class="description"><p>A list of item type identifiers (required).</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.filter</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>A filter object for the search (required).</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.notification</code>
+                    </td>
+                    <td>
+                      <code class="type">boolean</code>
+               <span class="description"><p>Send email notification when new
+                  imagery matches search criteria (<code>false</code> by default).</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Promise.&lt;Object&gt;</code>
+              </td>
+                  <td><p>A promise that resolves to the new search or
+                  is rejected with any error.  See the <a href="#module:api/errors"><code>errors</code>
+                  module</a> for a list of the possible
+                  error types.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/searches~update">
+              <a href="#module:api/searches~update">
+                <code>
+                  searches.<span class="name">update</span>(id, options)
+                </code>
+              </a>
+            </h2>
+            <p><p>Update a saved search.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">id</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>Search identifier.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>Options.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.name</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>Search name.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.types</code>
+                    </td>
+                    <td>
+                      <code class="type">Array.&lt;string&gt;</code>
+               <span class="description"><p>A list of item type identifiers.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.filter</code>
+                    </td>
+                    <td>
+                      <code class="type">Object</code>
+               <span class="description"><p>A filter object for the search.</p>
+              </span>
+                    </td>
+                  </tr>
+                  <tr class="param">
+                    <td>
+                      <code class="name">options.notification</code>
+                    </td>
+                    <td>
+                      <code class="type">boolean</code>
+               <span class="description"><p>Send email notification when new
+                  imagery matches search criteria.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Promise.&lt;Object&gt;</code>
+              </td>
+                  <td><p>A promise that resolves to the updated search or
+                  is rejected with any error.  See the <a href="#module:api/errors"><code>errors</code>
+                  module</a> for a list of the possible
+                  error types.</p>
+              </td>
+                </tr>
+              </table>
+          </div>
+          <div class="function">
+            <h2 id="module:api/searches~remove">
+              <a href="#module:api/searches~remove">
+                <code>
+                  searches.<span class="name">remove</span>(id)
+                </code>
+              </a>
+            </h2>
+            <p><p>Remove a saved search.</p>
+            </p>
+              <h4>Arguments</h4>
+              <table class="params">
+                  <tr class="param">
+                    <td>
+                      <code class="name">id</code>
+                    </td>
+                    <td>
+                      <code class="type">string</code>
+               <span class="description"><p>Search identifier.</p>
+              </span>
+                    </td>
+                  </tr>
+              </table>
+              <h4>Returns</h4>
+              <table class="returns">
+                <tr>
+                  <td><code class="type">Promise</code>
+              </td>
+                  <td><p>A promise that resolves if the search was removed or
+                  is rejected with any error.  See the <a href="#module:api/errors"><code>errors</code>
+                  module</a> for a list of the possible
+                  error types.</p>
               </td>
                 </tr>
               </table>
           </div>
     
     </section>
-    <section class="module separated" id="module:planet-client/api/page">
+    <section class="module separated" id="module:api/types">
       <h1>
-        <a href="#module:planet-client/api/page"><code><span class="name">planet-client/api/page</span></code></a>
+        <a href="#module:api/types"><code><span class="name">@planet/client/api/types</span></code></a>
       </h1>
-      <p class="description"><p>Provides a utility for working with pages of search results.</p>
+      <p class="description"><p>Provides methods to get information on the available item types.</p>
     </p>
       <hr>
-      <h2><code>var mod = require('planet-client/api/page')</code></h2>
-    
-        <h3>Classes</h3>
-          <div class="class">
-            <h2 id="module:planet-client/api/page~Page">
-              <a href="#module:planet-client/api/page~Page">
-                  <code>mod.<span class="name">Page</span></code>
-              </a>
-            </h2>
-            <p class="description"><p>A page of results.  Pages do not need to be constructed directly, but are
-            generated by methods that make API requests.</p>
-            </p>
-                <div class="method">
-                  <h3 id="module:planet-client/api/page~Page#prev">
-                    <a href="#module:planet-client/api/page~Page#prev">
-                      <code>
-                        page.<span class="name">prev</span>()
-                      </code>
-                    </a>
-                  </h3>
-                  <p><p>Get the previous page.  If there is no previous page, <code>prev</code> will be
-                  <code>null</code>.</p>
-                  </p>
-                    <h4>Returns</h4>
-                    <table class="returns">
-                      <tr>
-                        <td><code class="type">Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;</code>
-                    </td>
-                        <td><p>The previous page.</p>
-                    </td>
-                      </tr>
-                    </table>
-                </div>
-                <div class="method">
-                  <h3 id="module:planet-client/api/page~Page#next">
-                    <a href="#module:planet-client/api/page~Page#next">
-                      <code>
-                        page.<span class="name">next</span>()
-                      </code>
-                    </a>
-                  </h3>
-                  <p><p>Get the next page.  If there is no next page, <code>next</code> will be <code>null</code>.</p>
-                  </p>
-                    <h4>Returns</h4>
-                    <table class="returns">
-                      <tr>
-                        <td><code class="type">Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;</code>
-                    </td>
-                        <td><p>The next page.</p>
-                    </td>
-                      </tr>
-                    </table>
-                </div>
-          </div>
+      <h2><code>var types = require('@planet/client/api/types');</code></h2>
     
     
-    </section>
-    <section class="module separated" id="module:planet-client/api/quads">
-      <h1>
-        <a href="#module:planet-client/api/quads"><code><span class="name">planet-client/api/quads</span></code></a>
-      </h1>
-      <p class="description"><p>Provides methods for getting mosaic quad metadata.</p>
-    </p>
-      <hr>
-      <h2><code>var mod = require('planet-client/api/quads')</code></h2>
-    
-    
-        <h3>Functions</h3>
           <div class="function">
-            <h2 id="module:planet-client/api/quads~get">
-              <a href="#module:planet-client/api/quads~get">
+            <h2 id="module:api/types~get">
+              <a href="#module:api/types~get">
                 <code>
-                  mod.<span class="name">get</span>(mosaicId, quadId, options)
+                  types.<span class="name">get</span>(id, options)
                 </code>
               </a>
             </h2>
-            <p><p>Get metadata for a mosaic quad.</p>
+            <p><p>Get metadata for a single item type.</p>
             </p>
               <h4>Arguments</h4>
               <table class="params">
                   <tr class="param">
                     <td>
-                      <code class="name">mosaicId</code>
+                      <code class="name">id</code>
                     </td>
                     <td>
                       <code class="type">string</code>
-               <span class="description"><p>A mosaic identifier.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">quadId</code>
-                    </td>
-                    <td>
-                      <code class="type">string</code>
-               <span class="description"><p>A quad identifier.</p>
+               <span class="description"><p>An item type identifier.</p>
               </span>
                     </td>
                   </tr>
@@ -1183,39 +1712,39 @@
                 <tr>
                   <td><code class="type">Promise.&lt;Object&gt;</code>
               </td>
-                  <td><p>A promise that resolves to quad metadata or is
-                  rejected with any error.
-                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
-                  the possible error types.</p>
+                  <td><p>A promise that resolves to item type metadata or
+                  is rejected with any error.  See the <a href="#module:api/errors"><code>errors</code>
+                  module</a> for a list of the possible
+                  error types.</p>
               </td>
                 </tr>
               </table>
           </div>
           <div class="function">
-            <h2 id="module:planet-client/api/quads~search">
-              <a href="#module:planet-client/api/quads~search">
+            <h2 id="module:api/types~search">
+              <a href="#module:api/types~search">
                 <code>
-                  mod.<span class="name">search</span>(mosaicId, query, options)
+                  types.<span class="name">search</span>(options)
                 </code>
               </a>
             </h2>
-            <p><p>Get a collection of quad metadata based on a query.</p>
+            <p><p>Get metadata for multiple item types.</p>
             </p>
               <h4>Arguments</h4>
               <table class="params">
                   <tr class="param">
                     <td>
-                      <code class="name">mosaicId</code>
+                      <code class="name">options</code>
                     </td>
                     <td>
-                      <code class="type">string</code>
-               <span class="description"><p>A mosaic identifier.</p>
+                      <code class="type">Object</code>
+               <span class="description"><p>Options.</p>
               </span>
                     </td>
                   </tr>
                   <tr class="param">
                     <td>
-                      <code class="name">query</code>
+                      <code class="name">options.query</code>
                     </td>
                     <td>
                       <code class="type">Object</code>
@@ -1225,11 +1754,13 @@
                   </tr>
                   <tr class="param">
                     <td>
-                      <code class="name">options</code>
+                      <code class="name">options.each</code>
                     </td>
                     <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>Options.</p>
+                      <code class="type">function</code>
+               <span class="description"><p>A function that is called once for
+                  each page of data.  If the <code>each</code> callback is absent, all data will be
+                  concatenated and provided when the promise resolves.</p>
               </span>
                     </td>
                   </tr>
@@ -1248,207 +1779,12 @@
               <h4>Returns</h4>
               <table class="returns">
                 <tr>
-                  <td><code class="type">Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;</code>
+                  <td><code class="type">Promise.&lt;Array&gt;</code>
               </td>
-                  <td><p>A promise that
-                  resolves to a page of quad metadata or is rejected with any error.
-                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
-                  the possible error types.</p>
-              </td>
-                </tr>
-              </table>
-          </div>
-          <div class="function">
-            <h2 id="module:planet-client/api/quads~scenes">
-              <a href="#module:planet-client/api/quads~scenes">
-                <code>
-                  mod.<span class="name">scenes</span>(mosaicId, quadId, options)
-                </code>
-              </a>
-            </h2>
-            <p><p>Get scenes for a mosaic quad.</p>
-            </p>
-              <h4>Arguments</h4>
-              <table class="params">
-                  <tr class="param">
-                    <td>
-                      <code class="name">mosaicId</code>
-                    </td>
-                    <td>
-                      <code class="type">string</code>
-               <span class="description"><p>A mosaic identifier.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">quadId</code>
-                    </td>
-                    <td>
-                      <code class="type">string</code>
-               <span class="description"><p>A quad identifier.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>Options.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options.terminator</code>
-                    </td>
-                    <td>
-                      <code class="type">function</code>
-               <span class="description"><p>A function that is called
-                  with a function that can be called back to terminate the request.</p>
-              </span>
-                    </td>
-                  </tr>
-              </table>
-              <h4>Returns</h4>
-              <table class="returns">
-                <tr>
-                  <td><code class="type">Promise.&lt;Object&gt;</code>
-              </td>
-                  <td><p>A promise that resolves to quad metadata or is
-                  rejected with any error.
-                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
-                  the possible error types.</p>
-              </td>
-                </tr>
-              </table>
-          </div>
-    
-    </section>
-    <section class="module separated" id="module:planet-client/api/scenes">
-      <h1>
-        <a href="#module:planet-client/api/scenes"><code><span class="name">planet-client/api/scenes</span></code></a>
-      </h1>
-      <p class="description"><p>Provides methods getting scene metadata.</p>
-    </p>
-      <hr>
-      <h2><code>var mod = require('planet-client/api/scenes')</code></h2>
-    
-    
-        <h3>Functions</h3>
-          <div class="function">
-            <h2 id="module:planet-client/api/scenes~get">
-              <a href="#module:planet-client/api/scenes~get">
-                <code>
-                  mod.<span class="name">get</span>(scene, options)
-                </code>
-              </a>
-            </h2>
-            <p><p>Get metadata for a single scene.</p>
-            </p>
-              <h4>Arguments</h4>
-              <table class="params">
-                  <tr class="param">
-                    <td>
-                      <code class="name">scene</code>
-                    </td>
-                    <td>
-                      <code class="type">Object|string</code>
-               <span class="description"><p>An object with scene id and type properties.  If
-                  a string is provided, it is assumed to be the id, and the type will be
-                  set to &#39;ortho&#39;.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>Options.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options.terminator</code>
-                    </td>
-                    <td>
-                      <code class="type">function</code>
-               <span class="description"><p>A function that is called
-                  with a function that can be called back to terminate the request.</p>
-              </span>
-                    </td>
-                  </tr>
-              </table>
-              <h4>Returns</h4>
-              <table class="returns">
-                <tr>
-                  <td><code class="type">Promise.&lt;Object&gt;</code>
-              </td>
-                  <td><p>A promise that resolves to scene metadata or is
-                  rejected with any error.
-                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
-                  the possible error types.</p>
-              </td>
-                </tr>
-              </table>
-          </div>
-          <div class="function">
-            <h2 id="module:planet-client/api/scenes~search">
-              <a href="#module:planet-client/api/scenes~search">
-                <code>
-                  mod.<span class="name">search</span>(query, options)
-                </code>
-              </a>
-            </h2>
-            <p><p>Get a collection of scene metadata based on a query.</p>
-            </p>
-              <h4>Arguments</h4>
-              <table class="params">
-                  <tr class="param">
-                    <td>
-                      <code class="name">query</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>A query object.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options</code>
-                    </td>
-                    <td>
-                      <code class="type">Object</code>
-               <span class="description"><p>Options.</p>
-              </span>
-                    </td>
-                  </tr>
-                  <tr class="param">
-                    <td>
-                      <code class="name">options.terminator</code>
-                    </td>
-                    <td>
-                      <code class="type">function</code>
-               <span class="description"><p>A function that is called
-                  with a function that can be called back to terminate the request.</p>
-              </span>
-                    </td>
-                  </tr>
-              </table>
-              <h4>Returns</h4>
-              <table class="returns">
-                <tr>
-                  <td><code class="type">Promise.&lt;<a href="#module:planet-client/api/page~Page">Page</a>&gt;</code>
-              </td>
-                  <td><p>A promise that
-                  resolves to a page of scene metadata or is rejected with any error.
-                  See the <a href="#module:planet-client/api/errors"><code>errors</code> module</a> for a list of
+                  <td><p>A promise that resolves when all data is finished
+                  loading or is rejected with any error.  If an <code>each</code> callback is not
+                  provided, the promise will resolve with all data concatenated.
+                  See the <a href="#module:api/errors"><code>errors</code> module</a> for a list of
                   the possible error types.</p>
               </td>
                 </tr>
