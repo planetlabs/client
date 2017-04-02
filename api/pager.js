@@ -1,7 +1,7 @@
 var request = require('./request');
 
 module.exports = function(config, key, each) {
-  let aborted = false;
+  var aborted = false;
   var terminator = config.terminator;
   config.terminator = function(abort) {
     if (terminator) {

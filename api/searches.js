@@ -74,15 +74,15 @@ function create(options) {
   if (!options) {
     throw new Error('Searches require "name", "types", and "filter"');
   }
-  const name = options.name;
+  var name = options.name;
   if (!name) {
     throw new Error('Missing search "name"');
   }
-  const types = options.types;
+  var types = options.types;
   if (!types) {
     throw new Error('Missing search "types"');
   }
-  const filter = options.filter;
+  var filter = options.filter;
   if (!filter) {
     throw new Error('Missing search "filter"');
   }
