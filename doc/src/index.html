@@ -20,7 +20,17 @@ title: Planet Client
     Install the <code>@planet/client</code> package with <code>npm</code> (which comes with <a href="https://nodejs.org/">Node</a>).
   </p>
 
-  <pre><code>npm install @planet/client</code></pre>
+  <pre><code>npm install --save @planet/client</code></pre>
+
+  <p>
+    It is also possible to load a standalone bundle of the library in a script tag.  Without a module loader, this will create a global <code>planet</code> object:
+  </p>
+
+  <pre><code>&lt;script src="https://unpkg.com/@planet/client/dist/planet.js"&gt;&lt;/script&gt;</code></pre>
+
+  <p>
+    This will redirect to the most recent release.  To avoid the redirect, you can include a specific version number (e.g. <code>https://unpkg.com/@planet/client@2.0.0/dist/planet.js</code>).
+  </p>
 
   <h2 id="using-the-library"><a href="#using-the-library">Using the Library</a></h2>
 
