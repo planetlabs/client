@@ -288,13 +288,18 @@ function put(config) {
 
 /**
  * Issue a DELETE request.
- * @param {Object} config The request config.
+ * @param {string|Object} config A URL or request config.
  * @return {Promise<Object>} A promise that resolves on a successful
  *     response.  The object includes response and body properties, where the
  *     body is a JSON decoded object representing the response body.  Any
  *     non-200 status will result in a rejection.
  */
 function del(config) {
+  if (typeof config === 'string') {
+    config = {
+      url: config
+    };
+  }
   return request(assign({method: 'DELETE'}, config));
 }
 

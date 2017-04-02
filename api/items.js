@@ -31,11 +31,11 @@ function get(type, id, options) {
 }
 
 /**
- * Get metadata for multiple types.
+ * Get metadata for multiple items.
  * @param {Object} options Options.
- * @param {Object} options.types A list of item type identifiers.
+ * @param {Array<string>} options.types A list of item type identifiers.
  * @param {Object} options.filter A filter object for the search.
- * @param {Object} options.id A saved search identifier.  This can be provided
+ * @param {string} options.id A saved search identifier.  This can be provided
  *     as an alternative to `itemTypes` and `filter` to get items from a
  *     previously saved search.
  * @param {Object} options.query An object with optional `_page_size` and
