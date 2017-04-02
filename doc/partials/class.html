@@ -1,9 +1,9 @@
 <h2 id="{{longname}}">
   <a href="#{{longname}}">
     {{#if ignore}}
-      <code>mod.<span class="name">{{name}}</span></code>
+      <code>{{short module.name}}.<span class="name">{{name}}</span></code>
     {{else}}
-      <code>var {{lower name}} = new mod.<span class="name">{{name}}</span>()</code>
+      <code>var {{lower name}} = new {{short module.name}}.<span class="name">{{name}}</span>()</code>
     {{/if}}
   </a>
 </h2>

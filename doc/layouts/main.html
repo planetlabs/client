@@ -2,21 +2,21 @@
 <html>
   <head>
     <title>{{ title }}</title>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Montserrat" rel="stylesheet">
     <style>
       html, body {
         margin: 1em;
         padding; 0;
-        font-family: "Open Sans",sans-serif,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-family: "Montserrat", sans-serif;
         background: #FFF;
         color: #666;
       }
       a {
-        color: #00a9e9;
+        color: #009da5;
         text-decoration: none;
       }
       a:hover,
       a:focus {
-        color: #00729d;
         text-decoration: none;
       }
       hr {
@@ -29,18 +29,14 @@
         padding: 1em;
       }
       code {
-        font-family: "Lucida Console", Monaco, monospace;
-        font-size: 0.9em;
+        font-family: "Droid Sans Mono", monospace;
+        font-size: 0.8em;
         color: #666;
-        background: #f3f6f9;
+        background: #f7f7f8;
         padding: 0.2em 0.5em;
       }
       a code .name {
-        color: #00a9e9;
-      }
-      a:hover code .name,
-      a:focus code .name {
-        color: #00729d;
+        color: #009da5;
       }
       #sidebar {
         position: fixed;
@@ -67,13 +63,22 @@
       #content {
         margin-left: 200px;
       }
+      #content h2 {
+        margin-top: 2.5em;
+      }
       #content h3 {
-        margin-top: 1.5em;
+        margin-top: 2em;
+      }
+      #content h4 {
+        margin: 2em 0 0.5em;
       }
       section.separated {
         border: 1px solid #eee;
         padding: 0 2em;
         margin-bottom: 3em;
+      }
+      section.module h1 {
+        font-size: 2em;
       }
       .function,
       .method,
