@@ -2,7 +2,6 @@
 
 var assert = require('chai').assert;
 var auth = require('../../api/auth');
-var authStore = require('../../api/auth-store');
 var errors = require('../../api/errors');
 var testUtil = require('../util');
 
@@ -18,7 +17,6 @@ describe('api/auth', function() {
 
   afterEach(function() {
     testUtil.unmockXHR();
-    authStore.clear();
     auth.logout();
   });
 
@@ -50,9 +48,9 @@ describe('api/auth', function() {
       auth
         .login(email, password)
         .then(function(success) {
-          assert.isTrue(success);
-          assert.equal(authStore.getToken(), token);
-          assert.equal(authStore.getKey(), 'my-api-key');
+          assert.equal(success, token);
+          assert.equal(auth.getToken(), token);
+          assert.equal(auth.getKey(), 'my-api-key');
           done();
         })
         .catch(done);
@@ -134,7 +132,7 @@ describe('api/auth', function() {
     it('stores an API key', function() {
       var key = 'my-api-key';
       auth.setKey(key);
-      assert.equal(authStore.getKey(), key);
+      assert.equal(auth.getKey(), key);
     });
   });
 
@@ -148,16 +146,16 @@ describe('api/auth', function() {
 
   describe('logout()', function() {
     it('clears any previously stored token', function() {
-      authStore.setToken(token);
+      auth.setToken(token);
       auth.logout();
-      assert.isUndefined(authStore.getToken());
-      assert.isUndefined(authStore.getKey());
+      assert.isUndefined(auth.getToken());
+      assert.isUndefined(auth.getKey());
     });
 
     it('clears any previously stored API key', function() {
-      authStore.setKey('some-key');
+      auth.setKey('some-key');
       auth.logout();
-      assert.isUndefined(authStore.getKey());
+      assert.isUndefined(auth.getKey());
     });
   });
 });

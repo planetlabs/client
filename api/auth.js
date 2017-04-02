@@ -38,8 +38,9 @@ function login(email, password) {
         obj.body
       );
     }
+    var token = obj.body.token;
     try {
-      store.setToken(obj.body.token);
+      store.setToken(token);
     } catch (err) {
       throw new errors.UnexpectedResponse(
         'Unable to decode token',
@@ -47,7 +48,7 @@ function login(email, password) {
         obj.body
       );
     }
-    return true;
+    return token;
   });
 }
 
@@ -72,3 +73,5 @@ exports.login = login;
 exports.logout = logout;
 exports.setKey = setKey;
 exports.getKey = store.getKey;
+exports.setToken = store.setToken;
+exports.getToken = store.getToken;

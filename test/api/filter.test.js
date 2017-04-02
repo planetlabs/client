@@ -3,7 +3,7 @@ var assert = require('chai').assert;
 
 var filter = require('../../api/filter');
 
-describe.only('api/filter', function() {
+describe('api/filter', function() {
   describe('and()', function() {
     it('creates an AndFilter', function() {
       var where = filter.geometry('place', {
