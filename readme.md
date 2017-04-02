@@ -1,6 +1,6 @@
 ## @planet/client
 
-A JavaScript client for [Planet's imagery API](https://www.planet.com/docs/).
+A JavaScript client for [Planet's imagery API](https://www.planet.com/docs/).  See the [client API docs](http://planetlabs.github.io/planet-client-js/api/) for detail on using the package.
 
 ### Installation
 
@@ -22,7 +22,7 @@ This will redirect to the most recent release.  To avoid the redirect, you can i
 
 The library requires a global [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) implementation.  This comes with Node >= 0.12 and [modern browsers](http://caniuse.com/#search=promise).  To use `@planet/client` in an environment without `Promise`, you can [use a polyfill](https://www.google.com/search?q=promise+polyfill).
 
-See the `examples` directory for example use of the library.
+See the [API docs](http://planetlabs.github.io/planet-client-js/api/) for detail on using the package.
 
 ### Contributing
 
