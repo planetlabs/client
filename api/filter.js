@@ -1,5 +1,8 @@
 /**
- * Convenience functions for creating search filters.
+ * Convenience functions for creating search filters.  These functions return
+ * objects that can be used as the `filter` property when searching for items
+ * with [`items.search()`](#module:planet-client/api/items~search) or when
+ * saving a search with [`searches.create()`](#module:planet-client/api/searches~create).
  *
  * @module planet-client/api/filter
  */

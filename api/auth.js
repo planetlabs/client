@@ -1,5 +1,10 @@
 /**
  * Provides methods for authenticating with a Planet API account.
+ * Authentication is required when searching for imagery, and clients can
+ * authenticate by either providing a valid email/password pair or an API
+ * key.  Use the [`auth.login()`](#module:planet-client/api/auth~login) method
+ * with an email and password or the [`auth.setKey()`](#module:planet-client/api/auth~setKey)
+ * method with an API key.
  * @module planet-client/api/auth
  */
 

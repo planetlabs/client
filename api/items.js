@@ -1,5 +1,9 @@
 /**
- * Provides methods to get information on items.
+ * Provides methods to get imagery (or item) metadata.  Individual images are
+ * identified by an item `type` and `id`.  To access metadata for a single
+ * image, use [`items.get()`](#module:planet-client/api/items~get).  To
+ * search for metadata about multiple items, use
+ * [`items.search()`](#module:planet-client/api/items~search).
  * @module planet-client/api/items
  */
 
