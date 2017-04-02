@@ -47,7 +47,7 @@ function getter() {
 
 exports.base = getter('');
 exports.login = getter('v0', 'auth', 'login');
-exports.itemTypes = getter('data', 'v1', 'item-types', '');
+exports.types = getter('data', 'v1', 'item-types', '');
 exports.items = function(type) {
   var rest = Array.prototype.slice.call(arguments, 1);
   var get = getter('data', 'v1', 'item-types', type, 'items', '');

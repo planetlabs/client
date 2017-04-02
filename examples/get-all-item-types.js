@@ -1,6 +1,6 @@
 const planet = require('./planet');
 
-planet.itemTypes
+planet.types
   .search()
   .then(function(types) {
     console.log(JSON.stringify(types, null, 2));

@@ -50,7 +50,7 @@ function search(options) {
   options = options || {};
   var query = Object.assign({search_type: 'saved'}, options.query);
   var config = {
-    url: urls.itemTypes(),
+    url: urls.types(),
     query: query,
     terminator: options.terminator
   };

@@ -1,6 +1,6 @@
 /**
  * Provides methods to get information on the available item types.
- * @module planet-client/api/item-types
+ * @module planet-client/api/types
  */
 
 var pager = require('./pager');
@@ -21,7 +21,7 @@ var urls = require('./urls');
 function get(id, options) {
   options = options || {};
   var config = {
-    url: urls.itemTypes(id),
+    url: urls.types(id),
     terminator: options.terminator
   };
   return request.get(config).then(function(res) {
@@ -47,7 +47,7 @@ function get(id, options) {
 function search(options) {
   options = options || {};
   var config = {
-    url: urls.itemTypes(),
+    url: urls.types(),
     query: options.query,
     terminator: options.terminator
   };

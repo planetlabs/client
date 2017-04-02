@@ -139,17 +139,14 @@ describe('api/urls', function() {
     });
   });
 
-  describe('itemTypes()', function() {
+  describe('types()', function() {
     it('returns the item types URL', function() {
-      assert.equal(
-        urls.itemTypes(),
-        'https://api.planet.com/data/v1/item-types/'
-      );
+      assert.equal(urls.types(), 'https://api.planet.com/data/v1/item-types/');
     });
 
     it('returns the URL for a single item type', function() {
       assert.equal(
-        urls.itemTypes('foo'),
+        urls.types('foo'),
         'https://api.planet.com/data/v1/item-types/foo'
       );
     });
@@ -165,7 +162,7 @@ describe('api/urls', function() {
 
     it('returns the URL for a single item', function() {
       assert.equal(
-        urls.itemTypes('mysat', 'item-id'),
+        urls.types('mysat', 'item-id'),
         'https://api.planet.com/data/v1/item-types/mysat/item-id'
       );
     });
@@ -173,7 +170,7 @@ describe('api/urls', function() {
     it('works with a custom base', function() {
       urls.setBase('https://example.com/');
       assert.equal(
-        urls.itemTypes('mysat', 'item-id'),
+        urls.types('mysat', 'item-id'),
         'https://example.com/data/v1/item-types/mysat/item-id'
       );
     });

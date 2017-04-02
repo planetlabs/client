@@ -36,10 +36,10 @@ function get(type, id, options) {
  * @param {Array<string>} options.types A list of item type identifiers.
  * @param {Object} options.filter A filter object for the search.
  * @param {string} options.id A saved search identifier.  This can be provided
- *     as an alternative to `itemTypes` and `filter` to get items from a
+ *     as an alternative to `types` and `filter` to get items from a
  *     previously saved search.
  * @param {Object} options.query An object with optional `_page_size` and
- *     `sort` parameters.
+ *     `_sort` parameters.
  * @param {function(Array)} options.each A function that is called once for
  *     each page of data.  If the `each` callback is absent, all data will be
  *     concatenated and provided when the promise resolves.
@@ -67,7 +67,7 @@ function search(options) {
   } else if (options.id) {
     config.url = urls.searches(options.id, 'results');
   } else {
-    throw new Error('Expected both `filter` and `itemTypes` or a serach `id`.');
+    throw new Error('Expected both `filter` and `types` or a serach `id`.');
   }
   return pager(config, 'features', options.each);
 }

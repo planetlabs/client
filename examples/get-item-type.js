@@ -1,6 +1,6 @@
 const planet = require('./planet');
 
-planet.itemTypes
+planet.types
   .get('REOrthoTile')
   .then(function(type) {
     console.log(JSON.stringify(type, null, 2));
