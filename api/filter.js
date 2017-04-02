@@ -56,7 +56,7 @@ function not(filters) {
  *     provided dates.
  */
 function dates(field, range) {
-  var config;
+  var config = {};
   for (var key in range) {
     if (range[key] instanceof Date) {
       config[key] = range[key].toISOString();
