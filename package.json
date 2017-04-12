@@ -31,6 +31,7 @@
   "devDependencies": {
     "browserify": "^14.1.0",
     "chai": "^3.5.0",
+    "envify": "^4.0.0",
     "eslint": "^3.18.0",
     "eslint-config-planet": "^13.0.0-beta.2",
     "gh-pages": "^0.12.0",
