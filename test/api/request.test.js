@@ -301,12 +301,9 @@ describe('api/request', function() {
             setTimeout(abort, 10);
           }
         });
-        setTimeout(
-          function() {
-            done();
-          },
-          200
-        );
+        setTimeout(function() {
+          done();
+        }, 200);
         promise
           .then(function() {
             done(new Error('Expected promise not to be resolved'));
@@ -375,7 +372,9 @@ describe('api/request', function() {
     describe('request()', function() {
       var request = req.request;
 
-      it('rejects with ClientError when there is a client error', function(done) {
+      it('rejects with ClientError when there is a client error', function(
+        done
+      ) {
         var promise = request({url: 'xyz:pdq'});
 
         promise
@@ -395,7 +394,8 @@ describe('api/request', function() {
 
     describe('parseConfig()', function() {
       // {api_key: 'my-api-key'}
-      var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +
+      var token =
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5Ijoib' +
         'XktYXBpLWtleSJ9.sYcuJzdUThIsvJGNymbobOh-nY6ZKFEqXTqwZS-4QvE';
       var parseConfig = req.parseConfig;
       var defaultHeaders = {accept: 'application/json'};
