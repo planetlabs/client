@@ -47,6 +47,7 @@ function getter() {
 
 exports.base = getter('');
 exports.login = getter('v0', 'auth', 'login');
+exports.passwordReset = getter('v0', 'emails', 'password-reset');
 exports.types = getter('data', 'v1', 'item-types', '');
 exports.items = function(type) {
   var rest = Array.prototype.slice.call(arguments, 1);

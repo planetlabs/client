@@ -139,6 +139,23 @@ describe('api/urls', function() {
     });
   });
 
+  describe('passwordReset()', function() {
+    it('returns the password reset URL', function() {
+      assert.equal(
+        urls.passwordReset(),
+        'https://api.planet.com/v0/emails/password-reset'
+      );
+    });
+
+    it('works with a custom base URL', function() {
+      urls.setBase('http://example.com/');
+      assert.equal(
+        urls.passwordReset(),
+        'http://example.com/v0/emails/password-reset'
+      );
+    });
+  });
+
   describe('types()', function() {
     it('returns the item types URL', function() {
       assert.equal(urls.types(), 'https://api.planet.com/data/v1/item-types/');
