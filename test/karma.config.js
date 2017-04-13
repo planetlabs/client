@@ -8,8 +8,7 @@ module.exports = function(karma) {
       'api/*.test.js': ['browserify', 'sourcemap']
     },
     browserify: {
-      debug: true,
-      transform: ['envify']
+      debug: true
     },
     polyfill: ['Promise']
   });
