@@ -22,7 +22,7 @@
     "test-forever": "karma start test/karma.config.js",
     "test": "karma start test/karma.config.js --single-run",
     "start": "npm run test-forever & watchy --watch bin,examples,api,cli,test -- npm run pretest",
-    "prepublish": "in-publish && rm -rf dist && mkdir dist && browserify api/index.js --standalone planet | uglifyjs --compress 'warnings=false' > dist/planet.js || not-in-publish",
+    "prepublish": "in-publish && rm -rf dist && mkdir dist && browserify api/index-browser.js --standalone planet | uglifyjs --compress 'warnings=false' > dist/planet.js || not-in-publish",
     "postpublish": "npm run publish-doc",
     "apidoc": "mkdir -p build && jsdoc --template jsdoc-json --destination build/api.json api",
     "doc": "npm run apidoc && node tasks/build-docs.js",
