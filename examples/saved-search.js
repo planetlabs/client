@@ -1,8 +1,8 @@
 const planet = require('../api');
 
-planet.items
-  .search({
-    id: 'e5b8ae9f20d84d93b1b22fe76e79cfab',
+async function main() {
+  const items = await planet.items.search({
+    id: '8be38918d1414ca499ed3f56759a380b',
     limit: 150,
     query: {
       _page_size: 100
@@ -10,6 +10,10 @@ planet.items
     each: items => {
       console.log(`got ${items.length} items`);
     }
-  })
-  .then(() => console.log('done'))
-  .catch(error => console.error(`Failed to fetch items: ${error.message}`));
+  });
+  console.log(`total: ${items.length}`);
+}
+
+if (require.main === module) {
+  main();
+}

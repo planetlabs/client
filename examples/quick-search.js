@@ -2,8 +2,8 @@ const planet = require('../api');
 
 const {and, range} = planet.filter;
 
-planet.items
-  .search({
+async function main() {
+  const items = await planet.items.search({
     types: ['PSScene4Band', 'Landsat8L1G'],
     filter: and([
       range('cloud_cover', {gte: 0, lte: 0.4}),
@@ -13,9 +13,13 @@ planet.items
       _page_size: 100
     },
     limit: 150,
-    each: items => {
-      console.log(`got ${items.length} items`);
+    each: page => {
+      console.log(`got ${page.length} items`);
     }
-  })
-  .then(() => console.log('done'))
-  .catch(error => console.error(`Failed to fetch items: ${error.message}`));
+  });
+  console.log(`total: ${items.length}`);
+}
+
+if (require.main === module) {
+  main();
+}
