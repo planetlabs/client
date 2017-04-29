@@ -38,6 +38,8 @@ function get(id, options) {
  * @param {function(Array)} options.each A function that is called once for
  *     each page of data.  If the `each` callback is absent, all data will be
  *     concatenated and provided when the promise resolves.
+ * @param {number} options.limit Limit the result set to this size (by default,
+ *     no limit is applied).
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
  * @return {Promise<Array>} A promise that resolves when all data is finished
@@ -52,6 +54,7 @@ function search(options) {
   var config = {
     url: urls.searches(),
     query: query,
+    limit: options.limit,
     terminator: options.terminator
   };
   return pager(config, 'searches', options.each);

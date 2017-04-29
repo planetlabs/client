@@ -44,6 +44,8 @@ function get(type, id, options) {
  *     previously saved search.
  * @param {Object} options.query An object with optional `_page_size` and
  *     `_sort` parameters.
+ * @param {number} options.limit Limit the result set to this size (by default,
+ *     no limit is applied).
  * @param {function(Array)} options.each A function that is called once for
  *     each page of data.  If the `each` callback is absent, all data will be
  *     concatenated and provided when the promise resolves.
@@ -59,6 +61,7 @@ function search(options) {
   options = options || {};
   var config = {
     query: options.query,
+    limit: options.limit,
     terminator: options.terminator
   };
   if (options.filter && options.types) {
