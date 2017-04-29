@@ -1,6 +1,7 @@
 var request = require('./request');
 
 module.exports = function(config, key, each) {
+  var limit = 'limit' in config ? config.limit : Infinity;
   var aborted = false;
   var terminator = config.terminator;
   config.terminator = function(abort) {
@@ -13,6 +14,7 @@ module.exports = function(config, key, each) {
   };
 
   return new Promise(function(resolve, reject) {
+    var count = 0;
     var all;
     if (!each) {
       each = function(array) {
@@ -26,6 +28,11 @@ module.exports = function(config, key, each) {
 
     function handler(response) {
       var data = response.body[key];
+      count += data.length;
+      if (count > limit) {
+        data.length = data.length - (count - limit);
+        aborted = true;
+      }
       each(data);
       if (!aborted) {
         var links = response.body._links || {};
