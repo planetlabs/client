@@ -4,10 +4,10 @@
   "description": "A client for Planet's imagery API",
   "repository": {
     "type": "git",
-    "url": "git://github.com/planetlabs/planet-client-js.git"
+    "url": "git://github.com/planetlabs/client.git"
   },
   "bugs": {
-    "url": "https://github.com/planetlabs/planet-client-js/issues"
+    "url": "https://github.com/planetlabs/client/issues"
   },
   "license": "Apache-2.0",
   "main": "api/index.js",
