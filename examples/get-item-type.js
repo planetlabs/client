@@ -1,4 +1,4 @@
-const planet = require('./planet');
+const planet = require('../api');
 
 planet.types
   .get('REOrthoTile')

@@ -1,4 +1,4 @@
-const planet = require('./planet');
+const planet = require('../api');
 
 planet.searches
   .get('e5b8ae9f20d84d93b1b22fe76e79cfab')

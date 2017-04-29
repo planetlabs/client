@@ -1,4 +1,4 @@
-const planet = require('./planet');
+const planet = require('../api');
 const {and, range} = planet.filter;
 
 planet.searches

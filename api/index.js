@@ -1,5 +1,6 @@
-exports.auth = require('./auth');
-exports.filter = require('./filter');
-exports.types = require('./types');
-exports.items = require('./items');
-exports.searches = require('./searches');
+global.XMLHttpRequest = require('xhr2');
+var planet = require('./index-browser');
+
+planet.auth.setKey(process.env.PL_API_KEY);
+
+module.exports = planet;

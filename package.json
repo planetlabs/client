@@ -11,6 +11,7 @@
   },
   "license": "Apache-2.0",
   "main": "api/index.js",
+  "browser": "api/index-browser.js",
   "bin": {
     "planet": "./bin/planet.js"
   },
@@ -54,14 +55,10 @@
     "sinon": "^1.17.6",
     "uglify-js": "^2.8.15",
     "watchify": "^3.7.0",
-    "watchy": "^0.6.6",
-    "xhr2": "^0.1.4"
+    "watchy": "^0.6.6"
   },
   "dependencies": {
-    "batch": "^0.5.3",
     "jwt-claims": "^1.0.1",
-    "os-homedir": "^1.0.1",
-    "prompt": "^0.2.14",
-    "yargs": "^3.31.0"
+    "xhr2": "^0.1.4"
   }
 }
