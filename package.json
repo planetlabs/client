@@ -4,13 +4,14 @@
   "description": "A client for Planet's imagery API",
   "repository": {
     "type": "git",
-    "url": "git://github.com/planetlabs/planet-client-js.git"
+    "url": "git://github.com/planetlabs/client.git"
   },
   "bugs": {
-    "url": "https://github.com/planetlabs/planet-client-js/issues"
+    "url": "https://github.com/planetlabs/client/issues"
   },
   "license": "Apache-2.0",
   "main": "api/index.js",
+  "browser": "api/index-browser.js",
   "bin": {
     "planet": "./bin/planet.js"
   },
@@ -21,7 +22,7 @@
     "test-forever": "karma start test/karma.config.js",
     "test": "karma start test/karma.config.js --single-run",
     "start": "npm run test-forever & watchy --watch bin,examples,api,cli,test -- npm run pretest",
-    "prepublish": "in-publish && rm -rf dist && mkdir dist && browserify api/index.js --standalone planet | uglifyjs --compress 'warnings=false' > dist/planet.js || not-in-publish",
+    "prepublish": "in-publish && rm -rf dist && mkdir dist && browserify api/index-browser.js --standalone planet | uglifyjs --compress 'warnings=false' > dist/planet.js || not-in-publish",
     "postpublish": "npm run publish-doc",
     "apidoc": "mkdir -p build && jsdoc --template jsdoc-json --destination build/api.json api",
     "doc": "npm run apidoc && node tasks/build-docs.js",
@@ -54,14 +55,10 @@
     "sinon": "^1.17.6",
     "uglify-js": "^2.8.15",
     "watchify": "^3.7.0",
-    "watchy": "^0.6.6",
-    "xhr2": "^0.1.4"
+    "watchy": "^0.6.6"
   },
   "dependencies": {
-    "batch": "^0.5.3",
-    "jwt-claims": "^1.0.1",
-    "os-homedir": "^1.0.1",
-    "prompt": "^0.2.14",
-    "yargs": "^3.31.0"
+    "jwt-decode": "^2.2.0",
+    "xhr2": "^0.1.4"
   }
 }

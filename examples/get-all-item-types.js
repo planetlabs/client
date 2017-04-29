@@ -1,10 +1,10 @@
-const planet = require('./planet');
+const planet = require('../api');
 
-planet.types
-  .search()
-  .then(function(types) {
-    console.log(JSON.stringify(types, null, 2));
-  })
-  .catch(function(err) {
-    console.error('Failed to fetch item types:', err.message);
-  });
+async function main() {
+  const types = await planet.types.search();
+  console.log(JSON.stringify(types, null, 2));
+}
+
+if (require.main === module) {
+  main();
+}

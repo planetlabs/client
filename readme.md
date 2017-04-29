@@ -1,6 +1,6 @@
 ## @planet/client
 
-A JavaScript client for [Planet's imagery API](https://www.planet.com/docs/).  See the [client API docs](http://planetlabs.github.io/planet-client-js/api/) for detail on using the package.
+A JavaScript client for [Planet's imagery API](https://www.planet.com/docs/).  See the [client API docs](http://planetlabs.github.io/client/api/) for detail on using the package.
 
 ### Installation
 
@@ -22,14 +22,14 @@ This will redirect to the most recent release.  To avoid the redirect, you can i
 
 The library requires a global [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) implementation.  This comes with Node >= 0.12 and [modern browsers](http://caniuse.com/#search=promise).  To use `@planet/client` in an environment without `Promise`, you can [use a polyfill](https://www.google.com/search?q=promise+polyfill).
 
-See the [API docs](http://planetlabs.github.io/planet-client-js/api/) for detail on using the package.
+See the [API docs](http://planetlabs.github.io/client/api/) for detail on using the package.
 
 ### Contributing
 
 To get set up, clone the repository and install the development dependencies:
 
-    git clone git@github.com:planetlabs/planet-client-js.git
-    cd planet-client-js
+    git clone git@github.com:planetlabs/client.git
+    cd client
     npm install
 
 #### Running the tests
@@ -60,7 +60,7 @@ Releases are published from the master branch.  To cut a new minor release, do t
 
     npm version minor && git push --tags origin master && npm publish
 
-The `postpublish` script will update the hosted version of [the docs](http://planetlabs.github.io/planet-client-js/).
+The `postpublish` script will update the hosted version of [the docs](http://planetlabs.github.io/client/).
 
 *Note* - Publishing a release requires Node >= 4.0.
 
@@ -75,7 +75,7 @@ Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See [the License](http://www.apache.org/licenses/LICENSE-2.0) for the specific language governing permissions and limitations under the License.
 
-[travis-url]: https://travis-ci.org/planetlabs/planet-client-js
-[travis-image]: https://img.shields.io/travis/planetlabs/planet-client-js.svg
-[coveralls-url]: https://coveralls.io/github/planetlabs/planet-client-js
-[coveralls-image]: https://coveralls.io/repos/planetlabs/planet-client-js/badge.svg?branch=master&service=github
+[travis-url]: https://travis-ci.org/planetlabs/client
+[travis-image]: https://img.shields.io/travis/planetlabs/client.svg
+[coveralls-url]: https://coveralls.io/github/planetlabs/client
+[coveralls-image]: https://coveralls.io/repos/planetlabs/client/badge.svg?branch=master&service=github
