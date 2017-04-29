@@ -4,7 +4,7 @@
  * @private
  */
 
-var jwtClaims = require('jwt-claims');
+var decode = require('jwt-decode');
 
 var storage = {};
 
@@ -30,7 +30,7 @@ function getKey() {
  */
 function setToken(token) {
   storage.token = token;
-  var claims = jwtClaims(token);
+  var claims = decode(token);
   if (!claims.api_key) {
     throw new Error('Expected api_key in token payload');
   }
