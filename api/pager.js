@@ -29,14 +29,14 @@ module.exports = function(config, key, each) {
     function handler(response) {
       var data = response.body[key];
       count += data.length;
-      if (count > limit) {
+      var done = count >= limit;
+      if (done) {
         data.length = data.length - (count - limit);
-        aborted = true;
       }
       each(data);
       if (!aborted) {
         var links = response.body._links || {};
-        if (links._next) {
+        if (!done && links._next) {
           request
             .get({url: links._next, terminator: config.terminator})
             .then(handler)
