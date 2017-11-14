@@ -14,10 +14,16 @@ module.exports = function(karma) {
   });
 
   if (process.env.TRAVIS) {
-    if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
-      process.stderr.write('SAUCE_USERNAME or SAUCE_ACCESS_KEY not set\n');
+    if (!process.env.SAUCE_ACCESS_KEY) {
+      process.stderr.write('SAUCE_ACCESS_KEY not set\n');
       process.exit(1);
     }
+
+    var testName = process.env.TRAVIS_PULL_REQUEST
+      ? `https://github.com/planetlabs/client/pull/${
+          process.env.TRAVIS_PULL_REQUEST
+        }`
+      : `${pkg.name}@${pkg.version} (${process.env.TRAVIS_COMMIT})`;
 
     // see https://wiki.saucelabs.com/display/DOCS/Platform+Configurator
     // for platform and browserName options (Selenium API, node.js code)
@@ -48,17 +54,20 @@ module.exports = function(karma) {
     };
     karma.set({
       sauceLabs: {
-        testName: pkg.name + ' ' + pkg.version,
+        testName: testName,
         recordScreenshots: false,
-        connectOptions: {
-          port: 5757
-        },
-        startConnect: false,
+        startConnect: true,
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
-        username: process.env.SAUCE_USERNAME,
-        accessKey: process.env.SAUCE_ACCESS_KEY
+        username: 'planet-labs',
+        accessKey: process.env.SAUCE_ACCESS_KEY,
+        connectOptions: {
+          noSslBumpDomains: 'all'
+        }
       },
+      hostname: 'travis.dev',
       reporters: ['dots', 'saucelabs'],
+      browserDisconnectTimeout: 10000,
+      browserDisconnectTolerance: 1,
       captureTimeout: 240000,
       browserNoActivityTimeout: 240000,
       customLaunchers: customLaunchers,
