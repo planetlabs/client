@@ -49,7 +49,7 @@ function parseConfig(config) {
   for (var key in config.headers) {
     headers[key.toLowerCase()] = config.headers[key];
   }
-  if (config.body) {
+  if (!config.form && config.body) {
     headers['content-type'] = 'application/json';
   }
 
@@ -66,7 +66,8 @@ function parseConfig(config) {
   var options = {
     method: config.method || 'GET',
     headers: headers,
-    url: config.protocol +
+    url:
+      config.protocol +
       '//' +
       config.hostname +
       (config.port ? ':' + config.port : '') +
@@ -126,7 +127,7 @@ function createResponseHandler(resolve, reject, info) {
         'load',
         createResponseHandler(resolve, reject, info)
       );
-      client.addEventListener('error', function(event) {
+      client.addEventListener('error', function() {
         reject(new errors.ClientError('Request failed'));
       });
       client.open('GET', redirectLocation);
@@ -178,6 +179,8 @@ function createResponseHandler(resolve, reject, info) {
  *     string.  Any existing query string in the URL will be extended.
  * @param {Object} config.body - Optional object that will be serialized as
  *     JSON.
+ * @param {Object} config.form - Optional form data that will be used as the
+ *     request body.  This will override the `body` option.
  * @param {string} config.hostname - The hostname (e.g. example.com).  Will
  *     override any hostname in the URL if provided.
  * @param {string} config.port - The port (e.g. '8000').  Default based on the
@@ -208,12 +211,14 @@ function request(config) {
 
     client.addEventListener('load', handler);
 
-    client.addEventListener('error', function(event) {
+    client.addEventListener('error', function() {
       reject(new errors.ClientError('Request failed'));
     });
 
     var body = null;
-    if (config.body) {
+    if (config.form) {
+      body = config.form;
+    } else if (config.body) {
       body = JSON.stringify(config.body);
     }
 

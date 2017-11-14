@@ -86,6 +86,24 @@ describe('api/request', function() {
         listener(loadEvent);
       });
 
+      it('posts a form as the body', function() {
+        var form = {};
+        request({
+          method: 'POST',
+          url: 'http://example.com',
+          form: form
+        });
+
+        assert.equal(mock.open.callCount, 1);
+        assert.deepEqual(mock.open.getCall(0).args, [
+          'POST',
+          'http://example.com/'
+        ]);
+
+        assert.equal(mock.send.callCount, 1);
+        assert.deepEqual(mock.send.getCall(0).args, [form]);
+      });
+
       it('follows location header on 302', function(done) {
         var firstLoadEvent = {
           target: {
@@ -143,7 +161,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -178,7 +196,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -210,7 +228,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -242,7 +260,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -274,7 +292,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -308,7 +326,7 @@ describe('api/request', function() {
           .then(function() {
             done(new Error('Expected promise not to be resolved'));
           })
-          .catch(function(err) {
+          .catch(function() {
             done(new Error('Expected promise not to be rejected'));
           });
       });
@@ -379,7 +397,7 @@ describe('api/request', function() {
 
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -479,6 +497,23 @@ describe('api/request', function() {
           method: 'POST',
           url: 'http://example.com/page',
           headers: headers
+        };
+
+        assert.deepEqual(parseConfig(config), options);
+      });
+
+      it('accepts a form for the body', function() {
+        var form = {};
+        var config = {
+          url: 'http://example.com/page',
+          method: 'POST',
+          form: form
+        };
+
+        var options = {
+          method: 'POST',
+          url: 'http://example.com/page',
+          headers: assign({}, defaultHeaders)
         };
 
         assert.deepEqual(parseConfig(config), options);

@@ -78,7 +78,7 @@ describe('api/auth', function() {
       auth
         .login(email, password)
         .then(
-          function(success) {
+          function() {
             done(new Error('Expected rejection'));
           },
           function(err) {
@@ -110,7 +110,7 @@ describe('api/auth', function() {
       auth
         .login(email, password)
         .then(
-          function(success) {
+          function() {
             done(new Error('Expected rejection'));
           },
           function(err) {

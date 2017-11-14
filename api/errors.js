@@ -52,7 +52,7 @@ ResponseError.prototype.name = 'ResponseError';
  * @constructor
  * @ignore
  */
-function BadRequest(message, response, body) {
+function BadRequest() {
   ResponseError.apply(this, arguments);
 }
 
@@ -68,7 +68,7 @@ BadRequest.prototype.name = 'BadRequest';
  * @constructor
  * @ignore
  */
-function Unauthorized(message, response, body) {
+function Unauthorized() {
   ResponseError.apply(this, arguments);
 }
 
@@ -84,7 +84,7 @@ Unauthorized.prototype.name = 'Unauthorized';
  * @constructor
  * @ignore
  */
-function Forbidden(message, response, body) {
+function Forbidden() {
   ResponseError.apply(this, arguments);
 }
 
@@ -100,7 +100,7 @@ Forbidden.prototype.name = 'Forbidden';
  * @constructor
  * @ignore
  */
-function UnexpectedResponse(message, response, body) {
+function UnexpectedResponse() {
   ResponseError.apply(this, arguments);
 }
 

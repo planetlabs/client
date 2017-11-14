@@ -105,7 +105,7 @@ function organizeDocs(docs) {
 
 function assign(target, source) {
   for (var key in source) {
-    target[key] = source[key];
+    target[key] = source[key]; // eslint-disable-line no-param-reassign
   }
   return target;
 }
