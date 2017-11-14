@@ -23,8 +23,8 @@ var urls = require('./urls');
  *     module](#module:api/errors) for a list of the possible
  *     error types.
  */
-function get(type, id, options) {
-  options = options || {};
+function get(type, id, opt) {
+  var options = opt || {};
   var config = {
     url: urls.items(type, id),
     terminator: options.terminator
@@ -57,8 +57,8 @@ function get(type, id, options) {
  *     See the [`errors` module](#module:api/errors) for a list of
  *     the possible error types.
  */
-function search(options) {
-  options = options || {};
+function search(opt) {
+  var options = opt || {};
   var config = {
     query: options.query,
     limit: options.limit,

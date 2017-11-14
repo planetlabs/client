@@ -28,9 +28,10 @@ function addQueryParams(link, params) {
  * @return {Object} The target object with source properties assigned.
  * @private
  */
-function assign(target, src) {
+function assign() {
+  var target = arguments[0];
   for (var i = 1, ii = arguments.length; i < ii; ++i) {
-    src = arguments[i];
+    var src = arguments[i];
     for (var key in src) {
       target[key] = src[key];
     }

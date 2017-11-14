@@ -161,7 +161,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -196,7 +196,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -228,7 +228,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -260,7 +260,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -292,7 +292,7 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
@@ -326,7 +326,7 @@ describe('api/request', function() {
           .then(function() {
             done(new Error('Expected promise not to be resolved'));
           })
-          .catch(function(err) {
+          .catch(function() {
             done(new Error('Expected promise not to be rejected'));
           });
       });
@@ -397,7 +397,7 @@ describe('api/request', function() {
 
         promise
           .then(
-            function(obj) {
+            function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {

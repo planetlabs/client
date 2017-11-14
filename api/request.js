@@ -66,7 +66,8 @@ function parseConfig(config) {
   var options = {
     method: config.method || 'GET',
     headers: headers,
-    url: config.protocol +
+    url:
+      config.protocol +
       '//' +
       config.hostname +
       (config.port ? ':' + config.port : '') +
@@ -126,7 +127,7 @@ function createResponseHandler(resolve, reject, info) {
         'load',
         createResponseHandler(resolve, reject, info)
       );
-      client.addEventListener('error', function(event) {
+      client.addEventListener('error', function() {
         reject(new errors.ClientError('Request failed'));
       });
       client.open('GET', redirectLocation);
@@ -210,7 +211,7 @@ function request(config) {
 
     client.addEventListener('load', handler);
 
-    client.addEventListener('error', function(event) {
+    client.addEventListener('error', function() {
       reject(new errors.ClientError('Request failed'));
     });
 

@@ -47,6 +47,9 @@ module.exports = function(config, key, each) {
       }
     }
 
-    request.request(config).then(handler).catch(reject);
+    request
+      .request(config)
+      .then(handler)
+      .catch(reject);
   });
 };

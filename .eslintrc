@@ -7,9 +7,6 @@
     "Promise": false
   },
   "rules": {
-    "no-multiple-empty-lines": [2, {"max": 1}],
-    "valid-jsdoc": [2, {
-      "requireReturn": false
-    }]
+    "no-param-reassign": "off"
   }
 }

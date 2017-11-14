@@ -152,7 +152,7 @@ function update(id, options) {
  *     error types.
  */
 function remove(id) {
-  return request.del(urls.searches(id)).then(function(res) {
+  return request.del(urls.searches(id)).then(function() {
     return true;
   });
 }
