@@ -30,11 +30,17 @@ module.exports = function(config, key, each) {
     }
 
     function handler(response) {
-      var data = response.body[key];
-      count += data.length;
-      var done = count >= limit;
-      if (done) {
-        data.length = data.length - (count - limit);
+      var done;
+      var data = key !== 'stats' ? response.body[key] : response.body;
+
+      if (data.length) {
+        count += data.length;
+        done = count >= limit;
+        if (done) {
+          data.length = data.length - (count - limit);
+        }
+      } else {
+        done = true;
       }
       if (!done && pageSize) {
         // avoid fetching last empty page
