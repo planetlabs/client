@@ -54,5 +54,6 @@ exports.items = function(type) {
   return get.apply(null, rest);
 };
 exports.quickSearch = getter('data', 'v1', 'quick-search');
+exports.stats = getter('data', 'v1', 'stats');
 exports.searches = getter('data', 'v1', 'searches', '');
 exports.join = join;
