@@ -1,6 +1,6 @@
 var request = require('./request');
 
-module.exports = function(config, key, each) {
+module.exports = function(config, key, each, controlledPaging) {
   var limit = 'limit' in config ? config.limit : Infinity;
   var pageSize = config.query && config.query._page_size;
 
@@ -42,7 +42,14 @@ module.exports = function(config, key, each) {
       each(data);
       if (!aborted) {
         var links = response.body._links || {};
-        if (!done && links._next) {
+        if (controlledPaging && links._next) {
+          data.getNextPage = function() {
+            request
+              .get({url: links._next, terminator: config.terminator})
+              .then(handler)
+              .catch(reject);
+          };
+        } else if (!done && links._next) {
           request
             .get({url: links._next, terminator: config.terminator})
             .then(handler)
@@ -51,6 +58,7 @@ module.exports = function(config, key, each) {
           resolve(all);
         }
       }
+      each(data);
     }
 
     request
