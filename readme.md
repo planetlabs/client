@@ -52,7 +52,7 @@ The project docs are generated from templates in the `doc` directory.  The API d
 
 If you are making frequent changes and want to rebuild the docs with each change, use the `npm run start-doc` task.  You can view the doc output in the `build/doc` directory.
 
-*Note* - Building the docs requires Node >= 4.0.
+*Note* - Building the docs requires Node >= 8.0.
 
 #### Publishing a release
 
@@ -62,7 +62,7 @@ Releases are published from the master branch.  To cut a new minor release, do t
 
 The `postpublish` script will update the hosted version of [the docs](http://planetlabs.github.io/client/).
 
-*Note* - Publishing a release requires Node >= 4.0.
+*Note* - Publishing a release requires Node >= 8.0.
 
 [![Build Status][travis-image]][travis-url]
 

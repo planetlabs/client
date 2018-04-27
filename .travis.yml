@@ -8,6 +8,3 @@ cache:
 branches:
   only:
   - master
-addons:
-  hosts:
-    - travis.dev
