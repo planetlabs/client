@@ -28,14 +28,16 @@ module.exports = function(karma) {
     // see https://wiki.saucelabs.com/display/DOCS/Platform+Configurator
     // for platform and browserName options (Selenium API, node.js code)
     var customLaunchers = {
-      SL_Chrome: {
-        base: 'SauceLabs',
-        browserName: 'chrome'
-      },
-      SL_Firefox: {
-        base: 'SauceLabs',
-        browserName: 'firefox'
-      },
+      // SL_Chrome: {
+      //   base: 'SauceLabs',
+      //   platform: 'macos 10.13',
+      //   browserName: 'chrome'
+      // },
+      // SL_Firefox: {
+      //   base: 'SauceLabs',
+      //   platform: 'macos 10.13',
+      //   browserName: 'firefox'
+      // },
       SL_IE: {
         base: 'SauceLabs',
         platform: 'Windows 10',
@@ -48,7 +50,7 @@ module.exports = function(karma) {
       },
       SL_Safari: {
         base: 'SauceLabs',
-        platform: 'macos 10.12',
+        platform: 'macos 10.13',
         browserName: 'safari'
       }
     };
@@ -60,7 +62,9 @@ module.exports = function(karma) {
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
         username: 'planet-labs',
         accessKey: process.env.SAUCE_ACCESS_KEY,
+        verbose: true,
         connectOptions: {
+          connectRetries: 5,
           noSslBumpDomains: 'all'
         }
       },

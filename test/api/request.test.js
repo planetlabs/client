@@ -390,9 +390,7 @@ describe('api/request', function() {
     describe('request()', function() {
       var request = req.request;
 
-      it('rejects with ClientError when there is a client error', function(
-        done
-      ) {
+      it('rejects with ClientError when there is a client error', function(done) {
         var promise = request({url: 'xyz:pdq'});
 
         promise
