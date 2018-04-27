@@ -130,12 +130,18 @@ describe('api/urls', function() {
 
   describe('login()', function() {
     it('returns the login URL', function() {
-      assert.equal(urls.login(), 'https://api.planet.com/v0/auth/login');
+      assert.equal(
+        urls.login(),
+        'https://api.planet.com/auth/v1/experimental/public/users/authenticate'
+      );
     });
 
     it('works with a custom base URL', function() {
       urls.setBase('http://example.com/');
-      assert.equal(urls.login(), 'http://example.com/v0/auth/login');
+      assert.equal(
+        urls.login(),
+        'http://example.com/auth/v1/experimental/public/users/authenticate'
+      );
     });
   });
 
