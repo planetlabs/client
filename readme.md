@@ -65,7 +65,6 @@ The `postpublish` script will update the hosted version of [the docs](http://pla
 *Note* - Publishing a release requires Node >= 4.0.
 
 [![Build Status][travis-image]][travis-url]
-[![Coverage Status][coveralls-image]][coveralls-url]
 
 ### License
 
