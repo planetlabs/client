@@ -2,6 +2,8 @@ var request = require('./request');
 
 module.exports = function(config, key, each) {
   var limit = 'limit' in config ? config.limit : Infinity;
+  var pageSize = config.query && config.query._page_size;
+
   var aborted = false;
   var terminator = config.terminator;
   config.terminator = function(abort) {
@@ -32,6 +34,10 @@ module.exports = function(config, key, each) {
       var done = count >= limit;
       if (done) {
         data.length = data.length - (count - limit);
+      }
+      if (!done && pageSize) {
+        // avoid fetching last empty page
+        done = data.length < pageSize;
       }
       each(data);
       if (!aborted) {

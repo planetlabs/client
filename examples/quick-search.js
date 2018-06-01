@@ -3,7 +3,8 @@ const planet = require('../api');
 const {and, range} = planet.filter;
 
 async function main() {
-  const items = await planet.items.search({
+  const items = [];
+  await planet.items.search({
     types: ['PSScene4Band', 'Landsat8L1G'],
     filter: and([
       range('cloud_cover', {gte: 0, lte: 0.4}),
@@ -14,6 +15,7 @@ async function main() {
     },
     limit: 150,
     each: page => {
+      items.push.apply(items, page);
       console.log(`got ${page.length} items`);
     }
   });

@@ -6,9 +6,6 @@ async function main() {
     limit: 150,
     query: {
       _page_size: 100
-    },
-    each: items => {
-      console.log(`got ${items.length} items`);
     }
   });
   console.log(`total: ${items.length}`);
