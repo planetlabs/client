@@ -9,6 +9,7 @@ var assign = require('./util').assign;
 var util = require('./util');
 var authStore = require('./auth-store');
 var errors = require('./errors');
+var promiseWithRetry = require('./retry');
 
 var defaultHeaders = {
   accept: 'application/json'
@@ -192,6 +193,8 @@ function createResponseHandler(resolve, reject, info) {
  *     token will be added to an authorization header.
  * @param {boolean} config.withCredentials - Determines whether
  *     `XMLHttpRequest.withCredentials` is set (`true` by default).
+ * @param {number} config.retries - Number of retries for 429 or 5xx responses.
+ *     By default, the request will be attempted 10 times with exponential backoff.
  * @return {Promise<Object>} A promise that resolves on a successful
  *     response.  The object includes response and body properties, where the
  *     body is a JSON decoded object representing the response body.  Any
@@ -200,12 +203,14 @@ function createResponseHandler(resolve, reject, info) {
 function request(config) {
   var options = parseConfig(config);
 
+  var retries = 'retries' in config ? config.retries : 10;
+
   var info = {
     aborted: false,
     completed: false
   };
 
-  return new Promise(function(resolve, reject) {
+  return promiseWithRetry(retries, function(resolve, reject) {
     var client = new XMLHttpRequest();
     var handler = createResponseHandler(resolve, reject, info);
 

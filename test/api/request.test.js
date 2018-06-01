@@ -193,7 +193,7 @@ describe('api/request', function() {
           }
         };
 
-        var promise = request({url: 'http://example.com'});
+        var promise = request({url: 'http://example.com', retries: 0});
         promise
           .then(
             function() {
