@@ -60,10 +60,14 @@ function get(type, id, opt) {
 function search(opt) {
   var options = opt || {};
   var config = {
-    query: options.query,
+    query: options.query || {},
     limit: options.limit,
     terminator: options.terminator
   };
+  if (!config.query._page_size) {
+    config.query._page_size = 250; // default so we can bail early on incomplete pages
+  }
+
   if (options.filter && options.types) {
     config.url = urls.quickSearch();
     config.method = 'POST';

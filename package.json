@@ -21,12 +21,11 @@
     "test-browser-once": "karma start test/karma.config.js --single-run",
     "test-forever": "karma start test/karma.config.js",
     "test": "karma start test/karma.config.js --single-run",
-    "start": "npm run test-forever & watchy --watch bin,examples,api,cli,test -- npm run pretest",
+    "start": "npm run test-forever",
     "dist": "rm -rf dist && mkdir dist && browserify api/index-browser.js --standalone planet | uglifyjs --compress 'warnings=false' > dist/planet.js",
     "prepublishOnly": "npm run dist && npm run publish-doc",
     "apidoc": "mkdir -p build && jsdoc --template ./node_modules/jsdoc-json --destination build/api.json api",
     "doc": "npm run apidoc && node tasks/build-docs.js",
-    "start-doc": "watchy --watch doc,api,tasks -- npm run doc",
     "publish-doc": "npm run doc && gh-pages --dist build/doc"
   },
   "devDependencies": {
@@ -34,11 +33,11 @@
     "chai": "^3.5.0",
     "eslint": "^4.11.0",
     "eslint-config-planet": "^16.0.0",
-    "gh-pages": "^1.1.0",
+    "gh-pages": "^1.2.0",
     "handlebars": "^4.0.6",
     "jsdoc": "^3.5.5",
     "jsdoc-json": "^2.0.2",
-    "karma": "^1.7.1",
+    "karma": "^2.0.2",
     "karma-browserify": "^5.1.2",
     "karma-chrome-launcher": "^2.2.0",
     "karma-mocha": "^1.3.0",
@@ -49,12 +48,11 @@
     "metalsmith": "^2.2.0",
     "metalsmith-in-place": "^1.4.4",
     "metalsmith-layouts": "^1.8.0",
-    "mocha": "^3.1.2",
+    "mocha": "^5.2.0",
     "readable-stream": "^2.1.5",
     "sinon": "^1.17.6",
     "uglify-js": "^2.8.15",
-    "watchify": "^3.7.0",
-    "watchy": "^0.6.6"
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "jwt-decode": "^2.2.0",

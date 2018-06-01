@@ -50,7 +50,7 @@ The project docs are generated from templates in the `doc` directory.  The API d
 
     npm run doc
 
-If you are making frequent changes and want to rebuild the docs with each change, use the `npm run start-doc` task.  You can view the doc output in the `build/doc` directory.
+You can view the doc output in the `build/doc` directory.
 
 *Note* - Building the docs requires Node >= 8.0.
 
