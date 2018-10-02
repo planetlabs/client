@@ -1,6 +1,6 @@
 var request = require('./request');
 
-module.exports = function(config, key, each, controlledPaging) {
+module.exports = function(config, key, each) {
   var limit = 'limit' in config ? config.limit : Infinity;
   var pageSize = config.query && config.query._page_size;
 
@@ -25,6 +25,7 @@ module.exports = function(config, key, each, controlledPaging) {
         } else {
           all = all.concat(array);
         }
+        return true;
       };
     }
 
@@ -39,25 +40,32 @@ module.exports = function(config, key, each, controlledPaging) {
         // avoid fetching last empty page
         done = data.length < pageSize;
       }
+
       if (!aborted) {
         var links = response.body._links || {};
-        if (controlledPaging && links._next) {
-          data.getNextPage = function() {
-            request
-              .get({url: links._next, terminator: config.terminator})
-              .then(handler)
-              .catch(reject);
-          };
-        } else if (!done && links._next) {
-          request
-            .get({url: links._next, terminator: config.terminator})
-            .then(handler)
-            .catch(reject);
+        var more = !!links._next;
+
+        var next = !more
+          ? function() {}
+          : function() {
+              request
+                .get({url: links._next, terminator: config.terminator})
+                .then(handler)
+                .catch(reject);
+            };
+
+        var keepGoing = each(data, more, next);
+        if (keepGoing === false) {
+          resolve(all);
+          return;
+        }
+
+        if (!done && more) {
+          next();
         } else {
           resolve(all);
         }
       }
-      each(data);
     }
 
     request
