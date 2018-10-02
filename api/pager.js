@@ -39,7 +39,6 @@ module.exports = function(config, key, each, controlledPaging) {
         // avoid fetching last empty page
         done = data.length < pageSize;
       }
-      each(data);
       if (!aborted) {
         var links = response.body._links || {};
         if (controlledPaging && links._next) {
