@@ -51,10 +51,6 @@ function get(type, id, opt) {
  *     concatenated and provided when the promise resolves.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.
- * @param {boolean} options.controlledPaging A parameter specifying whether to
- *     automatically perform paging. If false, the result set will include a
- *     `getNextPage` function which will trigger the request for the next
- *     page in the search.
  * @return {Promise<Array>} A promise that resolves when all data is finished
  *     loading or is rejected with any error.  If an `each` callback is not
  *     provided, the promise will resolve with all data concatenated.
