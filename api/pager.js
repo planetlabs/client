@@ -43,7 +43,7 @@ module.exports = function(config, key, each) {
 
       if (!aborted) {
         var links = response.body._links || {};
-        var more = !!links._next;
+        var more = !done && !!links._next;
 
         var next = !more
           ? function() {}
@@ -52,9 +52,10 @@ module.exports = function(config, key, each) {
                 .get({url: links._next, terminator: config.terminator})
                 .then(handler)
                 .catch(reject);
-            };
+          };
 
-        var keepGoing = each(data, more, next);
+        var keepGoing = !!each(data, more, next);
+
         if (keepGoing === false) {
           resolve(all);
           return;
