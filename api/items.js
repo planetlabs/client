@@ -46,8 +46,9 @@ function get(type, id, opt) {
  *     `_sort` parameters.
  * @param {number} options.limit Limit the result set to this size (by default,
  *     no limit is applied).
- * @param {function(Array)} options.each A function that is called once for
- *     each page of data.  If the `each` callback is absent, all data will be
+ * @param {function(Array,Boolean,Function)} options.each A function that is called once for
+ *     each page of data. The each callback takes 3 arguments. The first is an array of features. The second is a boolean representing whether there are more results, the third is a function that gets the next page of results. If `each` returns false, it prevents automatic paging.
+ *     If the `each` callback is absent, all data will be
  *     concatenated and provided when the promise resolves.
  * @param {function(function())} options.terminator A function that is called
  *     with a function that can be called back to terminate the request.

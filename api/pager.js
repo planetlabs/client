@@ -25,6 +25,7 @@ module.exports = function(config, key, each) {
         } else {
           all = all.concat(array);
         }
+        return true;
       };
     }
 
@@ -39,14 +40,28 @@ module.exports = function(config, key, each) {
         // avoid fetching last empty page
         done = data.length < pageSize;
       }
-      each(data);
+
       if (!aborted) {
         var links = response.body._links || {};
-        if (!done && links._next) {
-          request
-            .get({url: links._next, terminator: config.terminator})
-            .then(handler)
-            .catch(reject);
+        var more = !done && !!links._next;
+
+        var next = !more
+          ? function() {}
+          : function() {
+              request
+                .get({url: links._next, terminator: config.terminator})
+                .then(handler)
+                .catch(reject);
+            };
+
+        var keepGoing = each(data, more, next);
+
+        if (keepGoing === false) {
+          return;
+        }
+
+        if (!done && more) {
+          next();
         } else {
           resolve(all);
         }
