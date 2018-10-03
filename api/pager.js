@@ -57,7 +57,6 @@ module.exports = function(config, key, each) {
         var keepGoing = each(data, more, next);
 
         if (keepGoing === false) {
-          resolve(all);
           return;
         }
 
