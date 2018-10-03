@@ -1290,7 +1290,8 @@
                     <td>
                       <code class="type">function</code>
                <span class="description"><p>A function that is called once for
-                  each page of data.  If the <code>each</code> callback is absent, all data will be
+                  each page of data. The each callback takes 3 arguments. The first is an array of features. The second is a boolean representing whether there are more results, the third is a function that gets the next page of results. If <code>each</code> returns false, it prevents automatic paging.
+                  If the <code>each</code> callback is absent, all data will be
                   concatenated and provided when the promise resolves.</p>
               </span>
                     </td>
