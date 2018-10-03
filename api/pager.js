@@ -53,8 +53,8 @@ module.exports = function(config, key, each) {
                 .then(handler)
                 .catch(reject);
             };
-
-        var keepGoing = !!each(data, more, next);
+            
+        var keepGoing = each(data, more, next);
 
         if (keepGoing === false) {
           resolve(all);
