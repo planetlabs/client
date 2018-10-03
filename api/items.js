@@ -80,7 +80,7 @@ function search(opt) {
   } else {
     throw new Error('Expected both `filter` and `types` or a serach `id`.');
   }
-  return pager(config, 'features', options.each, options.controlledPaging);
+  return pager(config, 'features', options.each);
 }
 
 exports.search = search;
