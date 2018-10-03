@@ -52,7 +52,7 @@ module.exports = function(config, key, each) {
                 .get({url: links._next, terminator: config.terminator})
                 .then(handler)
                 .catch(reject);
-          };
+            };
 
         var keepGoing = !!each(data, more, next);
 
