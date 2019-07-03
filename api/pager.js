@@ -1,7 +1,7 @@
 var request = require('./request');
 
 module.exports = function(config, key, each) {
-  var limit = 'limit' in config ? config.limit : Infinity;
+  var limit = 'limit' in config ? config.limit : 10;
   var pageSize = config.query && config.query._page_size;
 
   var aborted = false;
