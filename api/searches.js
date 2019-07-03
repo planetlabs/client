@@ -54,7 +54,7 @@ function search(options) {
   var config = {
     url: urls.searches(),
     query: query,
-    limit: options.limit,
+    limit: 'limit' in options ? options.limit : 10,
     terminator: options.terminator
   };
   return pager(config, 'searches', options.each);
