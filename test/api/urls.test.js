@@ -1,6 +1,4 @@
-/* eslint-env mocha */
-
-var assert = require('chai').assert;
+/* eslint-env jest */
 
 var urls = require('../../api/urls');
 
@@ -36,7 +34,7 @@ describe('api/urls', function() {
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
-        assert.deepEqual(c.actual, c.expected, 'case ' + i);
+        expect(c.actual).toEqual(c.expected);
       }
     });
 
@@ -62,7 +60,7 @@ describe('api/urls', function() {
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
-        assert.deepEqual(c.actual, c.expected, 'case ' + i);
+        expect(c.actual).toEqual(c.expected);
       }
     });
 
@@ -84,7 +82,7 @@ describe('api/urls', function() {
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
-        assert.deepEqual(c.actual, c.expected, 'case ' + i);
+        expect(c.actual).toEqual(c.expected);
       }
     });
 
@@ -92,7 +90,7 @@ describe('api/urls', function() {
       function call() {
         urls.join('http://example.com', new Date());
       }
-      assert.throws(call, Error, 'join must be called with strings or numbers');
+      expect(call).toThrow();
     });
 
     it('works with degenerate cases', function() {
@@ -109,7 +107,7 @@ describe('api/urls', function() {
 
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
-        assert.deepEqual(c.actual, c.expected, 'case ' + i);
+        expect(c.actual).toEqual(c.expected);
       }
     });
   });
@@ -118,28 +116,26 @@ describe('api/urls', function() {
     it('sets the base URL for the API', function() {
       var base = 'http://example.com/';
       urls.setBase(base);
-      assert.equal(urls.base(), base);
+      expect(urls.base()).toEqual(base);
     });
   });
 
   describe('base()', function() {
     it('returns the base URL for the API', function() {
-      assert.equal(urls.base(), 'https://api.planet.com/');
+      expect(urls.base()).toEqual('https://api.planet.com/');
     });
   });
 
   describe('login()', function() {
     it('returns the login URL', function() {
-      assert.equal(
-        urls.login(),
+      expect(urls.login()).toEqual(
         'https://api.planet.com/auth/v1/experimental/public/users/authenticate'
       );
     });
 
     it('works with a custom base URL', function() {
       urls.setBase('http://example.com/');
-      assert.equal(
-        urls.login(),
+      expect(urls.login()).toEqual(
         'http://example.com/auth/v1/experimental/public/users/authenticate'
       );
     });
@@ -147,12 +143,13 @@ describe('api/urls', function() {
 
   describe('types()', function() {
     it('returns the item types URL', function() {
-      assert.equal(urls.types(), 'https://api.planet.com/data/v1/item-types/');
+      expect(urls.types()).toEqual(
+        'https://api.planet.com/data/v1/item-types/'
+      );
     });
 
     it('returns the URL for a single item type', function() {
-      assert.equal(
-        urls.types('foo'),
+      expect(urls.types('foo')).toEqual(
         'https://api.planet.com/data/v1/item-types/foo'
       );
     });
@@ -160,23 +157,20 @@ describe('api/urls', function() {
 
   describe('items()', function() {
     it('returns the URL for items of a specific type', function() {
-      assert.equal(
-        urls.items('mysat'),
+      expect(urls.items('mysat')).toEqual(
         'https://api.planet.com/data/v1/item-types/mysat/items/'
       );
     });
 
     it('returns the URL for a single item', function() {
-      assert.equal(
-        urls.types('mysat', 'item-id'),
+      expect(urls.types('mysat', 'item-id')).toEqual(
         'https://api.planet.com/data/v1/item-types/mysat/item-id'
       );
     });
 
     it('works with a custom base', function() {
       urls.setBase('https://example.com/');
-      assert.equal(
-        urls.types('mysat', 'item-id'),
+      expect(urls.types('mysat', 'item-id')).toEqual(
         'https://example.com/data/v1/item-types/mysat/item-id'
       );
     });
@@ -184,16 +178,14 @@ describe('api/urls', function() {
 
   describe('quickSearch()', function() {
     it('returns the quick-search URL', function() {
-      assert.equal(
-        urls.quickSearch(),
+      expect(urls.quickSearch()).toEqual(
         'https://api.planet.com/data/v1/quick-search'
       );
     });
 
     it('works with a custom base', function() {
       urls.setBase('https://example.com/');
-      assert.equal(
-        urls.quickSearch(),
+      expect(urls.quickSearch()).toEqual(
         'https://example.com/data/v1/quick-search'
       );
     });
@@ -201,19 +193,20 @@ describe('api/urls', function() {
 
   describe('searches()', function() {
     it('returns the searches URL', function() {
-      assert.equal(urls.searches(), 'https://api.planet.com/data/v1/searches/');
+      expect(urls.searches()).toEqual(
+        'https://api.planet.com/data/v1/searches/'
+      );
     });
 
     it('returns a single search URL', function() {
-      assert.equal(
-        urls.searches('foo'),
+      expect(urls.searches('foo')).toEqual(
         'https://api.planet.com/data/v1/searches/foo'
       );
     });
 
     it('works with a custom base', function() {
       urls.setBase('https://example.com/');
-      assert.equal(urls.searches(), 'https://example.com/data/v1/searches/');
+      expect(urls.searches()).toEqual('https://example.com/data/v1/searches/');
     });
   });
 });

@@ -1,5 +1,4 @@
-/* eslint-env mocha */
-var assert = require('chai').assert;
+/* eslint-env jest */
 
 var util = require('../../api/util');
 
@@ -54,7 +53,7 @@ describe('api/util', function() {
       var add = util.addQueryParams;
       for (var i = 0, ii = cases.length; i < ii; ++i) {
         var c = cases[i];
-        assert.equal(add(c.url, c.query), c.expect, 'case ' + i);
+        expect(add(c.url, c.query)).toEqual(c.expect);
       }
     });
   });
@@ -69,7 +68,7 @@ describe('api/util', function() {
       };
 
       util.assign(target, source);
-      assert.deepEqual(target, {
+      expect(target).toEqual({
         foo: 'bar',
         num: 42
       });
@@ -79,7 +78,7 @@ describe('api/util', function() {
       var target = {};
 
       var got = util.assign(target, {foo: 'bar'});
-      assert.equal(got, target);
+      expect(got).toEqual(target);
     });
 
     it('overwrites target properties', function() {
@@ -88,7 +87,7 @@ describe('api/util', function() {
       };
 
       util.assign(target, {foo: 'bam'});
-      assert.equal(target.foo, 'bam');
+      expect(target.foo).toEqual('bam');
     });
 
     it('works with multiple sources', function() {
@@ -103,7 +102,7 @@ describe('api/util', function() {
       };
 
       util.assign(target, source1, source2);
-      assert.deepEqual(target, {
+      expect(target).toEqual({
         foo: 'bar',
         foo1: 'bar1',
         foo2: 'bar2'
@@ -122,8 +121,8 @@ describe('api/util', function() {
       };
 
       util.assign(target, source1, source2);
-      assert.deepEqual(target, {foo: 'baz'});
-      assert.deepEqual(source1, {foo: 'bam'});
+      expect(target).toEqual({foo: 'baz'});
+      expect(source1).toEqual({foo: 'bam'});
     });
   });
 });

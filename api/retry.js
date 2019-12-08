@@ -17,17 +17,18 @@ function promiseWithRetry(retries, executor) {
         }
 
         var status = error.response && error.response.status;
-        if (status === 429 || status >= 500) {
-          ++attempts;
-
-          var delay =
-            Math.random() *
-            Math.min(maxDelay, baseDelay * Math.pow(factor, attempts));
-
-          setTimeout(attempt, delay);
-        } else {
+        if (status !== 429 && status < 500) {
           reject(error);
+          return;
         }
+
+        ++attempts;
+        var delay =
+          Math.random() *
+          Math.min(maxDelay, baseDelay * Math.pow(factor, attempts));
+
+        attempt();
+        setTimeout(attempt, delay);
       });
     }
 

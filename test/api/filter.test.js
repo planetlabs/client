@@ -1,5 +1,4 @@
-/* eslint-env mocha */
-var assert = require('chai').assert;
+/* eslint-env jest */
 
 var filter = require('../../api/filter');
 
@@ -13,7 +12,7 @@ describe('api/filter', function() {
       var when = filter.dates('acquired', {
         gt: new Date('2000-01-01T12:00:00.000Z')
       });
-      assert.deepEqual(filter.and([where, when]), {
+      expect(filter.and([where, when])).toEqual({
         type: 'AndFilter',
         config: [
           {
@@ -45,7 +44,7 @@ describe('api/filter', function() {
       var when = filter.dates('acquired', {
         gt: new Date('2000-01-01T12:00:00.000Z')
       });
-      assert.deepEqual(filter.or([where, when]), {
+      expect(filter.or([where, when])).toEqual({
         type: 'OrFilter',
         config: [
           {
@@ -77,7 +76,7 @@ describe('api/filter', function() {
       var when = filter.dates('acquired', {
         gt: new Date('2000-01-01T12:00:00.000Z')
       });
-      assert.deepEqual(filter.not([where, when]), {
+      expect(filter.not([where, when])).toEqual({
         type: 'NotFilter',
         config: [
           {
@@ -108,7 +107,7 @@ describe('api/filter', function() {
         gte: then,
         lt: now
       });
-      assert.deepEqual(when, {
+      expect(when).toEqual({
         type: 'DateRangeFilter',
         field_name: 'time',
         config: {
@@ -126,7 +125,7 @@ describe('api/filter', function() {
         coordinates: [0, 0]
       };
       var place = filter.geometry('footprint', nullIsland);
-      assert.deepEqual(place, {
+      expect(place).toEqual({
         type: 'GeometryFilter',
         field_name: 'footprint',
         config: nullIsland
@@ -137,7 +136,7 @@ describe('api/filter', function() {
   describe('numbers()', function() {
     it('creates a NumberInFilter', function() {
       var medal = filter.numbers('rank', [1, 2, 3]);
-      assert.deepEqual(medal, {
+      expect(medal).toEqual({
         type: 'NumberInFilter',
         field_name: 'rank',
         config: [1, 2, 3]
@@ -148,7 +147,7 @@ describe('api/filter', function() {
   describe('range()', function() {
     it('creates a RangeFilter', function() {
       var aboveAverage = filter.range('fraction', {gt: 0.5, lte: 1});
-      assert.deepEqual(aboveAverage, {
+      expect(aboveAverage).toEqual({
         type: 'RangeFilter',
         field_name: 'fraction',
         config: {gt: 0.5, lte: 1}
@@ -159,7 +158,7 @@ describe('api/filter', function() {
   describe('strings()', function() {
     it('creates a StringInFilter', function() {
       var mediocre = filter.strings('grade', ['C', 'D', 'F']);
-      assert.deepEqual(mediocre, {
+      expect(mediocre).toEqual({
         type: 'StringInFilter',
         field_name: 'grade',
         config: ['C', 'D', 'F']
@@ -173,7 +172,7 @@ describe('api/filter', function() {
         'assets.analytic:download',
         'assets.visual:download'
       ]);
-      assert.deepEqual(hasAccess, {
+      expect(hasAccess).toEqual({
         type: 'PermissionFilter',
         config: ['assets.analytic:download', 'assets.visual:download']
       });

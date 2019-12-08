@@ -1,15 +1,11 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 var assign = require('../../api/util').assign;
 var authStore = require('../../api/auth-store');
-var chai = require('chai');
 var errors = require('../../api/errors');
 var req = require('../../api/request');
 var testUtil = require('../util');
 var url = require('url');
 var util = require('../../api/util');
-
-chai.config.truncateThreshold = 0;
-var assert = chai.assert;
 
 describe('api/request', function() {
   describe('using a mock XMLHttpRequest', function() {
@@ -26,35 +22,33 @@ describe('api/request', function() {
 
       it('returns a promise', function() {
         var promise = request({url: 'https://example.com'});
-        assert.instanceOf(promise, Promise);
+        expect(promise).toBeInstanceOf(Promise);
       });
 
       it('creates an XHR instance and calls methods', function() {
         request({url: 'http://example.com'});
 
-        assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, [
+        expect(mock.open.callCount).toEqual(1);
+        expect(mock.open.getCall(0).args).toEqual([
           'GET',
           'http://example.com/'
         ]);
 
-        assert.equal(mock.setRequestHeader.callCount, 1);
-        assert.deepEqual(mock.setRequestHeader.getCall(0).args, [
+        expect(mock.setRequestHeader.callCount).toEqual(1);
+        expect(mock.setRequestHeader.getCall(0).args).toEqual([
           'accept',
           'application/json'
         ]);
 
-        assert.equal(mock.addEventListener.callCount, 2);
+        expect(mock.addEventListener.callCount).toEqual(2);
 
-        assert.equal(mock.addEventListener.getCall(0).args[0], 'load');
-        assert.equal(
-          typeof mock.addEventListener.getCall(0).args[1],
+        expect(mock.addEventListener.getCall(0).args[0]).toEqual('load');
+        expect(typeof mock.addEventListener.getCall(0).args[1]).toEqual(
           'function'
         );
 
-        assert.equal(mock.addEventListener.getCall(1).args[0], 'error');
-        assert.equal(
-          typeof mock.addEventListener.getCall(1).args[1],
+        expect(mock.addEventListener.getCall(1).args[0]).toEqual('error');
+        expect(typeof mock.addEventListener.getCall(1).args[1]).toEqual(
           'function'
         );
       });
@@ -71,17 +65,17 @@ describe('api/request', function() {
         var promise = request({url: 'http://example.com'});
         promise
           .then(function(obj) {
-            assert.equal(obj.response, loadEvent.target);
-            assert.deepEqual(obj.body, body);
+            expect(obj.response).toEqual(loadEvent.target);
+            expect(obj.body).toEqual(body);
             done();
           })
           .catch(done);
 
         // mock the load event for the response
-        assert.equal(mock.addEventListener.callCount, 2);
+        expect(mock.addEventListener.callCount).toEqual(2);
         var args = mock.addEventListener.getCall(0).args;
-        assert.lengthOf(args, 2);
-        assert.equal(args[0], 'load');
+        expect(args.length).toBe(2);
+        expect(args[0]).toEqual('load');
         var listener = args[1];
         listener(loadEvent);
       });
@@ -94,14 +88,14 @@ describe('api/request', function() {
           form: form
         });
 
-        assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, [
+        expect(mock.open.callCount).toEqual(1);
+        expect(mock.open.getCall(0).args).toEqual([
           'POST',
           'http://example.com/'
         ]);
 
-        assert.equal(mock.send.callCount, 1);
-        assert.deepEqual(mock.send.getCall(0).args, [form]);
+        expect(mock.send.callCount).toEqual(1);
+        expect(mock.send.getCall(0).args).toEqual([form]);
       });
 
       it('follows location header on 302', function(done) {
@@ -130,21 +124,21 @@ describe('api/request', function() {
         });
         promise
           .then(function(obj) {
-            assert.equal(obj.response, secondLoadEvent.target);
-            assert.deepEqual(obj.body, body);
+            expect(obj.response).toEqual(secondLoadEvent.target);
+            expect(obj.body).toEqual(body);
             done();
           })
           .catch(done);
 
         // mock the first response load event (302)
-        assert.equal(mock.addEventListener.callCount, 2);
-        assert.equal(mock.addEventListener.getCall(0).args[0], 'load');
+        expect(mock.addEventListener.callCount).toEqual(2);
+        expect(mock.addEventListener.getCall(0).args[0]).toEqual('load');
         var firstListener = mock.addEventListener.getCall(0).args[1];
         firstListener(firstLoadEvent);
 
         // mock the second response load event (200)
-        assert.equal(mock.addEventListener.callCount, 4);
-        assert.equal(mock.addEventListener.getCall(2).args[0], 'load');
+        expect(mock.addEventListener.callCount).toEqual(4);
+        expect(mock.addEventListener.getCall(2).args[0]).toEqual('load');
         var secondCallback = mock.addEventListener.getCall(2).args[1];
         secondCallback(secondLoadEvent);
       });
@@ -165,21 +159,20 @@ describe('api/request', function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
-              assert.instanceOf(err, errors.UnexpectedResponse);
-              assert.include(
-                err.message,
+              expect(err).toBeInstanceOf(errors.UnexpectedResponse);
+              expect(err.message).toContain(
                 'Trouble parsing response body as JSON'
               );
-              assert.equal(err.body, body);
+              expect(err.body).toEqual(body);
               done();
             }
           )
           .catch(done);
 
         // mock the response load event
-        assert.equal(mock.addEventListener.callCount, 2);
+        expect(mock.addEventListener.callCount).toEqual(2);
         var args = mock.addEventListener.getCall(0).args;
-        assert.equal(args[0], 'load');
+        expect(args[0]).toEqual('load');
         var listener = args[1];
         listener(loadEvent);
       });
@@ -200,18 +193,18 @@ describe('api/request', function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
-              assert.instanceOf(err, errors.UnexpectedResponse);
-              assert.include(err.message, 'Unexpected response status: 500');
-              assert.equal(err.body, null); // don't leak unexpected responses
+              expect(err).toBeInstanceOf(errors.UnexpectedResponse);
+              expect(err.message).toContain('Unexpected response status: 500');
+              expect(err.body).toEqual(null); // don't leak unexpected responses
               done();
             }
           )
           .catch(done);
 
         // mock the response load event
-        assert.equal(mock.addEventListener.callCount, 2);
+        expect(mock.addEventListener.callCount).toEqual(2);
         var args = mock.addEventListener.getCall(0).args;
-        assert.equal(args[0], 'load');
+        expect(args[0]).toEqual('load');
         var listener = args[1];
         listener(loadEvent);
       });
@@ -232,18 +225,18 @@ describe('api/request', function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
-              assert.instanceOf(err, errors.BadRequest);
-              assert.include(err.message, 'Bad request');
-              assert.deepEqual(err.body, body);
+              expect(err).toBeInstanceOf(errors.BadRequest);
+              expect(err.message).toContain('Bad request');
+              expect(err.body).toEqual(body);
               done();
             }
           )
           .catch(done);
 
         // mock the response load event
-        assert.equal(mock.addEventListener.callCount, 2);
+        expect(mock.addEventListener.callCount).toEqual(2);
         var args = mock.addEventListener.getCall(0).args;
-        assert.equal(args[0], 'load');
+        expect(args[0]).toEqual('load');
         var listener = args[1];
         listener(loadEvent);
       });
@@ -264,18 +257,18 @@ describe('api/request', function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
-              assert.instanceOf(err, errors.Unauthorized);
-              assert.include(err.message, 'Unauthorized');
-              assert.deepEqual(err.body, body);
+              expect(err).toBeInstanceOf(errors.Unauthorized);
+              expect(err.message).toContain('Unauthorized');
+              expect(err.body).toEqual(body);
               done();
             }
           )
           .catch(done);
 
         // mock the response load event
-        assert.equal(mock.addEventListener.callCount, 2);
+        expect(mock.addEventListener.callCount).toEqual(2);
         var args = mock.addEventListener.getCall(0).args;
-        assert.equal(args[0], 'load');
+        expect(args[0]).toEqual('load');
         var listener = args[1];
         listener(loadEvent);
       });
@@ -296,18 +289,18 @@ describe('api/request', function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
-              assert.instanceOf(err, errors.Forbidden);
-              assert.include(err.message, 'Forbidden');
-              assert.deepEqual(err.body, body);
+              expect(err).toBeInstanceOf(errors.Forbidden);
+              expect(err.message).toContain('Forbidden');
+              expect(err.body).toEqual(body);
               done();
             }
           )
           .catch(done);
 
         // mock the response load event
-        assert.equal(mock.addEventListener.callCount, 2);
+        expect(mock.addEventListener.callCount).toEqual(2);
         var args = mock.addEventListener.getCall(0).args;
-        assert.equal(args[0], 'load');
+        expect(args[0]).toEqual('load');
         var listener = args[1];
         listener(loadEvent);
       });
@@ -335,8 +328,8 @@ describe('api/request', function() {
     describe('get()', function() {
       it('calls request() with method set to GET', function() {
         req.get({url: 'http://example.com'});
-        assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, [
+        expect(mock.open.callCount).toEqual(1);
+        expect(mock.open.getCall(0).args).toEqual([
           'GET',
           'http://example.com/'
         ]);
@@ -344,8 +337,8 @@ describe('api/request', function() {
 
       it('accepts a string for the URL', function() {
         req.get('http://example.com');
-        assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, [
+        expect(mock.open.callCount).toEqual(1);
+        expect(mock.open.getCall(0).args).toEqual([
           'GET',
           'http://example.com/'
         ]);
@@ -355,8 +348,8 @@ describe('api/request', function() {
     describe('post()', function() {
       it('calls request() with method set to POST', function() {
         req.post({url: 'http://example.com'});
-        assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, [
+        expect(mock.open.callCount).toEqual(1);
+        expect(mock.open.getCall(0).args).toEqual([
           'POST',
           'http://example.com/'
         ]);
@@ -366,8 +359,8 @@ describe('api/request', function() {
     describe('put()', function() {
       it('calls request() with method set to PUT', function() {
         req.put({url: 'http://example.com'});
-        assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, [
+        expect(mock.open.callCount).toEqual(1);
+        expect(mock.open.getCall(0).args).toEqual([
           'PUT',
           'http://example.com/'
         ]);
@@ -377,8 +370,8 @@ describe('api/request', function() {
     describe('del()', function() {
       it('calls request() with method set to DELETE', function() {
         req.del({url: 'http://example.com'});
-        assert.equal(mock.open.callCount, 1);
-        assert.deepEqual(mock.open.getCall(0).args, [
+        expect(mock.open.callCount).toEqual(1);
+        expect(mock.open.getCall(0).args).toEqual([
           'DELETE',
           'http://example.com/'
         ]);
@@ -399,8 +392,8 @@ describe('api/request', function() {
               done(new Error('Expected promise to be rejected'));
             },
             function(err) {
-              assert.instanceOf(err, errors.ClientError, err.stack);
-              assert.include(err.message, 'Request failed');
+              expect(err).toBeInstanceOf(errors.ClientError);
+              expect(err.message).toContain('Request failed');
               done();
             }
           )
@@ -430,7 +423,7 @@ describe('api/request', function() {
           headers: defaultHeaders
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('adds user provided headers', function() {
@@ -446,7 +439,7 @@ describe('api/request', function() {
           headers: util.assign({}, defaultHeaders, config.headers)
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('works with a url.parse() response', function() {
@@ -459,7 +452,7 @@ describe('api/request', function() {
           headers: defaultHeaders
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('respects the port in the URL', function() {
@@ -472,7 +465,7 @@ describe('api/request', function() {
           headers: defaultHeaders
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('accepts a body that can be serialized to JSON', function() {
@@ -497,7 +490,7 @@ describe('api/request', function() {
           headers: headers
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('accepts a form for the body', function() {
@@ -514,7 +507,7 @@ describe('api/request', function() {
           headers: assign({}, defaultHeaders)
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('respects a query string in the URL', function() {
@@ -527,7 +520,7 @@ describe('api/request', function() {
           headers: defaultHeaders
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('accepts a config with url and query', function() {
@@ -543,7 +536,7 @@ describe('api/request', function() {
           headers: defaultHeaders
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('extends an existing URL query string with query object', function() {
@@ -559,7 +552,7 @@ describe('api/request', function() {
           headers: defaultHeaders
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('allows query object to override query string', function() {
@@ -575,7 +568,7 @@ describe('api/request', function() {
           headers: defaultHeaders
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('passes along the withCredentials option', function() {
@@ -590,7 +583,7 @@ describe('api/request', function() {
           withCredentials: false
         };
 
-        assert.deepEqual(parseConfig(config), options);
+        expect(parseConfig(config)).toEqual(options);
       });
 
       it('adds authorization header with stored token', function() {
@@ -601,7 +594,7 @@ describe('api/request', function() {
         var options = parseConfig(config);
 
         var headers = options.headers;
-        assert.equal(headers.authorization, 'Bearer ' + token);
+        expect(headers.authorization).toEqual('Bearer ' + token);
       });
 
       it('adds authorization header with stored API key', function() {
@@ -613,7 +606,7 @@ describe('api/request', function() {
         var options = parseConfig(config);
 
         var headers = options.headers;
-        assert.equal(headers.authorization, 'api-key ' + key);
+        expect(headers.authorization).toEqual('api-key ' + key);
       });
 
       it('prefers token to API key', function() {
@@ -625,7 +618,7 @@ describe('api/request', function() {
         var options = parseConfig(config);
 
         var headers = options.headers;
-        assert.equal(headers.authorization, 'Bearer ' + token);
+        expect(headers.authorization).toEqual('Bearer ' + token);
       });
     });
   });

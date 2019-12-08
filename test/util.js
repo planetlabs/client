@@ -23,3 +23,15 @@ exports.mockXHR = function() {
 exports.unmockXHR = function() {
   global.XMLHttpRequest = GlobalXHR;
 };
+
+var realSetTimeout = global.setTimeout;
+
+exports.disableSetTimeout = function() {
+  global.setTimeout = function(fn) {
+    fn();
+  };
+};
+
+exports.enableSetTimeout = function() {
+  global.setTimeout = realSetTimeout;
+};
