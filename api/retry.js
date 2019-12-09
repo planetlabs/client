@@ -1,3 +1,5 @@
+var ClientError = require('./errors').ClientError;
+
 var factor = 2;
 var maxDelay = 2500;
 var baseDelay = 100;
@@ -16,18 +18,27 @@ function promiseWithRetry(retries, executor) {
           return;
         }
 
-        var status = error.response && error.response.status;
-        if (status === 429 || status >= 500) {
-          ++attempts;
-
-          var delay =
-            Math.random() *
-            Math.min(maxDelay, baseDelay * Math.pow(factor, attempts));
-
-          setTimeout(attempt, delay);
-        } else {
+        if (error instanceof ClientError) {
           reject(error);
+          return;
         }
+
+        if (error.response) {
+          // only retry if 429 or 5xx
+          var status = error.response.status;
+          if (status !== 429 && status < 500) {
+            reject(error);
+            return;
+          }
+        }
+
+        ++attempts;
+        var delay =
+          Math.random() *
+          Math.min(maxDelay, baseDelay * Math.pow(factor, attempts));
+
+        attempt();
+        setTimeout(attempt, delay);
       });
     }
 
