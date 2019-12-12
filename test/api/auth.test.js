@@ -17,7 +17,7 @@ describe('api/auth', function() {
   });
 
   afterEach(function() {
-    testUtil.unmockXHR();
+    testUtil.restoreXHR();
     auth.logout();
   });
 

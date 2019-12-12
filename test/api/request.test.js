@@ -19,7 +19,7 @@ describe('api/request', function() {
       mock = testUtil.mockXHR();
     });
 
-    afterEach(testUtil.unmockXHR);
+    afterEach(testUtil.restoreXHR);
 
     describe('request()', function() {
       var request = req.request;
@@ -386,7 +386,10 @@ describe('api/request', function() {
     });
   });
 
-  describe('using the real XMLHttpRequest', function() {
+  describe('using the XMLHttpRequest polyfill', function() {
+    beforeEach(testUtil.polyfillXHR);
+    afterEach(testUtil.restoreXHR);
+
     describe('request()', function() {
       var request = req.request;
 

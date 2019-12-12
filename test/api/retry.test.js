@@ -24,7 +24,7 @@ function resolveWith(value) {
 }
 
 function responseError(status) {
-  var error = new Error('status ' + 429);
+  var error = new Error('status ' + status);
   error.response = {status: status};
   return error;
 }
@@ -62,6 +62,19 @@ describe('api/retry', function() {
 
       var error429 = responseError(429);
       var promise = promiseWithRetry(3, rejectNTimes(2, error429, value));
+
+      promise.then(function(resolved) {
+        assert.equal(resolved, value);
+        done();
+      });
+      promise.catch(done);
+    });
+
+    it('retries if status is 500', function(done) {
+      var value = {foo: 'bar'};
+
+      var error500 = responseError(500);
+      var promise = promiseWithRetry(3, rejectNTimes(2, error500, value));
 
       promise.then(function(resolved) {
         assert.equal(resolved, value);
