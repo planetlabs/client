@@ -16,7 +16,7 @@
     "planet": "./bin/planet.js"
   },
   "scripts": {
-    "lint": "eslint bin examples api cli test tasks",
+    "lint": "eslint bin examples api test tasks",
     "pretest": "npm run lint",
     "test-forever": "mocha test --recursive --watch",
     "test": "mocha test --recursive",
@@ -28,26 +28,26 @@
     "publish-doc": "npm run doc && gh-pages --dist build/doc"
   },
   "devDependencies": {
-    "browserify": "^16.3.0",
-    "chai": "^4.2.0",
-    "eslint": "^4.11.0",
+    "browserify": "^17.0.0",
+    "chai": "^4.3.0",
+    "eslint": "^7.19.0",
     "eslint-config-planet": "^16.0.0",
-    "gh-pages": "^2.0.1",
-    "handlebars": "^4.5.3",
-    "jsdoc": "^3.6.3",
+    "gh-pages": "^3.1.0",
+    "handlebars": "^4.7.6",
+    "jsdoc": "^3.6.6",
     "jsdoc-json": "^2.0.2",
-    "marked": "^0.7.0",
+    "marked": "^0.8.2",
     "metalsmith": "^2.3.0",
     "metalsmith-in-place": "^1.4.4",
-    "metalsmith-layouts": "^1.8.0",
-    "mocha": "^6.2.2",
-    "readable-stream": "^3.4.0",
-    "sinon": "^7.3.2",
-    "uglify-js": "^3.6.0",
-    "watchify": "^3.11.1"
+    "metalsmith-layouts": "^1.8.1",
+    "mocha": "^8.2.1",
+    "readable-stream": "^3.6.0",
+    "sinon": "^9.2.4",
+    "uglify-js": "^3.12.7",
+    "watchify": "^4.0.0"
   },
   "dependencies": {
-    "jwt-decode": "^2.2.0",
+    "jwt-decode": "^3.1.2",
     "xhr2": "^0.2.0"
   }
 }
