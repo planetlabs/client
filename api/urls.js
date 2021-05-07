@@ -4,8 +4,8 @@
  * @private
  */
 
-var API_URL = 'https://api.planet.com/';
-exports.setBase = function(base) {
+let API_URL = 'https://api.planet.com/';
+exports.setBase = function (base) {
   API_URL = base;
 };
 
@@ -16,7 +16,7 @@ exports.setBase = function(base) {
  * @return {string} The joined URL.
  */
 function join() {
-  var components = Array.prototype.map.call(arguments, function(part) {
+  const components = Array.prototype.map.call(arguments, function (part) {
     if (!(typeof part === 'string' || typeof part === 'number')) {
       throw new Error(
         'join must be called with strings or numbers, got: ' + part
@@ -26,9 +26,9 @@ function join() {
   });
 
   // Preserve trailing slashes but remove every other interstitial.
-  var lastComponent = components.pop();
+  const lastComponent = components.pop();
   return components
-    .filter(function(el) {
+    .filter(function (el) {
       return el !== '';
     })
     .concat(lastComponent)
@@ -36,8 +36,8 @@ function join() {
 }
 
 function getter() {
-  var parts = Array.prototype.slice.call(arguments);
-  return function() {
+  const parts = Array.prototype.slice.call(arguments);
+  return function () {
     return join.apply(
       null,
       [API_URL].concat(parts).concat(Array.prototype.slice.call(arguments))
@@ -55,9 +55,9 @@ exports.login = getter(
   'authenticate'
 );
 exports.types = getter('data', 'v1', 'item-types', '');
-exports.items = function(type) {
-  var rest = Array.prototype.slice.call(arguments, 1);
-  var get = getter('data', 'v1', 'item-types', type, 'items', '');
+exports.items = function (type) {
+  const rest = Array.prototype.slice.call(arguments, 1);
+  const get = getter('data', 'v1', 'item-types', type, 'items', '');
   return get.apply(null, rest);
 };
 exports.quickSearch = getter('data', 'v1', 'quick-search');

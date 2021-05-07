@@ -1,19 +1,19 @@
-var spy = require('sinon').spy;
-var polyXHR = require('xhr2');
+const spy = require('sinon').spy;
+const polyXHR = require('xhr2');
 
-var realXHR = global.XMLHttpRequest;
+const realXHR = global.XMLHttpRequest;
 
-exports.mockXHR = function() {
-  var mock = {
+exports.mockXHR = function () {
+  const mock = {
     open: spy(),
     addEventListener: spy(),
     setRequestHeader: spy(),
     send: spy(),
-    abort: spy()
+    abort: spy(),
   };
 
-  global.XMLHttpRequest = function() {
-    for (var method in mock) {
+  global.XMLHttpRequest = function () {
+    for (const method in mock) {
       this[method] = mock[method];
     }
   };
@@ -21,22 +21,22 @@ exports.mockXHR = function() {
   return mock;
 };
 
-exports.polyfillXHR = function() {
+exports.polyfillXHR = function () {
   global.XMLHttpRequest = polyXHR;
 };
 
-exports.restoreXHR = function() {
+exports.restoreXHR = function () {
   global.XMLHttpRequest = realXHR;
 };
 
-var realSetTimeout = global.setTimeout;
+const realSetTimeout = global.setTimeout;
 
-exports.disableSetTimeout = function() {
-  global.setTimeout = function(fn) {
+exports.disableSetTimeout = function () {
+  global.setTimeout = function (fn) {
     fn();
   };
 };
 
-exports.enableSetTimeout = function() {
+exports.enableSetTimeout = function () {
   global.setTimeout = realSetTimeout;
 };
