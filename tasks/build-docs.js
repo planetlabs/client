@@ -5,7 +5,7 @@ const layouts = require('metalsmith-layouts');
 const marked = require('marked');
 
 const pkg = require('../package.json');
-const api = require('../build/api.json');
+const api = require('../build/api.json'); // eslint-disable-line import/no-unresolved
 
 function getNamed(name, array) {
   let item;
