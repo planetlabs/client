@@ -56,15 +56,13 @@ You can view the doc output in the `build/doc` directory.
 
 #### Publishing a release
 
-Releases are published from the master branch.  To cut a new minor release, do this:
+Releases are published from the main branch.  To cut a new minor release, do this:
 
-    npm version minor && git push --tags origin master && npm publish
+    npm version minor && git push --tags origin main && npm publish
 
 The `postpublish` script will update the hosted version of [the docs](http://planetlabs.github.io/client/).
 
 *Note* - Publishing a release requires Node >= 8.0.
-
-[![Build Status][travis-image]][travis-url]
 
 ### License
 
@@ -73,8 +71,3 @@ The `postpublish` script will update the hosted version of [the docs](http://pla
 Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0) (the "License"); you may not use this file except in compliance with the License.
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See [the License](http://www.apache.org/licenses/LICENSE-2.0) for the specific language governing permissions and limitations under the License.
-
-[travis-url]: https://travis-ci.org/planetlabs/client
-[travis-image]: https://img.shields.io/travis/planetlabs/client.svg
-[coveralls-url]: https://coveralls.io/github/planetlabs/client
-[coveralls-image]: https://coveralls.io/repos/planetlabs/client/badge.svg?branch=master&service=github
