@@ -3,9 +3,9 @@
  * @module api/types
  */
 
-var pager = require('./pager');
-var request = require('./request');
-var urls = require('./urls');
+const pager = require('./pager');
+const request = require('./request');
+const urls = require('./urls');
 
 /**
  * Get metadata for a single item type.
@@ -19,12 +19,12 @@ var urls = require('./urls');
  *     error types.
  */
 function get(id, opt) {
-  var options = opt || {};
-  var config = {
+  const options = opt || {};
+  const config = {
     url: urls.types(id),
-    terminator: options.terminator
+    terminator: options.terminator,
   };
-  return request.get(config).then(function(res) {
+  return request.get(config).then(function (res) {
     return res.body;
   });
 }
@@ -45,11 +45,11 @@ function get(id, opt) {
  *     the possible error types.
  */
 function search(opt) {
-  var options = opt || {};
-  var config = {
+  const options = opt || {};
+  const config = {
     url: urls.types(),
     query: options.query,
-    terminator: options.terminator
+    terminator: options.terminator,
   };
   return pager(config, 'item_types', options.each);
 }

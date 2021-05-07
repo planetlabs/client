@@ -16,7 +16,7 @@
 function and(filters) {
   return {
     type: 'AndFilter',
-    config: filters
+    config: filters,
   };
 }
 
@@ -29,7 +29,7 @@ function and(filters) {
 function or(filters) {
   return {
     type: 'OrFilter',
-    config: filters
+    config: filters,
   };
 }
 
@@ -42,7 +42,7 @@ function or(filters) {
 function not(filters) {
   return {
     type: 'NotFilter',
-    config: filters
+    config: filters,
   };
 }
 
@@ -56,8 +56,8 @@ function not(filters) {
  *     provided dates.
  */
 function dates(field, range) {
-  var config = {};
-  for (var key in range) {
+  const config = {};
+  for (const key in range) {
     if (range[key] instanceof Date) {
       config[key] = range[key].toISOString();
     } else {
@@ -67,7 +67,7 @@ function dates(field, range) {
   return {
     type: 'DateRangeFilter',
     field_name: field,
-    config: config
+    config: config,
   };
 }
 
@@ -82,7 +82,7 @@ function geometry(field, geometry) {
   return {
     type: 'GeometryFilter',
     field_name: field,
-    config: geometry
+    config: geometry,
   };
 }
 
@@ -97,7 +97,7 @@ function numbers(field, values) {
   return {
     type: 'NumberInFilter',
     field_name: field,
-    config: values
+    config: values,
   };
 }
 
@@ -114,7 +114,7 @@ function range(field, range) {
   return {
     type: 'RangeFilter',
     field_name: field,
-    config: range
+    config: range,
   };
 }
 
@@ -129,7 +129,7 @@ function strings(field, values) {
   return {
     type: 'StringInFilter',
     field_name: field,
-    config: values
+    config: values,
   };
 }
 
@@ -142,7 +142,7 @@ function strings(field, values) {
 function permissions(values) {
   return {
     type: 'PermissionFilter',
-    config: values
+    config: values,
   };
 }
 

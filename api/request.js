@@ -4,15 +4,15 @@
  * @private
  */
 
-var url = require('url');
-var assign = require('./util').assign;
-var util = require('./util');
-var authStore = require('./auth-store');
-var errors = require('./errors');
-var promiseWithRetry = require('./retry');
+const url = require('url');
+const assign = require('./util').assign;
+const util = require('./util');
+const authStore = require('./auth-store');
+const errors = require('./errors');
+const promiseWithRetry = require('./retry');
 
-var defaultHeaders = {
-  accept: 'application/json'
+const defaultHeaders = {
+  accept: 'application/json',
 };
 
 /**
@@ -23,11 +23,11 @@ var defaultHeaders = {
  * @private
  */
 function parseConfig(config) {
-  var base;
+  let base;
 
   if (config.url) {
-    var resolved;
-    var currentLocation = util.currentLocation();
+    let resolved;
+    const currentLocation = util.currentLocation();
 
     if (typeof currentLocation !== 'undefined') {
       resolved = url.resolve(currentLocation.href, config.url);
@@ -41,13 +41,13 @@ function parseConfig(config) {
   if (config.query) {
     config.path = url.format({
       pathname: base.pathname || config.pathname || '/',
-      query: assign(base.query, config.query)
+      query: assign(base.query, config.query),
     });
   }
   config = assign(base, config);
 
-  var headers = assign({}, defaultHeaders);
-  for (var key in config.headers) {
+  const headers = assign({}, defaultHeaders);
+  for (const key in config.headers) {
     headers[key.toLowerCase()] = config.headers[key];
   }
   if (!config.form && config.body) {
@@ -55,8 +55,8 @@ function parseConfig(config) {
   }
 
   if (config.withCredentials !== false) {
-    var token = authStore.getToken();
-    var apiKey = authStore.getKey();
+    const token = authStore.getToken();
+    const apiKey = authStore.getKey();
     if (token) {
       headers.authorization = 'Bearer ' + token;
     } else if (apiKey) {
@@ -64,7 +64,7 @@ function parseConfig(config) {
     }
   }
 
-  var options = {
+  const options = {
     method: config.method || 'GET',
     headers: headers,
     url:
@@ -72,7 +72,7 @@ function parseConfig(config) {
       '//' +
       config.hostname +
       (config.port ? ':' + config.port : '') +
-      config.path
+      config.path,
   };
 
   if ('withCredentials' in config) {
@@ -88,8 +88,8 @@ function parseConfig(config) {
  * @return {errors.ResponseError} A response error (or null if none).
  */
 function errorCheck(response, body) {
-  var err = null;
-  var status = response.status;
+  let err = null;
+  const status = response.status;
   if (status === 400) {
     err = new errors.BadRequest('Bad request', response, body);
   } else if (status === 401) {
@@ -118,17 +118,17 @@ function errorCheck(response, body) {
  * @private
  */
 function createResponseHandler(resolve, reject, info) {
-  return function(event) {
-    var client = event.target;
+  return function (event) {
+    let client = event.target;
 
     if (client.status === 302) {
-      var redirectLocation = client.getResponseHeader('Location');
+      const redirectLocation = client.getResponseHeader('Location');
       client = new XMLHttpRequest();
       client.addEventListener(
         'load',
         createResponseHandler(resolve, reject, info)
       );
-      client.addEventListener('error', function() {
+      client.addEventListener('error', function () {
         reject(new errors.ClientError('Request failed'));
       });
       client.open('GET', redirectLocation);
@@ -139,9 +139,9 @@ function createResponseHandler(resolve, reject, info) {
     if (info.aborted) {
       return;
     }
-    var body = null;
-    var err = null;
-    var data = client.responseText;
+    let body = null;
+    let err = null;
+    const data = client.responseText;
     if (data) {
       try {
         body = JSON.parse(data);
@@ -165,7 +165,7 @@ function createResponseHandler(resolve, reject, info) {
     } else {
       resolve({
         response: client,
-        body: body
+        body: body,
       });
     }
   };
@@ -201,26 +201,26 @@ function createResponseHandler(resolve, reject, info) {
  *     non-200 status will result in a rejection.
  */
 function request(config) {
-  var options = parseConfig(config);
+  const options = parseConfig(config);
 
-  var retries = 'retries' in config ? config.retries : 10;
+  const retries = 'retries' in config ? config.retries : 10;
 
-  var info = {
+  const info = {
     aborted: false,
-    completed: false
+    completed: false,
   };
 
-  return promiseWithRetry(retries, function(resolve, reject) {
-    var client = new XMLHttpRequest();
-    var handler = createResponseHandler(resolve, reject, info);
+  return promiseWithRetry(retries, function (resolve, reject) {
+    const client = new XMLHttpRequest();
+    const handler = createResponseHandler(resolve, reject, info);
 
     client.addEventListener('load', handler);
 
-    client.addEventListener('error', function() {
+    client.addEventListener('error', function () {
       reject(new errors.ClientError('Request failed'));
     });
 
-    var body = null;
+    let body = null;
     if (config.form) {
       body = config.form;
     } else if (config.body) {
@@ -230,7 +230,7 @@ function request(config) {
     try {
       // Old Firefox throws NetworkError instead of firing the 'error' event
       client.open(options.method, options.url);
-      for (var header in options.headers) {
+      for (const header in options.headers) {
         client.setRequestHeader(header, options.headers[header]);
       }
       if ('withCredentials' in options) {
@@ -243,7 +243,7 @@ function request(config) {
     }
 
     if (config.terminator) {
-      config.terminator(function() {
+      config.terminator(function () {
         if (!info.completed && !info.aborted) {
           info.aborted = true;
           client.abort();
@@ -266,7 +266,7 @@ function get(config) {
   if (typeof config === 'string') {
     config = {
       url: config,
-      method: 'GET'
+      method: 'GET',
     };
   }
   return request(config);
@@ -307,7 +307,7 @@ function put(config) {
 function del(config) {
   if (typeof config === 'string') {
     config = {
-      url: config
+      url: config,
     };
   }
   return request(assign({method: 'DELETE'}, config));

@@ -8,10 +8,10 @@
  * @module api/auth
  */
 
-var errors = require('./errors');
-var request = require('./request');
-var store = require('./auth-store');
-var urls = require('./urls');
+const errors = require('./errors');
+const request = require('./request');
+const store = require('./auth-store');
+const urls = require('./urls');
 
 /**
  * Submit credentials for authentication.  Upon successful authentication, a
@@ -22,15 +22,15 @@ var urls = require('./urls');
  *     otherwise.
  */
 function login(email, password) {
-  var config = {
+  const config = {
     url: urls.login(),
     body: {
       email: email,
-      password: password
+      password: password,
     },
-    withCredentials: false
+    withCredentials: false,
   };
-  return request.post(config).then(function(obj) {
+  return request.post(config).then(function (obj) {
     if (!obj.body || !obj.body.token) {
       throw new errors.UnexpectedResponse(
         'Missing token',
@@ -38,7 +38,7 @@ function login(email, password) {
         obj.body
       );
     }
-    var token = obj.body.token;
+    const token = obj.body.token;
     try {
       store.setToken(token);
     } catch (err) {

@@ -1,15 +1,15 @@
-var Metalsmith = require('metalsmith');
-var handlebars = require('handlebars');
-var inPlace = require('metalsmith-in-place');
-var layouts = require('metalsmith-layouts');
-var marked = require('marked');
+const Metalsmith = require('metalsmith');
+const handlebars = require('handlebars');
+const inPlace = require('metalsmith-in-place');
+const layouts = require('metalsmith-layouts');
+const marked = require('marked');
 
-var pkg = require('../package.json');
-var api = require('../build/api.json');
+const pkg = require('../package.json');
+const api = require('../build/api.json'); // eslint-disable-line import/no-unresolved
 
 function getNamed(name, array) {
-  var item;
-  for (var i = 0, ii = array.length; i < ii; ++i) {
+  let item;
+  for (let i = 0, ii = array.length; i < ii; ++i) {
     if (array[i].name === name) {
       item = array[i];
       break;
@@ -22,20 +22,20 @@ function getNamed(name, array) {
   return item;
 }
 
-var MODULE_NAME_RE = /^module:([\w-\/]+)~/;
+const MODULE_NAME_RE = /^module:([\w-\/]+)~/;
 
 function getModuleName(longname) {
-  var match = longname.match(MODULE_NAME_RE);
+  const match = longname.match(MODULE_NAME_RE);
   if (!match) {
     throw new Error('Expected to parse a module name from ' + longname);
   }
   return match[1];
 }
 
-var CLASS_NAME_RE = /^module:[\w-\/]+~([A-Z]\w+)$/;
+const CLASS_NAME_RE = /^module:[\w-\/]+~([A-Z]\w+)$/;
 
 function getClassName(memberof) {
-  var match = memberof.match(CLASS_NAME_RE);
+  const match = memberof.match(CLASS_NAME_RE);
   if (!match) {
     throw new Error('Expected to parse a class name from ' + memberof);
   }
@@ -43,59 +43,62 @@ function getClassName(memberof) {
 }
 
 function getModule(longname, modules) {
-  var name = getModuleName(longname);
+  const name = getModuleName(longname);
   return getNamed(name, modules);
 }
 
 function getClass(memberof, classes) {
-  var name = getClassName(memberof);
+  const name = getClassName(memberof);
   return getNamed(name, classes);
 }
 
 function organizeDocs(docs) {
-  var modules = [];
-  for (var i = 0, ii = docs.length; i < ii; ++i) {
-    var doc = docs[i];
-    var module, cls;
+  const modules = [];
+  for (let i = 0, ii = docs.length; i < ii; ++i) {
+    const doc = docs[i];
     switch (doc.kind) {
-      case 'module':
-        module = getNamed(doc.name, modules);
-        assign(module, doc);
+      case 'module': {
+        const mod = getNamed(doc.name, modules);
+        assign(mod, doc);
         break;
-      case 'class':
-        module = getModule(doc.longname, modules);
-        if (!module.classes) {
-          module.classes = [];
+      }
+      case 'class': {
+        const mod = getModule(doc.longname, modules);
+        if (!mod.classes) {
+          mod.classes = [];
         }
-        cls = getClass(doc.longname, module.classes);
+        const cls = getClass(doc.longname, mod.classes);
         assign(cls, doc);
         break;
-      case 'member':
-        module = getModule(doc.longname, modules);
-        cls = getClass(doc.memberof, module.classes);
+      }
+      case 'member': {
+        const mod = getModule(doc.longname, modules);
+        const cls = getClass(doc.memberof, mod.classes);
         if (!cls.members) {
           cls.members = [];
         }
         cls.members.push(doc);
         break;
-      case 'function':
-        module = getModule(doc.longname, modules);
+      }
+      case 'function': {
+        const mod = getModule(doc.longname, modules);
         if (doc.scope === 'instance') {
-          if (!module.classes) {
-            module.classes = [];
+          if (!mod.classes) {
+            mod.classes = [];
           }
-          cls = getClass(doc.memberof, module.classes);
+          const cls = getClass(doc.memberof, mod.classes);
           if (!cls.methods) {
             cls.methods = [];
           }
           cls.methods.push(doc);
         } else {
-          if (!module.functions) {
-            module.functions = [];
+          if (!mod.functions) {
+            mod.functions = [];
           }
-          module.functions.push(doc);
+          mod.functions.push(doc);
         }
         break;
+      }
       default:
       //pass
     }
@@ -104,61 +107,61 @@ function organizeDocs(docs) {
 }
 
 function assign(target, source) {
-  for (var key in source) {
-    target[key] = source[key]; // eslint-disable-line no-param-reassign
+  for (const key in source) {
+    target[key] = source[key];
   }
   return target;
 }
 
 function main(callback) {
-  var modules = organizeDocs(api.docs)
-    .filter(function(module) {
+  const modules = organizeDocs(api.docs)
+    .filter(function (module) {
       return module.access !== 'private';
     })
-    .sort(function(a, b) {
+    .sort(function (a, b) {
       return a.name < b.name ? -1 : 1;
     });
 
-  var smith = new Metalsmith('.')
+  const smith = new Metalsmith('.')
     .source('doc/src')
     .destination('build/doc')
     .concurrency(25)
     .metadata({
       version: pkg.version,
-      modules: modules
+      modules: modules,
     })
     .use(
       inPlace({
         engine: 'handlebars',
         partials: 'doc/partials',
         helpers: {
-          short: function(name) {
+          short: function (name) {
             return name.replace(/^api\//, '');
           },
-          long: function(name) {
+          long: function (name) {
             return '@planet/client/' + name;
           },
-          instance: function(memberof) {
-            var className = getClassName(memberof);
+          instance: function (memberof) {
+            const className = getClassName(memberof);
             return className.charAt(0).toLowerCase() + className.slice(1);
           },
-          listParams: function(params) {
+          listParams: function (params) {
             if (!params) {
               return '';
             }
             return params
-              .map(function(param) {
+              .map(function (param) {
                 return param.name;
               })
-              .filter(function(name) {
+              .filter(function (name) {
                 return name.indexOf('.') === -1;
               })
               .join(', ');
           },
-          linkType: function(type) {
-            var openIndex = type.lastIndexOf('<');
-            var closeIndex = type.indexOf('>');
-            var match, link;
+          linkType: function (type) {
+            const openIndex = type.lastIndexOf('<');
+            const closeIndex = type.indexOf('>');
+            let match, link;
             if (openIndex >= 0 && closeIndex > openIndex) {
               match = type
                 .slice(openIndex + 1, closeIndex)
@@ -188,22 +191,22 @@ function main(callback) {
             }
             return link;
           },
-          lower: function(str) {
+          lower: function (str) {
             return str.charAt(0).toLowerCase() + str.slice(1);
           },
-          md: function(str) {
+          md: function (str) {
             return new handlebars.SafeString(marked(str));
-          }
-        }
+          },
+        },
       })
     )
     .use(
       layouts({
         engine: 'handlebars',
-        directory: 'doc/layouts'
+        directory: 'doc/layouts',
       })
     )
-    .build(function(err) {
+    .build(function (err) {
       callback(err);
     });
 
@@ -211,7 +214,7 @@ function main(callback) {
 }
 
 if (require.main === module) {
-  main(function(err) {
+  main(function (err) {
     if (err) {
       process.stderr.write(
         'Building docs failed.  See the full trace below.\n\n' +

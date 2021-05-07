@@ -4,17 +4,17 @@
  * @private
  */
 
-var querystring = require('querystring');
+const querystring = require('querystring');
 
 function addQueryParams(link, params) {
-  var baseHash = link.split('#');
-  var base = baseHash[0];
-  var hash = baseHash[1];
+  const baseHash = link.split('#');
+  const base = baseHash[0];
+  const hash = baseHash[1];
 
-  var parts = base.split('?');
-  var search = parts[1] || '';
-  var query = querystring.parse(search);
-  for (var name in params) {
+  const parts = base.split('?');
+  let search = parts[1] || '';
+  const query = querystring.parse(search);
+  for (const name in params) {
     query[name] = params[name];
   }
   search = querystring.stringify(query);
@@ -29,10 +29,10 @@ function addQueryParams(link, params) {
  * @private
  */
 function assign() {
-  var target = arguments[0];
-  for (var i = 1, ii = arguments.length; i < ii; ++i) {
-    var src = arguments[i];
-    for (var key in src) {
+  const target = arguments[0];
+  for (let i = 1, ii = arguments.length; i < ii; ++i) {
+    const src = arguments[i];
+    for (const key in src) {
       target[key] = src[key];
     }
   }

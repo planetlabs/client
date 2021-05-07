@@ -34,15 +34,13 @@ To get set up, clone the repository and install the development dependencies:
 
 #### Running the tests
 
-The tests are run in a browser and in Node.  You can run the linter and all tests once with the following:
+The tests are run in Node.  You can run the linter and all tests once with the following:
 
     npm test
 
-To start a file watcher that runs the linter and tests with any file changes:
+To start a file watcher that runs the tests with any file changes:
 
     npm start
-
-With the `npm start` task running, you can attach any number of browsers to the [test server](http://localhost:9876/).  Every time you attach a new browser, tests run in all browsers.  To debug any failing test, visit the test runner [debug page](http://localhost:9876/debug.html) and open your development console.
 
 #### Building the docs
 

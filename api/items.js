@@ -7,9 +7,9 @@
  * @module api/items
  */
 
-var pager = require('./pager');
-var request = require('./request');
-var urls = require('./urls');
+const pager = require('./pager');
+const request = require('./request');
+const urls = require('./urls');
 
 /**
  * Get metadata for a single item.
@@ -24,12 +24,12 @@ var urls = require('./urls');
  *     error types.
  */
 function get(type, id, opt) {
-  var options = opt || {};
-  var config = {
+  const options = opt || {};
+  const config = {
     url: urls.items(type, id),
-    terminator: options.terminator
+    terminator: options.terminator,
   };
-  return request.get(config).then(function(res) {
+  return request.get(config).then(function (res) {
     return res.body;
   });
 }
@@ -59,11 +59,11 @@ function get(type, id, opt) {
  *     the possible error types.
  */
 function search(opt) {
-  var options = opt || {};
-  var config = {
+  const options = opt || {};
+  const config = {
     query: options.query || {},
     limit: options.limit,
-    terminator: options.terminator
+    terminator: options.terminator,
   };
   if (!config.query._page_size) {
     config.query._page_size = 250; // default so we can bail early on incomplete pages
@@ -74,7 +74,7 @@ function search(opt) {
     config.method = 'POST';
     config.body = {
       filter: options.filter,
-      item_types: options.types
+      item_types: options.types,
     };
   } else if (options.id) {
     config.url = urls.searches(options.id, 'results');

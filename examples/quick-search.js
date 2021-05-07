@@ -8,22 +8,22 @@ async function main() {
     types: ['PSScene4Band', 'Landsat8L1G'],
     filter: and([
       range('cloud_cover', {gte: 0, lte: 0.4}),
-      range('sun_elevation', {gte: 0, lte: 90})
+      range('sun_elevation', {gte: 0, lte: 90}),
     ]),
     query: {
-      _page_size: 100
+      _page_size: 100,
     },
     limit: 150,
     each: page => {
       items.push.apply(items, page);
-      console.log(`got ${page.length} items`);
-    }
+      console.log(`got ${page.length} items`); // eslint-disable-line
+    },
   });
-  console.log(`total: ${items.length}`);
+  console.log(`total: ${items.length}`); // eslint-disable-line
 }
 
 if (require.main === module) {
   main().catch(err => {
-    console.error(err.message);
+    console.error(err.message); // eslint-disable-line
   });
 }

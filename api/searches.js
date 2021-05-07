@@ -3,9 +3,9 @@
  * @module api/searches
  */
 
-var pager = require('./pager');
-var request = require('./request');
-var urls = require('./urls');
+const pager = require('./pager');
+const request = require('./request');
+const urls = require('./urls');
 
 /**
  * Get metadata for a single search.
@@ -20,11 +20,11 @@ var urls = require('./urls');
  */
 function get(id, options) {
   options = options || {};
-  var config = {
+  const config = {
     url: urls.searches(id),
-    terminator: options.terminator
+    terminator: options.terminator,
   };
-  return request.get(config).then(function(res) {
+  return request.get(config).then(function (res) {
     return res.body;
   });
 }
@@ -50,12 +50,12 @@ function get(id, options) {
  */
 function search(options) {
   options = options || {};
-  var query = Object.assign({search_type: 'saved'}, options.query);
-  var config = {
+  const query = Object.assign({search_type: 'saved'}, options.query);
+  const config = {
     url: urls.searches(),
     query: query,
     limit: options.limit,
-    terminator: options.terminator
+    terminator: options.terminator,
   };
   return pager(config, 'searches', options.each);
 }
@@ -77,28 +77,28 @@ function create(options) {
   if (!options) {
     throw new Error('Searches require "name", "types", and "filter"');
   }
-  var name = options.name;
+  const name = options.name;
   if (!name) {
     throw new Error('Missing search "name"');
   }
-  var types = options.types;
+  const types = options.types;
   if (!types) {
     throw new Error('Missing search "types"');
   }
-  var filter = options.filter;
+  const filter = options.filter;
   if (!filter) {
     throw new Error('Missing search "filter"');
   }
-  var config = {
+  const config = {
     url: urls.searches(),
     body: {
       name: name,
       item_types: types,
       filter: filter,
-      __daily_email_enabled: !!options.notification
-    }
+      __daily_email_enabled: !!options.notification,
+    },
   };
-  return request.post(config).then(function(res) {
+  return request.post(config).then(function (res) {
     return res.body;
   });
 }
@@ -121,7 +121,7 @@ function update(id, options) {
   if (!options) {
     throw new Error('Missing "name", "types", or "filter"');
   }
-  var search = {};
+  const search = {};
   if (options.name) {
     search.name = options.name;
   }
@@ -134,11 +134,11 @@ function update(id, options) {
   if ('notification' in options) {
     search.__daily_email_enabled = options.notification;
   }
-  var config = {
+  const config = {
     url: urls.searches(id),
-    body: search
+    body: search,
   };
-  return request.put(config).then(function(res) {
+  return request.put(config).then(function (res) {
     return res.body;
   });
 }
@@ -152,7 +152,7 @@ function update(id, options) {
  *     error types.
  */
 function remove(id) {
-  return request.del(urls.searches(id)).then(function() {
+  return request.del(urls.searches(id)).then(function () {
     return true;
   });
 }

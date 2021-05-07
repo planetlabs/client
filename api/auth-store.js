@@ -4,9 +4,9 @@
  * @private
  */
 
-var decode = require('jwt-decode');
+const decode = require('jwt-decode');
 
-var storage = {};
+let storage = {};
 
 /**
  * Set an API key to be used for subsequent requests.
@@ -30,7 +30,7 @@ function getKey() {
  */
 function setToken(token) {
   storage.token = token;
-  var claims = decode(token);
+  const claims = decode(token);
   if (!claims.api_key) {
     throw new Error('Expected api_key in token payload');
   }

@@ -1,17 +1,17 @@
 /* eslint-env mocha */
-var assert = require('chai').assert;
+const assert = require('chai').assert;
 
-var filter = require('../../api/filter');
+const filter = require('../../api/filter');
 
-describe('api/filter', function() {
-  describe('and()', function() {
-    it('creates an AndFilter', function() {
-      var where = filter.geometry('place', {
+describe('api/filter', function () {
+  describe('and()', function () {
+    it('creates an AndFilter', function () {
+      const where = filter.geometry('place', {
         type: 'Point',
-        coordinates: [0, 0]
+        coordinates: [0, 0],
       });
-      var when = filter.dates('acquired', {
-        gt: new Date('2000-01-01T12:00:00.000Z')
+      const when = filter.dates('acquired', {
+        gt: new Date('2000-01-01T12:00:00.000Z'),
       });
       assert.deepEqual(filter.and([where, when]), {
         type: 'AndFilter',
@@ -21,29 +21,29 @@ describe('api/filter', function() {
             field_name: 'place',
             config: {
               type: 'Point',
-              coordinates: [0, 0]
-            }
+              coordinates: [0, 0],
+            },
           },
           {
             type: 'DateRangeFilter',
             field_name: 'acquired',
             config: {
-              gt: '2000-01-01T12:00:00.000Z'
-            }
-          }
-        ]
+              gt: '2000-01-01T12:00:00.000Z',
+            },
+          },
+        ],
       });
     });
   });
 
-  describe('or()', function() {
-    it('creates an OrFilter', function() {
-      var where = filter.geometry('place', {
+  describe('or()', function () {
+    it('creates an OrFilter', function () {
+      const where = filter.geometry('place', {
         type: 'Point',
-        coordinates: [0, 0]
+        coordinates: [0, 0],
       });
-      var when = filter.dates('acquired', {
-        gt: new Date('2000-01-01T12:00:00.000Z')
+      const when = filter.dates('acquired', {
+        gt: new Date('2000-01-01T12:00:00.000Z'),
       });
       assert.deepEqual(filter.or([where, when]), {
         type: 'OrFilter',
@@ -53,29 +53,29 @@ describe('api/filter', function() {
             field_name: 'place',
             config: {
               type: 'Point',
-              coordinates: [0, 0]
-            }
+              coordinates: [0, 0],
+            },
           },
           {
             type: 'DateRangeFilter',
             field_name: 'acquired',
             config: {
-              gt: '2000-01-01T12:00:00.000Z'
-            }
-          }
-        ]
+              gt: '2000-01-01T12:00:00.000Z',
+            },
+          },
+        ],
       });
     });
   });
 
-  describe('not()', function() {
-    it('creates an NotFilter', function() {
-      var where = filter.geometry('place', {
+  describe('not()', function () {
+    it('creates an NotFilter', function () {
+      const where = filter.geometry('place', {
         type: 'Point',
-        coordinates: [0, 0]
+        coordinates: [0, 0],
       });
-      var when = filter.dates('acquired', {
-        gt: new Date('2000-01-01T12:00:00.000Z')
+      const when = filter.dates('acquired', {
+        gt: new Date('2000-01-01T12:00:00.000Z'),
       });
       assert.deepEqual(filter.not([where, when]), {
         type: 'NotFilter',
@@ -85,97 +85,97 @@ describe('api/filter', function() {
             field_name: 'place',
             config: {
               type: 'Point',
-              coordinates: [0, 0]
-            }
+              coordinates: [0, 0],
+            },
           },
           {
             type: 'DateRangeFilter',
             field_name: 'acquired',
             config: {
-              gt: '2000-01-01T12:00:00.000Z'
-            }
-          }
-        ]
+              gt: '2000-01-01T12:00:00.000Z',
+            },
+          },
+        ],
       });
     });
   });
 
-  describe('dates()', function() {
-    it('creates a DateRangeFilter', function() {
-      var then = new Date(0);
-      var now = new Date();
-      var when = filter.dates('time', {
+  describe('dates()', function () {
+    it('creates a DateRangeFilter', function () {
+      const then = new Date(0);
+      const now = new Date();
+      const when = filter.dates('time', {
         gte: then,
-        lt: now
+        lt: now,
       });
       assert.deepEqual(when, {
         type: 'DateRangeFilter',
         field_name: 'time',
         config: {
           gte: then.toISOString(),
-          lt: now.toISOString()
-        }
+          lt: now.toISOString(),
+        },
       });
     });
   });
 
-  describe('geometry()', function() {
-    it('creates a GeometryFilter', function() {
-      var nullIsland = {
+  describe('geometry()', function () {
+    it('creates a GeometryFilter', function () {
+      const nullIsland = {
         type: 'Point',
-        coordinates: [0, 0]
+        coordinates: [0, 0],
       };
-      var place = filter.geometry('footprint', nullIsland);
+      const place = filter.geometry('footprint', nullIsland);
       assert.deepEqual(place, {
         type: 'GeometryFilter',
         field_name: 'footprint',
-        config: nullIsland
+        config: nullIsland,
       });
     });
   });
 
-  describe('numbers()', function() {
-    it('creates a NumberInFilter', function() {
-      var medal = filter.numbers('rank', [1, 2, 3]);
+  describe('numbers()', function () {
+    it('creates a NumberInFilter', function () {
+      const medal = filter.numbers('rank', [1, 2, 3]);
       assert.deepEqual(medal, {
         type: 'NumberInFilter',
         field_name: 'rank',
-        config: [1, 2, 3]
+        config: [1, 2, 3],
       });
     });
   });
 
-  describe('range()', function() {
-    it('creates a RangeFilter', function() {
-      var aboveAverage = filter.range('fraction', {gt: 0.5, lte: 1});
+  describe('range()', function () {
+    it('creates a RangeFilter', function () {
+      const aboveAverage = filter.range('fraction', {gt: 0.5, lte: 1});
       assert.deepEqual(aboveAverage, {
         type: 'RangeFilter',
         field_name: 'fraction',
-        config: {gt: 0.5, lte: 1}
+        config: {gt: 0.5, lte: 1},
       });
     });
   });
 
-  describe('strings()', function() {
-    it('creates a StringInFilter', function() {
-      var mediocre = filter.strings('grade', ['C', 'D', 'F']);
+  describe('strings()', function () {
+    it('creates a StringInFilter', function () {
+      const mediocre = filter.strings('grade', ['C', 'D', 'F']);
       assert.deepEqual(mediocre, {
         type: 'StringInFilter',
         field_name: 'grade',
-        config: ['C', 'D', 'F']
+        config: ['C', 'D', 'F'],
       });
     });
   });
 
-  describe('permissions()', function() {
-    it('creates a PermissionFilter', function() {
-      var hasAccess = filter.permissions([
+  describe('permissions()', function () {
+    it('creates a PermissionFilter', function () {
+      const hasAccess = filter.permissions([
         'assets.analytic:download',
-        'assets.visual:download'
+        'assets.visual:download',
       ]);
       assert.deepEqual(hasAccess, {
         type: 'PermissionFilter',
-        config: ['assets.analytic:download', 'assets.visual:download']
+        config: ['assets.analytic:download', 'assets.visual:download'],
       });
     });
   });
